@@ -611,7 +611,7 @@ The expanded query returns the related product, supplier, and currency details i
 4. Set **Filter rows** to:
 
    ```text
-   _nwind_productid_value eq @{outputs('Get_case')?['body/_ppcc_productid_value']} and (nwind_OrderID/nwind_orderstatusid eq 0 or nwind_OrderID/nwind_orderstatusid eq 1) and nwind_orderdetailstatusid ne 3
+   _nwind_productid_value eq @{outputs('Get_case')?['body/_ppcc_productid_value']} and (nwind_OrderID/nwind_orderstatusid ne 3) and nwind_orderdetailstatusid ne 3
    ```
 
 This finds lines for the delayed product on **New** or **Invoiced** orders, excluding shipped lines. It does not contain fixed order numbers.
@@ -1018,8 +1018,8 @@ Alternatively check individual records within the Control Tower for detailed inf
    | Supplier | Supplier F |
    | Delayed Product | Northwind Traders Clam Chowder |
    | Delay Days | 14 |
-   | Impacted Order Count | 2 |
-   | Revenue at Risk | USD 772.00 |
+   | Impacted Order Count | 3 |
+   | Revenue at Risk | USD 868.50 |
    | Disruption Status | Decision Pending |
    | Recommendation Summary | AI-generated impact, suggested next step, and missing information |
    | Recommended Action | Blank, awaiting human selection |
@@ -1030,18 +1030,19 @@ Alternatively check individual records within the Control Tower for detailed inf
    | --- | --- | --- | --- |
    | 0915 | 50 | USD 9.65 | USD 482.50 |
    | 0920 | 30 | USD 9.65 | USD 289.50 |
-   | **Total** | **80** | | **USD 772.00** |
+   | 0935 | 10 | USD 9.65 | USD 96.50 |
+   | **Total** | **80** | | **USD 868.50** |
 
-5. Confirm each impact links to its source Order and Order Detail.
-6. Open the related **Recovery Decision** and confirm:
+6. Confirm each impact links to its source Order and Order Detail.
+7. Open the related **Recovery Decision** and confirm:
    - Approval State is **Pending**.
    - Is Current Decision is **Yes**.
    - Recommendation Rationale contains the AI-generated assessment.
    - Requested Action and human approval fields remain blank.
-7. Confirm the case-review Task created by Flow 1 is linked to the case. Flow 2 does not create another Task.
-8. Compare the AI assessment with the source facts. It must not invent figures, inventory availability, approval, or completed recovery.
+8. Confirm the case-review Task created by Flow 1 is linked to the case. Flow 2 does not create another Task.
+9. Compare the AI assessment with the source facts. It must not invent figures, inventory availability, approval, or completed recovery.
 
-The eligibility rule excludes shipped order 0935 and closed order 0906. The current example therefore totals USD 772.00, rather than the older fixed-order example's USD 868.50.
+The eligibility rule excludes closed order 0906. The current example therefore totals USD 868.50.
 
 > If the generated page displays a missing decision or currency, inspect the native case, impact, and decision records. Do not create another record to correct a display issue.
 
