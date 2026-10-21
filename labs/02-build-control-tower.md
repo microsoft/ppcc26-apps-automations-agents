@@ -29,7 +29,7 @@ Your facilitator should have prepared:
 If setup is missing, ask the facilitator rather than installing/upgrading tools
 or repairing the base solution during the build. The
 [Microsoft Learn setup guide](https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/model-driven-app-external-tools)
-and [shared prerequisites](../../prereqs.md) are preparation references.
+is a preparation reference.
 Never use a presenter's environment URL or the managed TARGET.
 
 ## Step 1: Open the existing app and capture the baseline
@@ -75,7 +75,7 @@ redesign them or choose production security/validation mechanisms.
 Use the app-builder skill to extend the installed PPCC Agentic Operations
 Control Tower in my workshop DEV environment: <MY-DEV-URL>.
 
-Use @prompts\Supplier-Recovery-Offer-Extension-app-spec.md
+Use @labs\prompts\Supplier-Recovery-Offer-Extension-app-spec.md
 as the complete requirements for this lab.
 
 Confirm the target and workshop identity, then retrieve the existing app.
@@ -148,11 +148,12 @@ Paste this at the Copilot prompt, replacing `<MY-DEV-URL>`:
 ```text
 Continue the existing Supplier Recovery Offers simplified planning run using
 the app-builder skill and the updated simplified requirements:
-@labs\agentic-control-tower\docs\specs\PPCC26-Supplier-Recovery-Offer-Extension-app-spec-simplified.md
+@labs\prompts\Supplier-Recovery-Offer-Extension-app-spec.md
 
 Target my workshop DEV: <MY-DEV-URL>. Reconfirm the environment, prepared
 administrator identity, existing app, unmanaged solution/version, and ppcc
-publisher. Use the existing supplier-recovery-offers-simplified workspace.
+publisher. Use the existing
+.artifacts\app-builder\supplier-recovery-offers-extension workspace.
 
 Preserve the previous plan, spec, and baseline before refreshing the existing
 app download in that same workspace. If the offer table now exists, the
@@ -318,7 +319,7 @@ navigation with the specified Fluent-style offer icon are published, both
 sample offers exist and compare correctly,
 the manual form/status checks pass, the original app still works, and the
 baseline comparison confirms no approval/execution
-effects. The [six acceptance checks](../docs/specs/PPCC26-Supplier-Recovery-Offer-Extension-app-spec-simplified.md#illustrative-data-and-acceptance)
+effects. The [six acceptance checks](prompts/Supplier-Recovery-Offer-Extension-app-spec.md#illustrative-data-and-acceptance)
 in the simplified spec are the completion contract.
 Keep **app-builder completion** and **full workshop acceptance** as separate
 results. All four manual follow-ups must pass before claiming the latter;
@@ -334,9 +335,8 @@ No role changes or custom validation code are part of this variant.
 A facilitator-rehearsed default Main-form preference is also optional under
 the simplified spec's preservation conditions; manual form selection remains
 allowed. It is separate from default-view selection and adds no required
-lab step. Presenter discussion of richer behaviors belongs in the
-[speaker notes](../docs/speaker-notes-supplier-recovery-offers-simplified.md),
-not in the participant build scope.
+lab step. Presenter discussion of richer behaviors belongs outside the
+participant build scope.
 
 If the build cannot finish, the facilitator may provide an approved completed
 full-solution checkpoint. Record that you used it: inspecting that result is
@@ -356,11 +356,8 @@ comparison and authority checks.
   inserted IDs and verify no duplicates on recovery; do not seed parent data.
 - Retain the complete full-solution DEV/TARGET model for the workshop, but
   do not run checker/export or deploy TARGET during this module.
-- The workshop README still points to the original Module 2. Open this
-  sibling explicitly for the comparison run. Use
-  [simplified Module 6](06-run-deploy-and-replay-simplified.md) for the reduced
-  inventory and carry forward the manual acceptance evidence. The original
-  Module 2, requirements, and Module 6 remain unchanged for comparison.
+- Carry forward the manual acceptance evidence for any later deployment
+  or replay exercise.
 - Keep default-view selection, date storage, and cascade-control issue
   candidates separate from acceptance receipts. Logging a future tooling bug
   does not complete a follow-up or authorize a safety workaround.

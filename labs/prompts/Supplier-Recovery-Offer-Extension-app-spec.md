@@ -1,9 +1,8 @@
 # Supplier Recovery Offers - Lab 2 requirements
 
-Use with [Module 2 - control tower extension instructions](02-build-control-tower.md).
-The [original requirements](prompts/Supplier-Recovery-Offer-Extension-app-spec.md)
-remain unchanged for comparison. This file replaces their requirements for
-this variant; it does not inherit their mandatory advanced work.
+Use with [Module 2 - control tower extension instructions](../02-build-control-tower.md).
+This file contains the complete requirements for this lab; advanced work
+outside its scope is not mandatory.
 
 ## Outcome and scope
 
@@ -420,6 +419,6 @@ multi-persona access, shared Recovery Action reuse, extra statuses, and
 autonumber are outside this variant. Do not generate a plug-in, business rule,
 security redesign, or extra approval gates to implement those deferred items.
 
-Keep all additions in the full solution for later managed deployment through
-Module 6; no checker/export/TARGET deployment is required in Module 2.
+Keep all additions in the full solution for later managed deployment;
+no checker/export/TARGET deployment is required in Module 2.
 Business rows and OAuth credentials are not transported in that solution.
