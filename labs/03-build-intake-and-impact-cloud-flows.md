@@ -357,10 +357,10 @@ Open the **SupplierDelay** case.
 1. Add two **Microsoft Dataverse - List rows** actions.
 2. Rename and configure them:
 
-   | Action name | Table | Select columns | Row count |
+   | Action name | Table | Select columns |
    | --- | --- | --- | --- |
-   | `Find product` | Order Products (`nwind_products`) | `nwind_productsid` | `2` |
-   | `Find supplier` | Suppliers | `nwind_suppliersid` | `2` |
+   | `Find product` | Order Products (`nwind_products`) | `nwind_productsid` |
+   | `Find supplier` | Suppliers | `nwind_suppliersid` |
 
 3. For **Find product**, set **Filter rows** to below text (Note you dont need to add this in forumulas. Just copy and paste in Filter row):
 
