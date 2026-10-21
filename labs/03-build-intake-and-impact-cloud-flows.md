@@ -959,7 +959,7 @@ Preserve the existing app, tables, and Module 2 additions.
 
 ## Step 4: Test the complete process
 
-Before we start, delete the Disruption Case and Task that was created in previous test.
+**Important - Before we start, delete the Disruption Case and Task that was created in previous test. Go to the PPCC Agentic Operations Control Tower Model Driven App - Navigate to Disruption cases and tasks and delete the newly created task from previous run **
 
 1. Open Outlook using your workshop account.
 2. Send this email to the workshop mailbox monitored by the intake flow.
