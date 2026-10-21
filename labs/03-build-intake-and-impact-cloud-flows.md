@@ -36,7 +36,6 @@ This is a workshop exposure model, not a claim about actual inventory or deliver
 - Access to **Run a prompt**, permission to create and use custom prompts, and available AI Builder or Copilot Credits.
 - The workshop flow connection user's default currency configured as **USD**. The facilitator confirms this setup and that Northwind's Decimal unit prices represent USD; this lab does not add a Currencies query or perform currency conversion.
 
-See the [workshop prerequisites](https://github.com/warrenbryant-msft/ppcc26-apps-agents-workshop-preview/blob/fca2d7b9b5501b074200b373866659feaa90285e/labs/prereqs.md) for account and access setup.
 
 ## Learning outcomes
 
