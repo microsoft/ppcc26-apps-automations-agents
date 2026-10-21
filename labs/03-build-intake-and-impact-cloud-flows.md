@@ -358,7 +358,7 @@ Open the **SupplierDelay** case.
 2. Rename and configure them:
 
    | Action name | Table | Select columns |
-   | --- | --- | --- | --- |
+   | --- | --- | --- |
    | `Find product` | Order Products (`nwind_products`) | `nwind_productsid` |
    | `Find supplier` | Suppliers | `nwind_suppliersid` |
 
