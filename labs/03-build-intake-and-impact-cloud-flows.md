@@ -205,7 +205,8 @@ Email body:
 ```
 
 ![alt text](images/module3/intake-image-19.png)
-
+> [!TIP]
+> AI prompts can use different AI models. Ranging from GPT 4.1 mini (default) to GPT 5.2 reasoning along with Claude Models. Select the models based on the complexity of the task , depth of reasoning etc. 
 > [!TIP]
 > **One custom prompt turns an email into actionable data.**
 > Instead of building separate text-splitting rules for every email format, describe what to identify. The prompt interprets the subject and body, classifies the notification, extracts key details, and explains when information needs review - all in one action.
