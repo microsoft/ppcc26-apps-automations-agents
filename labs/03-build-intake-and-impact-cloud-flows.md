@@ -815,7 +815,7 @@ These are prompt inputs, not additional flow variables.
 
 
 8. Keep **Output = Text**.
-9. Test the prompt with these sample values:
+9. Test the prompt with these sample values (this is just sample data. actual values may differ):
 
    | Input | Sample value |
    | --- | --- |
