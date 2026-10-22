@@ -689,30 +689,16 @@ Later expressions use `union()` on this output to remove repeated orders. No Com
 
    | Column | Mode | Value |
    | --- | --- | --- |
+   | Currency | Expression | `concat('transactioncurrencies(', outputs('Get_case')?['body/_transactioncurrencyid_value'], ')')` |
+   | Customer Impact Summary | Text | `Supplier-delay exposure identified for human review. Recovery is not approved.` |
    | Disruption Case | Expression | `concat('ppcc_disruptioncases(', outputs('Get_case')?['body/ppcc_disruptioncaseid'], ')')` |
+   | Financial Exposure | Expression | `float(formatNumber(mul(float(items('Create_impacted_orders')?['nwind_quantity']), float(items('Create_impacted_orders')?['nwind_unitprice'])), '0.00', 'en-US'))` |
+   | Included in Recovery | Boolean | **Yes** |
    | Northwind Order | Expression | `concat('nwind_orderses(', items('Create_impacted_orders')?['_nwind_orderid_value'], ')')` |
    | Northwind Order Detail | Expression | `concat('nwind_orderdetailses(', items('Create_impacted_orders')?['nwind_orderdetailsid'], ')')` |
    | Quantity at Risk | Expression | `items('Create_impacted_orders')?['nwind_quantity']` |
    | Unit Price Snapshot | Expression | `items('Create_impacted_orders')?['nwind_unitprice']` |
-   | Financial Exposure | Expression | Use the calculation below. |
-   | Included in Recovery | Boolean | **Yes** |
-   | Customer Impact Summary | Text | `Supplier-delay exposure identified for human review. Recovery is not approved.` |
-   | Currency | Expression | `concat('transactioncurrencies(', outputs('Get_case')?['body/_transactioncurrencyid_value'], ')')` |
 
-   **Financial Exposure:**
-
-   ```text
-   float(
-     formatNumber(
-       mul(
-         float(items('Create_impacted_orders')?['nwind_quantity']),
-         float(items('Create_impacted_orders')?['nwind_unitprice'])
-       ),
-       '0.00',
-       'en-US'
-     )
-   )
-   ```
 ![alt text](images/module3/assessment-image-20.png)
 
 8. Leave **Impact Number** blank for automatic numbering. Leave Priority and Required Ship Date blank.
