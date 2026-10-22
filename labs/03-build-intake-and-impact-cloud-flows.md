@@ -223,7 +223,11 @@ Email body:
 
 ## Test the prompt with sample input
 
-7. Set sample `EmailSubject` to `PPCC Cloud Flow Lab - Supplier delay [REF:SUPF-2026-1042]`.
+7. Set sample `EmailSubject` to
+  
+   ```text
+   PPCC Cloud Flow Lab - Supplier delay [REF:SUPF-2026-1042]
+   ```
 
 ![alt text](images/module3/intake-image-12.png)
 
@@ -988,6 +992,8 @@ Preserve the existing app, tables, and Module 2 additions.
 
 ![alt text](images/module3/assessment-image-35.png)
 
+![alt text](images/module3/assessment-image-36.png)
+
 5. Inspect the assessment flow's latest run and confirm:
    - Eligible order lines were returned.
    - Impacted Orders were created.
@@ -997,7 +1003,6 @@ Preserve the existing app, tables, and Module 2 additions.
 
 > The case created during your Flow 1-only test will not automatically trigger Flow 2 after it is enabled. This end-to-end test must create a new case.
 
-![alt text](images/module3/assessment-image-36.png)
 
 ![alt text](images/module3/assessment-image-37.png)
 
