@@ -392,15 +392,15 @@ These expressions read the prompt fields directly. The `replace` function escape
    | Column | Mode | Value |
    | --- | --- | --- |
    | Title | Text and Dynamic content | `Supplier delay -@{outputs('Classify_supplier_notice')?['body/responsev2/predictionOutput/structuredOutput/productName']}` |
-   | Source | Choice | **Supplier Notice** |
-   | Source Reference | Dynamic content | **noticeReference** from **Classify supplier notice** |
-   | Reported On | Expression | `utcNow()` |
    | Delay Days | Dynamic content | **delayDays** from **Classify supplier notice** |
+   | Delayed Product | Expression | `concat('nwind_productses(', first(body('Find_product')?['value'])?['nwind_productsid'], ')')` |
    | Disruption Status | Choice | **New** |
    | Impacted Order Count | Number | `0` |
-   | Revenue at Risk | Number | `0` |
    | Recommendation Summary | Text | `Supplier-delay impact assessment pending. No recovery is approved.` |
-   | Delayed Product | Expression | `concat('nwind_productses(', first(body('Find_product')?['value'])?['nwind_productsid'], ')')` |
+   | Reported On | Expression | `utcNow()` |
+   | Revenue at Risk | Number | `0` |
+   | Source | Choice | **Supplier Notice** |
+   | Source Reference | Dynamic content | **noticeReference** from **Classify supplier notice** |
    | Supplier | Expression | `concat('nwind_supplierses(', first(body('Find_supplier')?['value'])?['nwind_suppliersid'], ')')` |
 
 **Important-Learning Moment**
