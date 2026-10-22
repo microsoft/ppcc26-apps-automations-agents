@@ -856,11 +856,11 @@ These are prompt inputs, not additional flow variables.
 
    | Column | Mode | Value |
    | --- | --- | --- |
-   | Disruption Case | Expression | `concat('ppcc_disruptioncases(', outputs('Get_case')?['body/ppcc_disruptioncaseid'], ')')` |
    | Approval State | Choice | **Pending** |
+   | Currency | Expression | `concat('transactioncurrencies(', outputs('Get_case')?['body/_transactioncurrencyid_value'], ')')` |
+   | Disruption Case | Expression | `concat('ppcc_disruptioncases(', outputs('Get_case')?['body/ppcc_disruptioncaseid'], ')')` |
    | Is Current Decision | Boolean | **Yes** |
    | Recommendation Rationale | Text and Dynamic content | Type `AI-generated draft - review required:` and insert **Text** from **Generate impact assessment**. |
-   | Currency | Expression | `concat('transactioncurrencies(', outputs('Get_case')?['body/_transactioncurrencyid_value'], ')')` |
 
 4. Leave **Decision Number** blank for automatic numbering.
 
