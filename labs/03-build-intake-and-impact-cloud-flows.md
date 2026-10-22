@@ -1000,7 +1000,7 @@ Go to Control Tower Home Page and check for the newly created record.
 Alternatively check individual records within the Control Tower for detailed information.
 
 1. Open **PPCC Agentic Operations Control Tower**.
-2. Find the case with **Source Reference = SUPF-2026-1046**.
+2. Go to Disruption cases and Find the case with **Source = Supplier Notice**.
 3. With the unchanged sample data, confirm:
 
    | Field | Expected result |
