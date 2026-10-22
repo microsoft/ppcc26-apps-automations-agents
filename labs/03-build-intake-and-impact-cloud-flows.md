@@ -886,10 +886,10 @@ This creates a pending review record. Selecting and authorizing a specific recov
 
    | Column | Mode | Value |
    | --- | --- | --- |
-   | Impacted Order Count | Expression | `length(union(body('Select_affected_orders'), body('Select_affected_orders')))` |
-   | Revenue at Risk | Expression | `float(formatNumber(variables('TotalExposure'), '0.00', 'en-US'))` |
-   | Recommendation Summary | Text and Dynamic content | Type `AI-generated draft - review required:` and insert **Text** from **Generate impact assessment**. |
    | Disruption Status | Choice | **Decision Pending** |
+   | Impacted Order Count | Expression | `length(union(body('Select_affected_orders'), body('Select_affected_orders')))` |
+   | Recommendation Summary | Text and Dynamic content | Type `AI-generated draft - review required:` and insert **Text** from **Generate impact assessment**. |
+   | Revenue at Risk | Expression | `float(formatNumber(variables('TotalExposure'), '0.00', 'en-US'))` |
 
 6. Leave **Recommended Action** unset. Leave other optional inputs untouched.
 
