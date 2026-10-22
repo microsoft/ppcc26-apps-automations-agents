@@ -255,6 +255,13 @@ account (`odl_user_<number>@...`). For example, the fictional account
 7. Select **Apps**.
 8. Find **PPCC Agentic Operations Control Tower**. If it isn't under
    **My apps**, select **All**.
+
+   > [!NOTE]
+   > If you don't see any apps in the list, publish the solution: select
+   > **Solutions**, open **PPCC Agentic Operations Control Tower**, and then
+   > select **Publish all customizations**. When publishing completes, select
+   > **Apps** again.
+
 9. Select **Play**. If Play is hidden, select the app's **...** menu, then
    select **Play**.
 10. Confirm the header reads **PPCC Agentic Operations Control Tower**.
@@ -312,6 +319,7 @@ Write these three lines in your lab notes:
 | GitHub authorization doesn't return to Visual Studio Code | In Visual Studio Code, open the **Accounts** menu and sign in to GitHub again. If the browser shows a device code, copy it into Visual Studio Code. |
 | Copilot says your account has no access | Confirm that **Signed in as** on **Authorize Visual Studio Code** showed your workshop GitHub username, not a personal account. Sign out of other GitHub accounts in Visual Studio Code and repeat Part 3. |
 | You can't see your environments | Confirm you're signed in with the workshop account and that the tenant matches your **Tenant domain**. Search for your number instead of scrolling. |
+| The Apps list is empty in Dev | Select **Solutions**, open **PPCC Agentic Operations Control Tower**, select **Publish all customizations**, and then return to **Apps**. If the list is still empty, ask a proctor. |
 | You opened the wrong environment | Select the environment button again and choose `Dev-USER-<number>`. Undo nothing in Test or Prod; tell a proctor if you changed anything there. |
 
 ## Checkpoint
