@@ -318,4 +318,4 @@ successful Activity and **Submissions: 0 → 1** in that same session.
 - The library deployed managed FIRST, then main managed SECOND on the same pipeline.
 - TARGET connections were created in that deployment, without app repairs.
 
-Continue to [Module 7](07-transfer-the-pattern.md).
+# Congratulations on completion of the Agentic Control Tower!
