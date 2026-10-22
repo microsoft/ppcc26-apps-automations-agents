@@ -256,11 +256,11 @@ account (`odl_user_<number>@...`). For example, the fictional account
 8. Find **PPCC Agentic Operations Control Tower**. If it isn't under
    **My apps**, select **All**.
 
-   > [!NOTE]
-   > If you don't see any apps in the list, publish the solution: select
-   > **Solutions**, open **PPCC Agentic Operations Control Tower**, and then
-   > select **Publish all customizations**. When publishing completes, select
-   > **Apps** again.
+> [!NOTE]
+> If you don't see any apps in the list, publish the solution: select
+> **Solutions**, open **PPCC Agentic Operations Control Tower**, and then
+> select **Publish all customizations**. When publishing completes, select
+> **Apps** again.
 
 9. Select **Play**. If Play is hidden, select the app's **...** menu, then
    select **Play**.
