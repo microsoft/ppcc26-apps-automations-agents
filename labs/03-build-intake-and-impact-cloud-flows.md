@@ -832,13 +832,13 @@ These are prompt inputs, not additional flow variables.
 
    | Prompt input | Expression |
    | --- | --- |
-   | SupplierName | `body('Get_case')?['ppcc_supplierid']?['nwind_company']` |
-   | ProductName | `body('Get_case')?['ppcc_productid']?['nwind_productname']` |
-   | DelayDays | `string(body('Get_case')?['ppcc_delaydays'])` |
    | AffectedOrders | `string(union(body('Select_affected_orders'), body('Select_affected_orders')))` |
-   | OrderCount | `string(length(union(body('Select_affected_orders'), body('Select_affected_orders'))))` |
    | TotalExposure | `formatNumber(variables('TotalExposure'), '0.00', 'en-US')` |
    | CurrencyCode | `body('Get_case')?['transactioncurrencyid']?['isocurrencycode']` |
+   | SupplierName | `body('Get_case')?['ppcc_supplierid']?['nwind_company']` |
+   | OrderCount | `string(length(union(body('Select_affected_orders'), body('Select_affected_orders'))))` |
+   | DelayDays | `string(body('Get_case')?['ppcc_delaydays'])` |
+   | ProductName | `body('Get_case')?['ppcc_productid']?['nwind_productname']` |
 
 > [!TIP]
 > **The flow calculates; AI explains.**
