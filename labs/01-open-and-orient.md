@@ -3,14 +3,16 @@
 **Estimated time:** 30 minutes
 
 In this module, you collect your workshop credentials, connect to your
-workshop virtual machine (VM), sign in to GitHub Copilot in Visual Studio
-Code, and open your **Dev** environment. You then inspect the business data
-and record the authority boundary that the rest of the workshop builds on.
+workshop virtual machine (VM) and download the workshop files to it, sign in
+to GitHub Copilot in Visual Studio Code, and open your **Dev** environment.
+You then inspect the business data and record the authority boundary that
+the rest of the workshop builds on.
 
 You will complete four parts:
 
 1. [Retrieve your workshop credentials](#part-1-retrieve-your-workshop-credentials)
-2. [Connect to the workshop VM](#part-2-connect-to-the-workshop-vm)
+2. [Connect to the workshop VM](#part-2-connect-to-the-workshop-vm) and
+   [download the workshop files](#download-the-workshop-files)
 3. [Configure GitHub in Visual Studio Code](#part-3-configure-github-in-visual-studio-code)
 4. [Open and verify the development environment](#part-4-open-and-verify-the-development-environment)
 
@@ -127,6 +129,38 @@ the tools and the local repository checkout that later modules use.
 
 Keep the Remote Desktop session open. Complete the rest of the workshop
 inside the VM unless an instruction tells you otherwise.
+
+### Download the workshop files
+
+Later modules use prompts and files from this repository. Download a copy to
+the VM and store it in `C:\github\ppcc26-apps-automations-agents`.
+
+1. On the workshop VM, open a browser and go to
+   <https://github.com/microsoft/ppcc26-apps-automations-agents>.
+2. Select **Code**, and then select **Download ZIP**. You don't need to sign
+   in to GitHub to download.
+
+   ![On the repository page, select Code, and then select Download ZIP on the Local tab.](images/module1/13-github-download-zip.png)
+
+   *Download the repository as a ZIP file from the Code menu.*
+
+3. Create the destination folder. Open **File Explorer**, select
+   **This PC** > **Local Disk (C:)**, and check whether a `github` folder
+   exists. If it doesn't, select **New** > **Folder**, and name it `github`.
+4. When the download completes, go to **Downloads** in File Explorer.
+5. Right-click `ppcc26-apps-automations-agents-main.zip`, and then select
+   **Extract All**.
+6. In **Files will be extracted to this folder**, enter `C:\github`, and then
+   select **Extract**.
+7. In File Explorer, go to `C:\github`. Rename the extracted
+   `ppcc26-apps-automations-agents-main` folder to
+   `ppcc26-apps-automations-agents`.
+8. Open `C:\github\ppcc26-apps-automations-agents` and confirm that it
+   directly contains the `labs`, `setup`, and `solutions` folders.
+
+   If you see another `ppcc26-apps-automations-agents-main` folder inside
+   instead, move its contents up one level so that `labs` is directly under
+   `C:\github\ppcc26-apps-automations-agents`.
 
 ## Part 3: Configure GitHub in Visual Studio Code
 
@@ -325,6 +359,7 @@ Write these three lines in your lab notes:
 | Copilot says your account has no access | Confirm that **Signed in as** on **Authorize Visual Studio Code** showed your workshop GitHub username, not a personal account. Sign out of other GitHub accounts in Visual Studio Code and repeat Part 3. |
 | You can't see your environments | Confirm you're signed in with the workshop account and that the tenant matches your **Tenant domain**. Search for your number instead of scrolling. |
 | The Apps list is empty in Dev | Select **Solutions**, open **PPCC Agentic Operations Control Tower**, select **Publish all customizations**, and then return to **Apps**. If the list is still empty, ask a proctor. |
+| `C:\github` doesn't exist or you can't create it | Open **PowerShell** on the VM and run `New-Item -ItemType Directory -Path C:\github -Force`. If access is denied, ask a proctor. |
 | You opened the wrong environment | Select the environment button again and choose `Dev-USER-<number>`. Undo nothing in Test or Prod; tell a proctor if you changed anything there. |
 
 ## Checkpoint
@@ -333,6 +368,7 @@ You are ready to build when:
 
 - you can retrieve your credentials again from the credentials page,
 - your Remote Desktop session to the workshop VM is open,
+- `C:\github\ppcc26-apps-automations-agents\labs` exists on the VM,
 - Visual Studio Code is signed in to GitHub Copilot with your workshop
   account,
 - you can identify your `Dev-USER-<number>`, `Test-USER-<number>`, and
