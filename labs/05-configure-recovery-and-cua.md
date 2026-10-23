@@ -1,11 +1,6 @@
----
-title: "Module 5: Create the Carrier agent and governed recovery cloud flow"
-level: 200
-persona: "Power Platform maker"
-estimated_duration: "90 minutes"
----
-
 # Module 5: Create the Carrier agent and governed recovery cloud flow
+
+**Estimated time:** 90 minutes
 
 ## Overview
 

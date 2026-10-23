@@ -1,11 +1,6 @@
----
-title: "Module 3: Create supplier-delay intake and live impact with Power Automate"
-level: 200
-persona: "Power Platform maker"
-estimated_duration: "60 minutes"
----
-
 # Module 3: Create supplier-delay intake and live impact with Power Automate
+
+**Estimated time:** 60 minutes
 
 ## Overview
 
