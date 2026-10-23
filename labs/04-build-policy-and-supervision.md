@@ -253,7 +253,7 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    | Change type | `Modified` |
    | Table name | `Recovery Decisions` |
    | Scope | `Organization` |
-   | Filter rows | `ppcc_decisionnumber eq 'Decision for PPCC-LAB-SUPPLIER-DELAY-001' and ppcc_approvalstate eq 100000000` |
+   | Filter rows | `ppcc_decisionnumber eq 'Decision for PPCC-LAB-SUPPLIER-DELAY-001' and ppcc_approvalstate eq 100000000` ** You may have to change decisionnumber based on the Recovery decision record created by the previous module ** |
 
 5. If the trigger supports monitored columns, select only
    `ppcc_recommendationrationale`.
