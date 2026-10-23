@@ -566,10 +566,9 @@ a table column. The current table has no Stage or System column.
 ![Parent-flow topology illustration: read the decision and case, list existing CP7 evidence, then enter the governed decision router.](images/module5/04-approved-recovery-flow-overview.png)
 Figure: Completed-state reference for action order. Add Governed Decision Router next; it is not expected to exist yet.
 
-The existing parent-flow images illustrate action order, not current field
-configuration. Use the schema mappings in this guide and add the child-action
-failure handling in Step 8; that extra failure scope is not shown in these
-topology images.
+The parent-flow screenshots show the completed configuration. Build the
+actions in the sequence below; the separate child-action failure scope is
+added in Step 8. Use the field mappings and expressions in this guide.
 
 ### Add Governed Decision Router
 
@@ -598,6 +597,9 @@ the prepared parent.
 
 ![The live Governed Decision Router Parameters tab shows five AND comparisons, including Is Current Decision equals true and the recommendation matching the requested action.](images/module5/35-governed-decision-router-parameters.png)
 Figure: The router requires no CP7, Approved, Split Shipment, a current decision, and a matching case recommendation. Keep every consequential action in its True branch.
+
+![The router Code view shows all five AND comparisons with numeric Choice values and Boolean true.](images/module5/38-governed-decision-router-code-view.png)
+Figure: Code view exposes the full expressions and preserves numeric and Boolean types.
 
 ## Step 6: Add deterministic recovery and replay protection
 
@@ -757,7 +759,7 @@ Disable automatic retries on **Run a child flow** if the action exposes a
 retry policy. Do not implement an automatic parent retry around this call.
 
 ![Parent-flow topology illustration: deterministic recovery and draft creation precede the child call and terminal-result guard.](images/module5/07-approved-recovery-transaction-path.png)
-Figure: Completed-state reference. Add Carrier verified in Step 8; the condition shown here is not a prerequisite for adding the child call.
+Figure: Deterministic recovery, review-task completion, and unsent drafts precede the child call. Add the result and failure branches in Step 8.
 
 ## Step 8: Create CP7 or fail closed
 
@@ -822,6 +824,12 @@ Figure: Completed-state reference. Add Carrier verified in Step 8; the condition
    | Priority | **High** (`2`) |
    | Disruption Case (`ppcc_disruptioncaseid`, fx) | `concat('/ppcc_disruptioncases(',outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value'],')')` |
 
+   If the case lookup is hidden, open **Advanced parameters** and select
+   **Disruption Case (Disruption Cases)**. In the task's **Code view**, the
+   lookup parameter is `item/ppcc_disruptioncaseid_Task@odata.bind`; the task
+   relationship uses this navigation property, not the case table's column
+   name alone.
+
    Leave the task open for investigation. Do not mark it Completed.
 7. Also configure a failure-handling path to the Needs Attention actions when
    **Invoke Carrier Operations** fails or times out (rather than returning a
@@ -850,6 +858,12 @@ Figure: Completed-state reference. Add Carrier verified in Step 8; the condition
    Do not invoke the child again, write CP7, or resolve the case in this
    scope.
 
+   ![Carrier verified Settings allows only a successful Invoke Carrier Operations action.](images/module5/39-carrier-verified-success-only.png)
+   Figure: The response-field condition runs only when the child action succeeds.
+
+   ![Carrier call failed Settings allows only failed or timed-out Invoke Carrier Operations actions.](images/module5/40-carrier-call-failed-run-after.png)
+   Figure: The separate scope handles action failures and timeouts without reading child response fields.
+
 > [!IMPORTANT]
 > An earlier prepared parent may run **Carrier verified** after a failed or
 > timed-out child call and omit **Carrier call failed**. That configuration
@@ -867,8 +881,8 @@ Closed On; do not add case Approval State, Execution State, or Carrier State
 columns. Approval is on the Recovery Decision; execution proof is on the
 evidence and carrier ledger records.
 
-![Parent-flow topology illustration: the Carrier verified True branch writes CP7 before resolving the case; the False branch handles Needs Attention.](images/module5/08-carrier-verification-branches.png)
-Figure: Completed success and returned-ambiguity branches. The separate Carrier call failed scope is not shown; add it using step 7 above.
+![The completed parent has Carrier verified success and returned-ambiguity branches alongside a separate Carrier call failed scope with a case update and follow-up task.](images/module5/08-carrier-verification-branches.png)
+Figure: Verified responses write CP7 before resolution. Ambiguous responses and failed or timed-out child calls have separate Needs Attention paths.
 
 The following screenshots show the expected browser-side state before and
 after a verified submission. You will observe the automatic run in Module 6.
