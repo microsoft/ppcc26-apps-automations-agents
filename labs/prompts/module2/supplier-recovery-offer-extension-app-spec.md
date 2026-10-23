@@ -1,6 +1,6 @@
 # Supplier Recovery Offers - Lab 2 requirements
 
-Use with [Module 2 - control tower extension instructions](../02-build-control-tower.md).
+Use with [Module 2 - control tower extension instructions](../../02-build-control-tower.md).
 This file contains the complete requirements for this lab; advanced work
 outside its scope is not mandatory.
 

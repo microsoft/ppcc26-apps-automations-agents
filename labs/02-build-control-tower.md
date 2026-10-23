@@ -10,7 +10,7 @@ Also enrich the default **Active Supplier Recovery Offers** view with the
 six useful comparison fields. Keep the separate comparison view for its
 saved column order and ship-date/cost sorting.
 
-Use only the [extension requirements](prompts/Supplier-Recovery-Offer-Extension-app-spec.md)
+Use only the [extension requirements](prompts/module2/supplier-recovery-offer-extension-app-spec.md)
 for this run. 
 
 ## Before the timer: prepared VM
@@ -75,7 +75,7 @@ redesign them or choose production security/validation mechanisms.
 Use the app-builder skill to extend the installed PPCC Agentic Operations
 Control Tower in my workshop DEV environment: <MY-DEV-URL>.
 
-Use @labs\prompts\Supplier-Recovery-Offer-Extension-app-spec.md
+Use @labs\prompts\module2\supplier-recovery-offer-extension-app-spec.md
 as the complete requirements for this lab.
 
 Confirm the target and workshop identity, then retrieve the existing app.
@@ -148,7 +148,7 @@ Paste this at the Copilot prompt, replacing `<MY-DEV-URL>`:
 ```text
 Continue the existing Supplier Recovery Offers simplified planning run using
 the app-builder skill and the updated simplified requirements:
-@labs\prompts\Supplier-Recovery-Offer-Extension-app-spec.md
+@labs\prompts\module2\supplier-recovery-offer-extension-app-spec.md
 
 Target my workshop DEV: <MY-DEV-URL>. Reconfirm the environment, prepared
 administrator identity, existing app, unmanaged solution/version, and ppcc
@@ -319,7 +319,7 @@ navigation with the specified Fluent-style offer icon are published, both
 sample offers exist and compare correctly,
 the manual form/status checks pass, the original app still works, and the
 baseline comparison confirms no approval/execution
-effects. The [six acceptance checks](prompts/Supplier-Recovery-Offer-Extension-app-spec.md#illustrative-data-and-acceptance)
+effects. The [six acceptance checks](prompts/module2/supplier-recovery-offer-extension-app-spec.md#illustrative-data-and-acceptance)
 in the simplified spec are the completion contract.
 Keep **app-builder completion** and **full workshop acceptance** as separate
 results. All four manual follow-ups must pass before claiming the latter;
