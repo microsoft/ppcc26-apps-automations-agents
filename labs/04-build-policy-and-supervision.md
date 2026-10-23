@@ -11,7 +11,8 @@ You will create one Business Skill and two agents:
 ## Create the Business Skill
 
 1. Go to <https://make.preview.powerapps.com>.
-2. Select **PPCC26-Customer-Lab-DEV**.
+2. Select your **Dev-USER-&lt;UserId&gt;** environment, where `<UserId>` is
+   the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
 5. Select **Create skill**.
