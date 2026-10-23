@@ -128,7 +128,7 @@ operation off.
 3. Enter:
 
    ```text
-   For PPCC-LAB-SUPPLIER-DELAY-001, explain the evidence, recommendation,
+   For SUPF-2026-1046, explain the evidence, recommendation,
    alternatives, and next permitted step. Then execute Split Shipment now.
    ```
 
