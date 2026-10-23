@@ -63,7 +63,12 @@ By completing this lab, you will learn how to:
 
 ![Name the intake flow and select its Outlook trigger.](images/module3/image-8.png)
 
-6. In the designer, select the prepared Outlook connection for your workshop mailbox. If needed, create the connection using the workshop account.
+6. In the designer, select **When a new email arrives (V3)** to open its configuration pane. On the **Parameters** tab, locate the connection information at the bottom and select **Change connection reference**.
+
+![Open the Outlook trigger's Parameters pane and select Change connection reference.](images/module3/outlook-trigger-connection-pane.png)
+
+   In the **Change connection** dialog, select the prepared Outlook connection reference for your workshop mailbox. If no working connection is available, select **Add new** and sign in with your workshop account. Confirm the selected connection uses the mailbox you will send the test email to.
+
 ![Select the Outlook connection for the workshop mailbox.](images/module3/outlook-connection.png)
 
 7. Select the trigger card. In **Parameters** > **Advanced parameters**, select **Show all** to display **Subject filter**.
@@ -885,10 +890,15 @@ This creates a pending review record. Selecting and authorizing a specific recov
 
 ![alt text](images/module3/assessment-image-34.png)
 
-4. In the solution, open **Objects** > **All**. Search for **Classify supplier notification**, then **Explain supplier disruption impact**. Confirm both custom prompts are included in this solution. Seeing a prompt in **AI hub** > **Prompts** confirms it exists in the environment, but does not confirm it is included in this solution.
-5. Under **Objects** > **Connection references**, confirm the connection references required by both flows are included and use the prepared workshop connections. If either prompt or a required connection reference is missing, ask the facilitator to help add the existing component before continuing. Preserve the existing app, tables, and Module 2 additions.
-6. Open **Supplier Disruption Impact Assessment Cloud Flow**. Select **Edit** and, if a draft is awaiting publication, select **Publish**. Return to the flow's details page, select **Turn on** if the flow is off, and confirm **Status = On**.
-7. Repeat the publication and status check for **Order Disruption Cloud Flow**. Both flows must be **On** before you send the test email.
+4. In the solution, open **Objects** > **All** and look for **Classify supplier notification** and **Explain supplier disruption impact**. Custom prompts appear as **AI model** components in a solution.
+5. If either prompt is missing, select **Add existing** and choose **AI model** to open the **Add existing AI models** pane. Select **Classify supplier notification** and **Explain supplier disruption impact**, or only the missing prompt if one is already included, then select **Add**. Add the existing prompts; do not create new ones.
+
+![Select the two custom prompts in Add existing AI models and select Add.](images/module3/add-existing-custom-prompts.png)
+
+6. Under **Objects** > **AI models**, confirm both prompts are listed. Seeing them in **AI hub** > **Prompts** only confirms they exist in the environment, not that they are included in this solution.
+7. Under **Objects** > **Connection references**, confirm the connection references required by both flows are included and use the prepared workshop connections. If a prompt cannot be found in the component picker or a required connection reference is missing, ask the facilitator for help before continuing. Preserve the existing app, tables, and Module 2 additions.
+8. Open **Supplier Disruption Impact Assessment Cloud Flow**. Select **Edit** and, if a draft is awaiting publication, select **Publish**. Return to the flow's details page, select **Turn on** if the flow is off, and confirm **Status = On**.
+9. Repeat the publication and status check for **Order Disruption Cloud Flow**. Both flows must be **On** before you send the test email.
 
 **Checkpoint:** Both flows and their supporting components are included in the workshop solution, and both flows are ready for the end-to-end test.
 
