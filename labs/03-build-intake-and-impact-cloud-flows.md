@@ -19,7 +19,7 @@ For the first test, Supplier F reports a 14-day delay for **Northwind Traders Cl
 
 The preinstalled **PPCC Agentic Operations Control Tower** solution already contains the tables, app, and example cases. Your cloud flows will distinguish a delay notice from a general supplier update, create a **new case for a validated delay**, calculate its impact, and prepare a pending recommendation. AI explains the calculated impact, identifies missing information, and suggests what the analyst should investigate next. The flow creates a Pending Recovery Decision; selecting and authorizing a specific recovery action remains outside this module.
 
-This is a workshop exposure model, not a claim about actual inventory or delivery capacity. With the unchanged workshop data and the eligibility policy below, the first test includes orders **0915 and 0920**, totaling **USD 772.00**; shipped order 0935 and closed order 0906 are excluded. Those are test expectations, not flow filters. A pending recommendation does not approve or execute recovery.
+This is a workshop exposure model, not a claim about actual inventory or delivery capacity. With the unchanged workshop data and the eligibility policy below, the test includes **3 orders: 0915, 0920, and 0935**, totaling **USD 868.50**; closed order 0906 is excluded. Those are test expectations, not flow filters. A pending recommendation does not approve or execute recovery.
 
 ## Prerequisites
 
@@ -63,7 +63,12 @@ By completing this lab, you will learn how to:
 
 ![Name the intake flow and select its Outlook trigger.](images/module3/image-8.png)
 
-6. In the designer, select the prepared Outlook connection for your workshop mailbox. If needed, create the connection using the workshop account.
+6. In the designer, select **When a new email arrives (V3)** to open its configuration pane. On the **Parameters** tab, locate the connection information at the bottom and select **Change connection reference**.
+
+![Open the Outlook trigger's Parameters pane and select Change connection reference.](images/module3/outlook-trigger-connection-pane.png)
+
+   In the **Change connection** dialog, select the prepared Outlook connection reference for your workshop mailbox. If no working connection is available, select **Add new** and sign in with your workshop account. Confirm the selected connection uses the mailbox you will send the test email to.
+
 ![Select the Outlook connection for the workshop mailbox.](images/module3/outlook-connection.png)
 
 7. Select the trigger card. In **Parameters** > **Advanced parameters**, select **Show all** to display **Subject filter**.
@@ -78,12 +83,6 @@ Then configure:
    | Subject filter | `PPCC Cloud Flow Lab` |
 
 <img width="617" height="473" alt="image" src="images/module3/email-trigger-parameters.png" />
-
-
-> Rename actions exactly as shown before referencing them. Enter expressions through **fx** and use Dynamic content for values from earlier actions. Keep default run-after behavior: continue only after the preceding action succeeds.
->
-> Send one test email at a time and wait for both flows to finish before sending another. Test duplicate handling only after the first run completes.
-
 
 
 ### Classify the notification with Run a prompt
@@ -384,11 +383,13 @@ These expressions read the prompt fields directly. The `replace` function escape
 2. Rename it **Create disruption case**.
 3. Select **Disruption Cases** and configure:
 
+   For **Reported On** and **Supplier**, select the field, select **fx**, paste the expression shown in the table into the expression editor, and select **Add**. Do not paste these expressions directly into the field as plain text. Use the same method for fields marked **Expression** in the following sections. Leave **Delayed Product** blank for now; you will build its expression with Copilot below.
+
    | Column | Mode | Value |
    | --- | --- | --- |
    | Title | Text and Dynamic content | `Supplier delay -@{outputs('Classify_supplier_notice')?['body/responsev2/predictionOutput/structuredOutput/productName']}` |
    | Delay Days | Dynamic content | **delayDays** from **Classify supplier notice** |
-   | Delayed Product | Expression | `concat('nwind_productses(', first(body('Find_product')?['value'])?['nwind_productsid'], ')')` |
+   | Delayed Product | Expression built with Copilot | Leave blank for now. Complete **Learn to build an expression with Copilot** below before continuing. |
    | Disruption Status | Choice | **New** |
    | Impacted Order Count | Number | `0` |
    | Recommendation Summary | Text | `Supplier-delay impact assessment pending. No recovery is approved.` |
@@ -398,19 +399,28 @@ These expressions read the prompt fields directly. The `replace` function escape
    | Source Reference | Dynamic content | **noticeReference** from **Classify supplier notice** |
    | Supplier | Expression | `concat('nwind_supplierses(', first(body('Find_supplier')?['value'])?['nwind_suppliersid'], ')')` |
 
-**Important-Learning Moment**
-For Delayed Product Expression, You can also use Create an Expressionwith Copilot. Go to Delayed Product, Formula -> Create an expression with Copilot
+**Learn to build an expression with Copilot**
+
+Now use Copilot to build the **Delayed Product** lookup expression. Complete this exercise before continuing. Select **Delayed Product** > **Formula** > **Create an expression with Copilot**.
 
 ![alt text](images/module3/delayed-product-expression-copilot.png)
 
-Add the following prompt and click on Create Expression
+Enter the following prompt and select **Create expression**:
 
 ```text
 Use concat() to join 'nwind_productses(', the nwind_productsid from the first row in body('Find_product')?['value'], and ')'
 ```
 ![alt text](images/module3/delayed-product-expression-prompt.png)
 
-Use Ok to use this expression. Add the expression to the action.
+Compare the generated expression with the expected formula below. Spacing may differ, but the function names, action name, field name, and lookup table name should match:
+
+```text
+concat('nwind_productses(', first(body('Find_product')?['value'])?['nwind_productsid'], ')')
+```
+
+Here, `first()` selects the first product returned by **Find product**, and `concat()` builds the Dataverse lookup reference using that product's ID.
+
+If the generated expression does not match, refine your prompt or correct the expression before continuing. Select **OK**, then add the expression to the **Delayed Product** field.
 
 4. Leave **Case Number** blank for automatic numbering., leave **Severity** and **Recommended Action** blank, leave **Currency** unmapped to use the facilitator-configured USD default.
 
@@ -462,67 +472,12 @@ Creating this case triggers the assessment flow once that flow is enabled. The a
    ```
 
 2. Select **Save**, or **Save draft** if shown, and resolve any **Flow checker** errors.
-3. Do not send the test email yet. Enable the assessment flow before enabling and testing intake.
+3. Do not send a test email yet. Create the assessment flow in Step 2 and prepare both flows in Step 3. You will test both flows together in Step 4.
 
 
 **Checkpoint:** Flow 1 is saved and ready to create the records that Flow 2 will assess.
 
 > **Note:** We will add the flows created in the lab to a solution for easier management and deployment at the end of the lab.
-
-### Test the intake flow
-
-1. Save the completed flow. If the designer shows **Publish**, select it, then confirm the flow's **Status = On**.
-2. Open Outlook and send the following email to the workshop mailbox monitored by your trigger.
-
-   **Subject**
-
-   ```text
-   PPCC Cloud Flow Lab - Supplier delay [REF:SUPF-2026-1045]
-   ```
-
-   **Body**
-
-   ```text
-   Workshop simulation only.
-
-   Supplier F reports a 14-day delivery delay for:
-
-   Product name: Northwind Traders Clam Chowder
-   Product code: NWTSO-41
-
-   Please assess the impact on affected orders.
-   No recovery action has been approved.
-   ```
-
-   ![alt text](images/module3/intake-image-34.png)
-
-
-3. Send the email **to your lab account**.
-
-4. Return to Power Automate, open the flow's **Run history**, and select the latest run.
-5. Confirm:
-   - **Classify supplier notice** returns `SupplierDelay`.
-   - The Switch follows **SupplierDelay**.
-   - **Find product** and **Find supplier** each return one record.
-   - **Create disruption case** succeeds.
-
-6. Open the **PPCC Agentic Operations Control Tower** app and select **Disruption Cases**.
-7. Find the record with **Source Reference = SUPF-2026-1045** and confirm:
-
-   | Field | Expected value |
-   | --- | --- |
-   | Source | Supplier Notice |
-   | Supplier | Supplier F |
-   | Delayed Product | Northwind Traders Clam Chowder |
-   | Delay Days | 14 |
-   | Disruption Status | New |
-
-**Checkpoint:** The email created a disruption case with the extracted details. Impact count and revenue remain zero until the assessment flow processes a case.
-
-> When Flow 2 is ready, send a fresh test email with a new reference. Its **Added** trigger will not run automatically for this already-created case. This simplified intake flow does not prevent duplicates, so do not repeatedly send the same test email.
-
-> Screenshot: Successful intake run and the newly created Disruption Case.
-
 
 ## Step 2: Create Supplier Disruption Impact Assessment Cloud Flow
 
@@ -806,9 +761,9 @@ These are prompt inputs, not additional flow variables.
    | SupplierName | `Supplier F` |
    | ProductName | `Northwind Traders Clam Chowder` |
    | DelayDays | `14` |
-   | AffectedOrders | `0915, 0920` |
-   | OrderCount | `2` |
-   | TotalExposure | `772.00` |
+   | AffectedOrders | `0915, 0920, 0935` |
+   | OrderCount | `3` |
+   | TotalExposure | `868.50` |
    | CurrencyCode | `USD` |
 
    ![alt text](images/module3/assessment-image-26.png)
@@ -917,6 +872,7 @@ This creates a pending review record. Selecting and authorizing a specific recov
    ```
 
 2. Select **Save draft** or **Save** and resolve Flow checker errors.
+3. Do not send a test email yet. Continue to Step 3 to add the components to the workshop solution and confirm both flows are ready to run.
 
 
 ## Step 3: Add the components to the solution
@@ -925,28 +881,29 @@ This creates a pending review record. Selecting and authorizing a specific recov
    Confirm the unique name is `PPCCAgenticOperationsControlTower` and the DEV
    solution is unmanaged. Use the existing solution, not a new flow or
    extension solution.
-2. Navigate to Add Existing -> Automation-> Cloud flow.
+2. Select **Add existing** > **Automation** > **Cloud flow**.
 
 ![alt text](images/module3/assessment-image-32.png)
 
-3. Select **Order Disruption Cloud Flow** and **Supplier Disruption Impact Assessment Cloud Flow** and select **Add**.
+3. Open the **From Dataverse** tab. The workshop environment saves new flows in its preferred solution, so these flows are already solution-aware. Select **Order Disruption Cloud Flow** and **Supplier Disruption Impact Assessment Cloud Flow**, then select **Add** to include them in this workshop solution.
 ![alt text](images/module3/assessment-image-33.png)
 
 ![alt text](images/module3/assessment-image-34.png)
-> Make sure both these flows are turned on. 
 
-Confirm both custom prompts and the required connection references are also
-included in this same solution. Inspect solution Objects rather than assuming
-that an environment-only prompt or flow will be exported. If a required
-component cannot be included, stop and ask the facilitator before deployment.
-Preserve the existing app, tables, and Module 2 additions.
+4. In the solution, open **Objects** > **All** and look for **Classify supplier notification** and **Explain supplier disruption impact**. Custom prompts appear as **AI model** components in a solution.
+5. If either/both prompt are missing, select **Add existing** and choose **AI model** to open the **Add existing AI models** pane. Select **Classify supplier notification** and **Explain supplier disruption impact**, or only the missing prompt if one is already included, then select **Add**. Add the existing prompts; do not create new ones.
+
+![Select the two custom prompts in Add existing AI models and select Add.](images/module3/add-existing-custom-prompts.png)
+
+6. Under **Objects** > **AI models**, confirm both prompts are listed. Seeing them in **AI hub** > **Prompts** only confirms they exist in the environment, not that they are included in this solution.
+
+
+**Checkpoint:** Both flows and their supporting components are included in the workshop solution, and both flows are ready for the end-to-end test.
 
 ## Step 4: Test the complete process
 
-** Important - Before we start, delete the Disruption Case and Task that was created in previous test. Go to the PPCC Agentic Operations Control Tower Model Driven App - Navigate to Disruption cases and tasks and delete the newly created records from previous run. To identify the case look for the case created with Supplier Notice as Source **
-
-1. Open Outlook using your workshop account.
-2. Send this email to the workshop mailbox monitored by the intake flow.
+1. Open [Outlook on the web](https://outlook.office.com/mail/) and sign in with your workshop account.
+2. Create a new email addressed to **your own workshop email address**, the same mailbox used by the intake flow's Outlook connection. Use the subject and body below.
 
    **Subject**
 
@@ -968,8 +925,12 @@ Preserve the existing app, tables, and Module 2 additions.
    No recovery action has been approved.
    ```
 
-3. Use a fresh reference if this one has already been tested, and send the email once.
-4. In Power Automate, inspect the intake flow's latest run and confirm the SupplierDelay branch created the case.
+3. Use a fresh reference if this one has already been tested, and send the email once. Wait for both flows to finish before sending another test email. This lab does not prevent duplicate cases, so do not repeatedly send the same test email.
+4. In Power Automate, open the intake flow's **Run history**, select the latest run, and confirm:
+   - **Classify supplier notice** returns `SupplierDelay`.
+   - The Switch follows **SupplierDelay**.
+   - **Find product** and **Find supplier** each return one record.
+   - **Create disruption case** and **Create case review task** succeed.
 
 ![alt text](images/module3/assessment-image-35.png)
 
@@ -982,9 +943,6 @@ Preserve the existing app, tables, and Module 2 additions.
    - The prompt returned an assessment.
    - The Pending decision and final case update succeeded.
 
-> The case created during your Flow 1-only test will not automatically trigger Flow 2 after it is enabled. This end-to-end test must create a new case.
-
-
 ![alt text](images/module3/assessment-image-37.png)
 
 ## Step 5: Review the results in the Control Tower
@@ -995,11 +953,12 @@ Go to Control Tower Home Page and check for the newly created record.
 Alternatively check individual records within the Control Tower for detailed information.
 
 1. Open **PPCC Agentic Operations Control Tower**.
-2. Go to Disruption cases and Find the case with **Source = Supplier Notice**.
+2. Go to **Disruption Cases** and find the case whose **Source Reference** matches the reference in your test email (`SUPF-2026-1046`, unless you used a fresh reference).
 3. With the unchanged sample data, confirm:
 
    | Field | Expected result |
    | --- | --- |
+   | Source | Supplier Notice |
    | Supplier | Supplier F |
    | Delayed Product | Northwind Traders Clam Chowder |
    | Delay Days | 14 |
@@ -1016,7 +975,7 @@ Alternatively check individual records within the Control Tower for detailed inf
    | 0915 | 50 | USD 9.65 | USD 482.50 |
    | 0920 | 30 | USD 9.65 | USD 289.50 |
    | 0935 | 10 | USD 9.65 | USD 96.50 |
-   | **Total** | **80** | | **USD 868.50** |
+   | **Total** | **90** | | **USD 868.50** |
 
 6. Confirm each impact links to its source Order and Order Detail.
 7. Open the related **Recovery Decision** and confirm:

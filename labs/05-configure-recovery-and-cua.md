@@ -114,6 +114,7 @@ By completing this lab, you will learn how to:
    **Create**.
 
    ![In Name your agent, enter Carrier Operations Agent and select Create.](images/module5/12-name-carrier-operations-agent.png)
+   Figure: Agent creation dialog. This earlier capture includes an extra period; remove it before selecting Create.
 
    > [!IMPORTANT]
    > Enter the name exactly as `Carrier Operations Agent`, without a trailing
@@ -133,7 +134,16 @@ By completing this lab, you will learn how to:
 
     ![On the Carrier Operations Agent Overview page, verify the description and complete governed-execution instructions, and then save the agent.](images/module5/13-carrier-operations-agent-instructions.png)
 
-The exact display name matters. The prepared adapter searches active Bots for:
+**Checkpoint:** The agent Overview shows `Carrier Operations Agent` with no
+trailing period, and the instructions are saved. Creating from the solution
+establishes the intended context; do not look for an additional solution
+selector if your creation dialog does not show one. Step 10 verifies solution
+membership.
+
+The following filter explains why the exact display name matters. It is
+already configured in **Find local Carrier agent** in the prepared adapter,
+which you inspect in Step 4. Do not copy it into the agent instructions or
+configure a new action here:
 
 ```text
 name eq 'Carrier Operations Agent' and statecode eq 0
@@ -149,6 +159,7 @@ name eq 'Carrier Operations Agent' and statecode eq 0
 3. Under **Create new**, select **Computer use**.
 
    ![In Add tool, select the Computer use card under Create new.](images/module5/15-select-computer-use-tool.png)
+   Figure: Tool-type selection. Choose Computer use; do not add another existing tool.
 
 4. Open
    [`./prompts/module5/carrier-tool-instructions.txt`](./prompts/module5/carrier-tool-instructions.txt).
@@ -228,12 +239,27 @@ name eq 'Carrier Operations Agent' and statecode eq 0
 
 7. Select **Save**.
 
+**Checkpoint:** Register Shipping Contact is saved with all seven logical
+input names, the healthy prepared Hosted browser connection, and only the
+approved website and Microsoft Edge allowed. Do not start a test until
+these checks pass.
+
 ## Step 3: Test the Computer Use tool once
 
 1. Select **Instructions** > **Test directly**.
-2. Open
+2. Use the following fixture values. The same values are available in
    [`./prompts/module5/carrier-contact.json`](./prompts/module5/carrier-contact.json).
-3. Enter each fixture value in **Configure test**.
+3. In **Configure test**, enter each value:
+
+   | Input | Value |
+   | --- | --- |
+   | First Name | `Avery` |
+   | Last Name | `Morgan` |
+   | Company Name | `Northwind Traders` |
+   | Role in Company | `Fulfillment Coordinator` |
+   | Address | `1 Northwind Way, Seattle, WA 98101` |
+   | Email | `avery.morgan@example.com` |
+   | Phone Number | `206-555-0142` |
 
    ![Enter all seven prepared fixture values in Configure test.](images/module5/22-configure-cua-direct-test.png)
 
@@ -260,13 +286,26 @@ name eq 'Carrier Operations Agent' and statecode eq 0
 
 ## Step 4: Verify the prepared Invoke Carrier Operations flow
 
+This step is **inspection only**. Do not add actions, change inputs, save, or
+run the prepared adapter. If a check fails, stop and ask the facilitator to
+restore the current prepared solution.
+
 1. Go to <https://make.powerautomate.com>.
 2. Select your workshop environment.
 3. Select **Solutions** > **PPCC Agentic Operations Control Tower**.
 4. Open **Cloud flows** > **Invoke Carrier Operations**.
-5. Confirm these solution connection references are bound to authenticated
-   local connections: `ppcc_CarrierAdapterDataverse` (Microsoft Dataverse) and
-   `ppcc_CarrierAdapterCopilotStudio` (Microsoft Copilot Studio).
+5. Return to the solution's **Objects** list and open **Connection references**.
+   Open each reference below and check its selected **Connection**:
+
+   | Connection reference | Expected connector and connection |
+   | --- | --- |
+   | `ppcc_CarrierAdapterDataverse` | Microsoft Dataverse; authenticated local workshop connection |
+   | `ppcc_CarrierAdapterCopilotStudio` | Microsoft Copilot Studio; authenticated local workshop connection |
+
+   A reference name alone does not prove it is bound. If the connection is
+   blank, invalid, or requests sign-in, stop and ask the facilitator to bind
+   or authenticate it. Do not create replacement references.
+   Return to **Cloud flows** > **Invoke Carrier Operations**.
 6. Select **Edit** to inspect, without changing or running the prepared flow.
    Check its manual trigger's eleven required string inputs:
 
@@ -285,9 +324,32 @@ name eq 'Carrier Operations Agent' and statecode eq 0
    | `phoneNumber` | Phone Number |
 
    Display titles are labels; child-flow bindings use the camelCase keys,
-   not legacy `text`, `text_1`, or numbered inputs.
+   not legacy `text`, `text_1`, or numbered inputs. Select the manual trigger
+   and inspect **Parameters**. If it shows only input titles or no inputs,
+   open **Code view** and inspect `inputs.schema.properties` and
+   `inputs.schema.required`. All eleven keys must be present and required.
+   Do not add them yourself if this imported copy differs.
+
+   ![The manual trigger Code view shows inputs.schema.properties and the named workshop inputs.](images/module5/30-carrier-trigger-code-view.png)
+   Figure: Inspect the trigger's schema in Code view when Parameters does not display the inputs.
+
+   Scroll within the code editor to the top-level `required` array:
+
+   ![The trigger required array includes all eleven workshop keys, followed by platform-added location and date fields.](images/module5/31-carrier-trigger-required-inputs.png)
+   Figure: All eleven workshop inputs are required. The new designer can also show platform-added location and key-button-date metadata; leave those generated fields unchanged.
 
    ![Current prepared adapter overview with persisted decision and case reads, the approval and operation-key guard, failure scope, and one Respond to parent action.](images/module5/24-current-carrier-adapter-overview.png)
+   Figure: Prepared adapter structure. Expand the existing cards; do not rebuild this flow.
+
+   Use these tabs for the remaining checks:
+
+   | What to inspect | Where to inspect it |
+   | --- | --- |
+   | Table, Row ID, Filter rows, and condition operands | Select the action > **Parameters**; use **Code view** for exact expressions |
+   | Retry policy and timeout | Select the action > **Settings**; confirm `inputs.retryPolicy` and `limit.timeout` in **Code view** if the designer hides a setting |
+   | Agent operation type and parameter keys | Select the action > **Code view** |
+   | Response schema and response values | Select **Respond to parent** > **Code view** |
+   | Failure handling and allowed predecessor outcomes | Select the action or scope > **Settings** > **Run after**, or use **Configure run after** in its menu; confirm `runAfter` in **Code view** |
 
 7. Expand **Try Carrier** > **Verify persisted approval and operation key**.
    Confirm **Get Decision** and **Get Case** read Dataverse records by the
@@ -299,10 +361,29 @@ name eq 'Carrier Operations Agent' and statecode eq 0
    - `toLower(operationKey)` equals
      `concat('ppcc-carrier:',toLower(caseId),':split_shipment')`.
 
-   ![Current adapter approval guard requires persisted Approved and Split Shipment Choice values plus matching case and operation-key expressions.](images/module5/25-current-carrier-approval-guards.png)
+   In **Code view**, the operation-key comparison uses these exact operands
+   (the case ID comes from the retrieved record):
+
+   ```text
+   @toLower(triggerBody()?['operationKey'])
+   @concat('ppcc-carrier:',toLower(outputs('Get_Case')?['body/ppcc_disruptioncaseid']),':split_shipment')
+   ```
+
+   The leading `@` is code-view syntax, not text to enter in a condition.
+
+   ![The live approval guard Parameters tab shows Approved, both Split Shipment comparisons, the case match, and the operation-key comparison.](images/module5/32-carrier-approval-parameters.png)
+   Figure: Inspect all five populated comparisons. Use Code view for the full expressions hidden by the shortened tokens.
 
 8. Confirm **Find existing Carrier Operation** checks both the deterministic
-   operation ID (the case GUID) and operation number. Only a new operation
+   operation ID (the case GUID) and operation number. In **Parameters** >
+   **Filter rows**, or `$filter` in **Code view**, inspect:
+
+   ```text
+   ppcc_carrieroperationid eq @{outputs('Get_Case')?['body/ppcc_disruptioncaseid']} or ppcc_operationnumber eq '@{triggerBody()?['operationKey']}'
+   ```
+
+   This lookup is different from the lowercased authorization comparison
+   above; do not replace one expression with the other. Only a new operation
    enters **Create Carrier Operation atomic key** and
    **Create Carrier Attempt 1 atomic claim**. Both use deterministic case
    GUIDs in their respective tables and retry policy **None**. An atomic
@@ -327,8 +408,10 @@ name eq 'Carrier Operations Agent' and statecode eq 0
     | Action timeout | `PT20M` (20 minutes) |
 
     ![Current Execute Agent and wait action inside the exactly-one-active-agent branch, followed by result persistence.](images/module5/26-current-carrier-agent-action.png)
+    Figure: Parameters view of the existing agent call inside Exactly one active Carrier agent > True.
 
     ![Current agent action code uses OpenApiConnectionWebhook, the resolved schemaname, en-US, environmentId, and the governed message.](images/module5/27-current-carrier-agent-contract.png)
+    Figure: Code view of the same call. Also inspect Settings for retry policy None and timeout PT20M.
 
 11. Inspect **Carrier terminal result**. It requires Boolean
     `isPlanFinished = true`, the exact first whitespace-normalized response
@@ -343,7 +426,9 @@ name eq 'Carrier Operations Agent' and statecode eq 0
     - stop when a transcript appears, with at most 12 iterations and a
       `PT3M` timeout;
     - require exactly one returned transcript after the wait.
-13. Confirm the transcript's `content.activities` are filtered for nonempty
+13. In the transcript-processing actions after **Wait for conversation
+    transcript**, inspect **Parameters** and **Code view**. Confirm the
+    transcript's `content.activities` are filtered for nonempty
     `channelData.cuaSessionId`, then deduplicated with `union`. Require
     exactly one distinct CUA session ID. **Get correlated CUA Activity**
     reads that exact `flowsessions` row, not the most recent activity.
@@ -351,11 +436,15 @@ name eq 'Carrier Operations Agent' and statecode eq 0
     `triggertype = 4`, and `flowsessionid` equal to that session ID.
 
     ![Current correlated CUA Activity guard compares statuscode and triggertype to 4 and flowsessionid to the unique transcript session ID.](images/module5/28-current-carrier-activity-correlation.png)
+    Figure: Correlated Activity succeeded condition; verify all three comparisons, not only the status.
 
 14. Confirm the attempt and operation results are persisted before
     **Publish persisted terminal result** exposes success. The operation's
     `ppcc_externaloperationid` stores the verified `flowsessionid`.
-15. Inspect the existing-operation branch. It never calls the agent again.
+15. Scroll back to **Find existing Carrier Operation** and follow the branch
+    for an existing row, rather than the new-operation branch. Expand its
+    operation, attempt, and stored Activity checks in **Parameters** or
+    **Code view**. It never calls the agent again.
     Verified replay requires exactly one operation matching the operation
     number, case and decision, operation state `100000005`, exactly one
     attempt with execution state `100000003` and response summary
@@ -380,11 +469,15 @@ name eq 'Carrier Operations Agent' and statecode eq 0
     designer's Parameters tab only offers **Add an output**. Do not replace
     the prepared schema or add competing Response actions.
 
+    ![Respond to parent Code view shows terminalMarker, activityId, screenshotCount, and error with their required types.](images/module5/33-carrier-response-code-view.png)
+    Figure: The four output keys are already defined even when Parameters shows only Add an output. Scroll farther down to inspect all four body mappings.
+
     The response runs after **Try Carrier** succeeds, fails, or times out
     and **Record failure** succeeds or is skipped. A failure in failure
     recording can fail the child call itself; Step 8 must handle that too.
 
-    ![The current single Respond to parent action has explicit run-after handling for succeeded, failed, and timed-out work and the failure scope.](images/module5/29-current-carrier-parent-response.png)
+    ![Respond to parent Settings shows Try Carrier successful, timed out, and failed selected, with Record failure successful and skipped selected.](images/module5/34-carrier-response-run-after.png)
+    Figure: Expand both predecessors under Settings > Run after to inspect the selected outcomes without changing any checkbox.
 
 The adapter screenshots show configuration, not a new execution or proof of
 a carrier submission. Environment and account labels are examples only.
@@ -399,6 +492,12 @@ Do not save changes to the adapter. If any required input, guard, response
 key, or connection is absent, stop and ask the facilitator to restore or
 configure the current prepared solution. Connection binding and activation
 are environment prerequisites, not assumptions about every imported copy.
+
+**Checkpoint:** Both connection references are bound, all eleven required
+inputs and four response keys exist, and the approval, duplicate-execution,
+correlated Activity, and failure checks match this guide. Close the editor
+without saving or running the adapter. If this inspection-only session
+prompts to save on exit, leave without saving.
 
 ## Step 5: Create Approved Recovery Execution Workflow
 
@@ -424,7 +523,8 @@ are environment prerequisites, not assumptions about every imported copy.
 
 ![Configure the Dataverse trigger for modified Recovery Decision rows and limit monitored columns to ppcc_approvalstate.](images/module5/05-approved-recovery-trigger.png)
 
-7. Save the flow.
+7. Continue to **Read the decision and case** before saving. The designer
+   requires at least one configured action after the trigger.
 
 The updated solution uses Choice columns. Do not use legacy lookup-table
 fields from an earlier workshop build.
@@ -437,7 +537,14 @@ Add and rename these actions:
 | --- | --- | --- |
 | `Get Decision` | Dataverse **Get a row by ID** | Table `Recovery Decisions`; Row ID `triggerOutputs()?['body/ppcc_recoverydecisionid']` |
 | `Get Case` | Dataverse **Get a row by ID** | Table `Disruption Cases`; Row ID `outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']` |
-| `List CP7` | Dataverse **List rows** | Table `Execution Evidence`; use the completed carrier-evidence filter below; Row count `1` |
+| `List CP7` | Dataverse **List rows** | Table `Execution Evidence`; use the succeeded carrier-evidence filter below; Row count `1` |
+
+Add **Get Decision** immediately after the trigger and configure both its
+table and Row ID, then select **Save**. Add **Get Case** and **List CP7** in
+that order. Rename actions before entering expressions that reference them.
+Use **fx** for expression values without a leading `@`; paste the OData
+filters shown below into **Filter rows**, retaining their inline `@{...}`
+expressions. Do not paste a complete filter into **fx**.
 
 For **List CP7**, use:
 
@@ -445,7 +552,7 @@ For **List CP7**, use:
 _ppcc_disruptioncaseid_value eq @{outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']} and ppcc_evidencetype eq 100000000 and ppcc_executionstate eq 100000003
 ```
 
-This is the dependent parent's case-wide replay guard: any completed
+This is the dependent parent's case-wide replay guard: any succeeded
 **Carrier Response** evidence for this case prevents a second recovery.
 Do not narrow that guard to only the current decision and thereby allow
 another execution for the same case. When inspecting evidence for a specific
@@ -457,6 +564,7 @@ The rows created below must bind **both** lookups.
 a table column. The current table has no Stage or System column.
 
 ![Parent-flow topology illustration: read the decision and case, list existing CP7 evidence, then enter the governed decision router.](images/module5/04-approved-recovery-flow-overview.png)
+Figure: Completed-state reference for action order. Add Governed Decision Router next; it is not expected to exist yet.
 
 The existing parent-flow images illustrate action order, not current field
 configuration. Use the schema mappings in this guide and add the child-action
@@ -465,22 +573,31 @@ topology images.
 
 ### Add Governed Decision Router
 
-Add an **If** action named **Governed Decision Router**. Its AND guard must
-verify:
+After **List CP7**, add **Control** > **Condition** and rename it
+**Governed Decision Router**. Set the condition group to **And** and add all
+five comparisons:
 
-- no existing CP7 row,
-- Recovery Decision Approval State is **Approved** (`100000001`),
-- Requested Action is **Split Shipment** (`100000000`),
-- the case recommendation is also **Split Shipment**.
+| Left value (fx) | Operator | Right value |
+| --- | --- | --- |
+| `length(body('List_CP7')?['value'])` | is equal to | Numeric `0` |
+| `outputs('Get_Decision')?['body/ppcc_approvalstate']` | is equal to | Numeric `100000001` (Approved) |
+| `outputs('Get_Decision')?['body/ppcc_requestedaction']` | is equal to | Numeric `100000000` (Split Shipment) |
+| `outputs('Get_Decision')?['body/ppcc_iscurrentdecision']` | is equal to | Boolean `true` |
+| `outputs('Get_Case')?['body/ppcc_recommendedaction']` | is equal to | Expression `outputs('Get_Decision')?['body/ppcc_requestedaction']` |
 
 Use fields from **Get Decision** and **Get Case**. Enter numeric Choice values
-through **fx**, not as quoted text.
+and Boolean `true` through **fx**, not as quoted text. The last comparison
+requires the case recommendation to match the requested action, which the
+earlier comparison restricts to **Split Shipment**. **Is Current Decision**
+prevents an older decision from authorizing recovery; retain this check from
+the prepared parent.
 
 > [!IMPORTANT]
 > The router is the authorization boundary. Keep every purchase-order, draft,
 > case-state, carrier, and CP7 action inside its True branch.
 
-![Parent-flow topology illustration: only the True branch enters deterministic recovery; the other branch fails closed.](images/module5/06-governed-decision-router.png)
+![The live Governed Decision Router Parameters tab shows five AND comparisons, including Is Current Decision equals true and the recommendation matching the requested action.](images/module5/35-governed-decision-router-parameters.png)
+Figure: The router requires no CP7, Approved, Split Shipment, a current decision, and a matching case recommendation. Keep every consequential action in its True branch.
 
 ## Step 6: Add deterministic recovery and replay protection
 
@@ -494,14 +611,16 @@ Inside **Governed Decision Router** > **True**:
    ```
 
 3. Set **Row count** to `1`.
-4. Add an **If** named **If new recovery transaction** and test:
+4. Add **Control** > **Condition**, rename it **If new recovery transaction**,
+   and test:
 
    ```text
    length(body('Find_existing_PO')?['value'])
    ```
 
    is equal to numeric `0`.
-5. In the True branch, add **Create case specific PO** for `Purchase Orders`.
+5. In the True branch, add Microsoft Dataverse **Add a new row**, rename it
+   **Create case specific PO**, and select table `Purchase Orders`.
 6. Set:
 
    | Field | Value |
@@ -513,13 +632,46 @@ Inside **Governed Decision Router** > **True**:
    | Expected Date | `addDays(utcNow(),14)` |
    | Supplier | `concat('/nwind_supplierses(',outputs('Get_Case')?['body/_ppcc_supplierid_value'],')')` |
 
-7. Add **Create PO detail** for `Purchase Order Details`.
-8. Set Quantity to `40`, bind Product from the case, and bind Purchase Order
-   from **Create case specific PO**.
-9. List review Tasks for the case, apply to each result, and mark each Task
-   Completed.
-10. Create two `Execution Evidence` rows for the conceptual CP9 communication
-    checkpoint. Use the current schema, not Stage/Details fields:
+7. After **Create case specific PO**, add Microsoft Dataverse **Add a new
+   row**, rename it **Create PO detail**, and select `Purchase Order Details`.
+8. Set the following fields. Use **fx** for expressions and numeric `40`
+   for Quantity:
+
+   | Field (logical name) | Value |
+   | --- | --- |
+   | Primary name (`nwind_primaryname`) | `concat('Split Shipment - ',outputs('Get_Decision')?['body/ppcc_decisionnumber'])` |
+   | Quantity (`nwind_quantity`) | `40` |
+   | Product (`nwind_productid`) | `concat('/nwind_productses(',outputs('Get_Case')?['body/_ppcc_productid_value'],')')` |
+   | Purchase Order (`nwind_purchaseorderid`) | `concat('/nwind_purchaseorderses(',outputs('Create_case_specific_PO')?['body/nwind_purchaseordersid'],')')` |
+
+9. After **Create PO detail**, add Microsoft Dataverse **List rows** and
+   rename it **List review tasks**. Select table `Tasks` and set **Filter
+   rows** to:
+
+   ```text
+   _ppcc_disruptioncaseid_value eq @{outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']}
+   ```
+
+   Leave Row count unset; do not limit this to one task. Add **Control** >
+   **Apply to each**, rename it **Complete review tasks**, and set its input
+   through **fx** to `body('List_review_tasks')?['value']`. Inside the loop,
+   add Microsoft Dataverse **Update a row**, rename it **Complete task**,
+   and configure:
+
+   | Field | Value |
+   | --- | --- |
+   | Table name | `Tasks` |
+   | Row ID (fx) | `items('Complete_review_tasks')?['activityid']` |
+   | Status (`statecode`) | **Completed** (`1`) |
+   | Status Reason (`statuscode`) | **Completed** (`5`) |
+
+   Task Completed is a task status, not the Execution State Choice used
+   below.
+10. After the loop (not inside it), add two Microsoft Dataverse **Add a new
+    row** actions in sequence, named **Create customer draft** and **Create
+    executive draft**, both using table `Execution Evidence`. These are the
+    conceptual CP9 communication checkpoint. Use the current schema, not
+    Stage/Details fields:
 
     | Field (logical name) | Customer update draft | Executive briefing draft |
     | --- | --- | --- |
@@ -527,7 +679,7 @@ Inside **Governed Decision Router** > **True**:
     | Evidence Type (`ppcc_evidencetype`) | **Communication** (`100000002`) | **Communication** (`100000002`) |
     | Communication Draft (`ppcc_communicationdraft`) | `Draft only - not sent. Supplier delay recovery approved: Split Shipment.` | `Draft only - not sent. Governed recovery approved one Split Shipment action.` |
     | Result Summary (`ppcc_resultsummary`) | `Customer update draft; no external communication was sent.` | `Executive briefing draft; no external communication was sent.` |
-    | Execution State (`ppcc_executionstate`) | **Completed** (`100000003`) | **Completed** (`100000003`) |
+    | Execution State (`ppcc_executionstate`) | **Succeeded** (`100000003`) | **Succeeded** (`100000003`) |
     | Started On (`ppcc_startedon`) and Completed On (`ppcc_completedon`) | `utcNow()` for each field | `utcNow()` for each field |
 
 11. Bind both rows' **Disruption Case** (`ppcc_disruptioncaseid`) and
@@ -539,19 +691,29 @@ Inside **Governed Decision Router** > **True**:
     ```
 
     These are OData lookup-binding expressions, not literal text labels.
-    Completed means the draft record was created, **not that a message was
+    Succeeded means the draft record was created, **not that a message was
     sent**. Leave Evidence Link and External Correlation ID unset for these
     drafts; neither is carrier proof. CP9 labels describe the learning
     checkpoint, while the dependent flow identifies these rows with the
     `DRAFT-CUSTOMER-` and `DRAFT-EXEC-` Evidence Number conventions.
-12. Add **Mark case running** and set:
+12. After **Create executive draft**, add Microsoft Dataverse **Update a
+    row** and rename it **Mark case running**. Select table `Disruption
+    Cases` and set Row ID through **fx** to
+    `outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']`. Set:
     - Disruption Status (`ppcc_disruptionstatus`): **In Execution** (`100000005`)
     - Purchase Order (`ppcc_purchaseorderid`): bind the newly created PO using
       `concat('/nwind_purchaseorderses(',outputs('Create_case_specific_PO')?['body/nwind_purchaseordersid'],')')`
     - Resolution Summary (`ppcc_resolutionsummary`):
       `Approved deterministic recovery completed. Governed carrier execution is running.`
-13. In the False branch, add a Compose action named
-    **Existing recovery transaction noop**.
+13. In **If new recovery transaction** > **False**, add **Data Operation** >
+    **Compose**, rename it **Existing recovery transaction noop**, and set
+    **Inputs** to:
+
+    ```text
+    Existing purchase order suppresses duplicate recovery execution.
+    ```
+
+    This is an informational no-op, not evidence of successful execution.
 
 The case-specific Purchase Order number is the replay guard for deterministic
 recovery. Do not create a second transaction when the row already exists.
@@ -595,10 +757,12 @@ Disable automatic retries on **Run a child flow** if the action exposes a
 retry policy. Do not implement an automatic parent retry around this call.
 
 ![Parent-flow topology illustration: deterministic recovery and draft creation precede the child call and terminal-result guard.](images/module5/07-approved-recovery-transaction-path.png)
+Figure: Completed-state reference. Add Carrier verified in Step 8; the condition shown here is not a prerequisite for adding the child call.
 
 ## Step 8: Create CP7 or fail closed
 
-1. After the child flow, add an **If** named **Carrier verified**.
+1. After the child flow, add **Control** > **Condition** and rename it
+   **Carrier verified**.
 2. Require both:
 
    | Left value | Operator | Right value |
@@ -606,8 +770,9 @@ retry policy. Do not implement an automatic parent retry around this call.
    | `outputs('Invoke_Carrier_Operations')?['body/terminalMarker']` | is equal to | `CARRIER_VERIFIED` |
    | `empty(outputs('Invoke_Carrier_Operations')?['body/activityId'])` | is equal to | Boolean `false` |
 
-3. In True, add **Create CP7** to create one `Execution Evidence` row with
-   these current columns:
+3. In **Carrier verified** > **True**, add Microsoft Dataverse **Add a new
+   row**, rename it **Create CP7**, and select table `Execution Evidence`.
+   Set these current columns:
 
    | Field (logical name) | Value |
    | --- | --- |
@@ -616,15 +781,22 @@ retry policy. Do not implement an automatic parent retry around this call.
    | Evidence Link (`ppcc_evidencelink`) | `concat('flowsession:',outputs('Invoke_Carrier_Operations')?['body/activityId'])` |
    | External Correlation ID (`ppcc_externalcorrelationid`) | `outputs('Invoke_Carrier_Operations')?['body/activityId']` |
    | Result Summary (`ppcc_resultsummary`) | `concat('CP7-ACTION; ',outputs('Invoke_Carrier_Operations')?['body/terminalMarker'],'; PO ',outputs('Create_case_specific_PO')?['body/nwind_purchaseordernumber'])` |
-   | Execution State (`ppcc_executionstate`) | **Completed** (`100000003`) |
+   | Execution State (`ppcc_executionstate`) | **Succeeded** (`100000003`) |
    | Started On (`ppcc_startedon`) and Completed On (`ppcc_completedon`) | `utcNow()` for each field |
-   | Disruption Case (`ppcc_disruptioncaseid`) | Bind the current case as in Step 6 |
-   | Recovery Decision (`ppcc_recoverydecisionid`) | Bind the current decision as in Step 6 |
+   | Disruption Case (`ppcc_disruptioncaseid`) | `concat('/ppcc_disruptioncases(',outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value'],')')` |
+   | Recovery Decision (`ppcc_recoverydecisionid`) | `concat('/ppcc_recoverydecisions(',outputs('Get_Decision')?['body/ppcc_recoverydecisionid'],')')` |
 
    Leave Communication Draft unset. `flowsession:<GUID>` is the durable
    correlation reference, not a fabricated screenshot URL; open the matching
    CUA Activity in Copilot Studio to inspect its replay.
-4. Add **Resolve case after CP7** and set:
+
+   ![Create CP7 Parameters shows Execution Evidence, Carrier Response, and Execution State Succeeded with the Activity ID correlation.](images/module5/36-create-cp7-parameters.png)
+   Figure: Select Succeeded for Execution State. Completed On remains the separate timestamp field; scroll down for the remaining fields in the table above.
+
+4. After **Create CP7**, add Microsoft Dataverse **Update a row**, rename
+   it **Resolve case after CP7**, select table `Disruption Cases`, and set
+   Row ID through **fx** to
+   `outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']`. Set:
    - Disruption Status: **Resolved** (`100000006`)
    - Resolution Summary:
      `Approved Split Shipment recovery and Carrier Operations Agent submission verified.`
@@ -632,24 +804,59 @@ retry policy. Do not implement an automatic parent retry around this call.
 
    Configure **Resolve case after CP7** to run only after **Create CP7**
    succeeds. A failed evidence write must not resolve the case.
-5. In False, add **Mark case Needs Attention** and set:
+5. In **Carrier verified** > **False**, add Microsoft Dataverse **Update a
+   row**, rename it **Mark case Needs Attention**, select table `Disruption
+   Cases`, and use the same case Row ID as step 4. Set:
    - Disruption Status: keep **In Execution** (`100000005`), not Resolved.
-   - Resolution Summary: start with `Technical Needs Attention - no CP7.`
-     and include the returned terminal marker and error.
-6. Add **Create technical Needs Attention task**, link it to the case, and
-   include the returned diagnostics in its description.
+   - Resolution Summary (fx):
+     `concat('Technical Needs Attention - no CP7. Carrier adapter outcome: ',outputs('Invoke_Carrier_Operations')?['body/terminalMarker'],'. ',outputs('Invoke_Carrier_Operations')?['body/error'])`
+   - Leave Closed On unset; this outcome does not close the case.
+6. After **Mark case Needs Attention**, add Microsoft Dataverse **Add a new
+   row**, rename it **Create technical Needs Attention task**, and configure:
+
+   | Field | Value |
+   | --- | --- |
+   | Table name | `Tasks` |
+   | Subject | `Technical carrier recovery needs attention` |
+   | Description (fx) | `concat('Carrier adapter outcome: ',outputs('Invoke_Carrier_Operations')?['body/terminalMarker'],'. ',outputs('Invoke_Carrier_Operations')?['body/error'])` |
+   | Priority | **High** (`2`) |
+   | Disruption Case (`ppcc_disruptioncaseid`, fx) | `concat('/ppcc_disruptioncases(',outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value'],')')` |
+
+   Leave the task open for investigation. Do not mark it Completed.
 7. Also configure a failure-handling path to the Needs Attention actions when
    **Invoke Carrier Operations** fails or times out (rather than returning a
    normal response). After the child action, add a parallel branch with a
    Scope named **Carrier call failed**. On that scope, use **Configure run
    after** for **Invoke Carrier Operations**: select **has failed** and
-   **has timed out**, and clear **is successful** and **is skipped**. Keep
-   **Carrier verified** configured to run only when the child succeeds.
-   In the failure scope, add the same case update and technical task as
-   steps 5–6, but use a fixed `Technical Needs Attention - no CP7.` summary
-   with `workflow()?['run']?['name']` and the child-action failure details,
-   not response fields that may be absent. Do not invoke the child again,
-   write CP7, or resolve the case in this scope.
+   **has timed out**, and clear **is successful** and **is skipped**. On
+   **Carrier verified**, inspect **Settings** > **Run after** > **Invoke
+   Carrier Operations**: select only **Is successful** and clear **Has
+   failed**, **Has timed out**, and **Is skipped**.
+   In the failure scope, add these actions in sequence:
+
+   | Connector action | Rename | Table and configuration |
+   | --- | --- | --- |
+   | Microsoft Dataverse **Update a row** | **Mark failed carrier case Needs Attention** | `Disruption Cases`; same Row ID as step 4; Disruption Status **In Execution** (`100000005`); leave Closed On unset |
+   | Microsoft Dataverse **Add a new row** | **Create failed carrier Needs Attention task** | `Tasks`; same Subject, Priority, and Disruption Case binding as step 6; leave the task open |
+
+   Set both the case **Resolution Summary** and task **Description** through
+   **fx** to the following expression. It reads action-level diagnostics,
+   not response fields that may be absent:
+
+   ```text
+   concat('Technical Needs Attention - no CP7. Workflow run: ',workflow()?['run']?['name'],'. Child action status: ',actions('Invoke_Carrier_Operations')?['status'],'. Child action error: ',string(actions('Invoke_Carrier_Operations')?['error']))
+   ```
+
+   Do not invoke the child again, write CP7, or resolve the case in this
+   scope.
+
+> [!IMPORTANT]
+> An earlier prepared parent may run **Carrier verified** after a failed or
+> timed-out child call and omit **Carrier call failed**. That configuration
+> is not the completed lab outcome. Add the separate failure scope and set
+> the success-only condition run-after as described above before the
+> consequential test in Module 6. An absent child response is not a normal
+> returned ambiguity result.
 
 Do not create CP7 in the False branch. Do not resolve the case merely because
 the child flow returned.
@@ -661,6 +868,7 @@ columns. Approval is on the Recovery Decision; execution proof is on the
 evidence and carrier ledger records.
 
 ![Parent-flow topology illustration: the Carrier verified True branch writes CP7 before resolving the case; the False branch handles Needs Attention.](images/module5/08-carrier-verification-branches.png)
+Figure: Completed success and returned-ambiguity branches. The separate Carrier call failed scope is not shown; add it using step 7 above.
 
 The following screenshots show the expected browser-side state before and
 after a verified submission. You will observe the automatic run in Module 6.
@@ -673,15 +881,40 @@ after a verified submission. You will observe the automatic run in Module 6.
 
 In **Governed Decision Router** > **False**:
 
-1. Add an **If** named **If Rejected**.
-2. Test whether Approval State equals **Rejected** (`100000002`).
-3. In True, update the case:
-   - Disruption Status: **Rejected** (`100000008`)
+1. Add **Control** > **Condition** and rename it **If Rejected**.
+2. Set the left value through **fx** to
+   `outputs('Get_Decision')?['body/ppcc_approvalstate']`, select **is equal
+   to**, and set the right value through **fx** to numeric `100000002`
+   (**Rejected**).
+3. In True, add Microsoft Dataverse **Update a row**, rename it **Persist
+   Rejected**, and select table `Disruption Cases`. Set Row ID through
+   **fx** to `outputs('Get_Decision')?['body/_ppcc_disruptioncaseid_value']`.
+   Set:
+   - Disruption Status: **Cancelled** (`100000008`)
    - Resolution Summary:
      `Recovery was rejected by the human approver. No purchase order, carrier operation, or completion evidence was created.`
-4. In False, add a Compose action named **Guard mismatch noop**.
+   Rejected is the decision's Approval State; Cancelled is the case's
+   Disruption Status. These are different Choice columns.
+
+   ![Persist Rejected updates the Disruption Cases row with Disruption Status Cancelled and the human-rejection summary.](images/module5/37-rejected-case-cancelled.png)
+   Figure: Keep the decision Rejected while setting the related case status to Cancelled.
+
+4. In False, add **Data Operation** > **Compose**, rename it **Guard mismatch
+   noop**, and set **Inputs** to:
+
+   ```text
+   Decision did not meet the governed execution guard. No consequential action was taken.
+   ```
+
+   This is an informational no-op, not evidence of successful execution.
 
 Any non-approved, non-rejected value fails closed through the no-op branch.
+
+**Checkpoint:** Every condition has its documented operands and branch
+contents. Every Dataverse action has a table, a Row ID for updates, and the
+required field values. Both Compose actions have Inputs. No action outside
+the approved branch creates a purchase order, calls the carrier, or writes
+CP7.
 
 ## Step 10: Save, check, and publish
 
@@ -701,6 +934,24 @@ Any non-approved, non-rejected value fails closed through the no-op branch.
    Do not move the parent or child flow into a separate solution.
 7. Do not approve the workshop Recovery Decision yet. Module 6 performs the
    single consequential test.
+
+Before leaving the designer, walk through these configuration checks without
+running the flow:
+
+| Path or setting | Expected result |
+| --- | --- |
+| Initial save | Save succeeds after the configured Get Decision action is present |
+| Governed Decision Router | All five AND comparisons use the documented fields and typed values, including Is Current Decision = true |
+| Deterministic recovery | PO detail has a name, Quantity 40, Product and PO bindings; the task loop updates each returned task |
+| Communication drafts and CP7 | Execution State is Succeeded (100000003), not a nonexistent Completed Choice |
+| Carrier verified > True | A nonempty Activity ID and exact CARRIER_VERIFIED marker are required; Create CP7 succeeds before Resolve case after CP7 can run |
+| Carrier verified > False | The case remains In Execution and an open task contains the returned diagnostics and case lookup |
+| Carrier call failed | Run after allows only failed or timed-out child calls; the case and open task contain the run ID and action error without reading child response fields |
+| If Rejected > True | Decision Rejected maps to case Cancelled (100000008) |
+| Replay and guard-mismatch branches | Compose Inputs are present; neither branch performs consequential work |
+
+These checks verify configuration only. Module 6 validates the actual
+approved execution, persisted evidence, and replay behavior.
 
 ## If validation or save fails
 
@@ -736,7 +987,7 @@ Any non-approved, non-rejected value fails closed through the no-op branch.
   attempt. Do not delete the ledger or invoke the agent manually to force a
   rerun.
 
-## Lab completion
+## Checkpoint: Lab completion
 
 You have completed the module when:
 
