@@ -275,23 +275,28 @@ account (`odl_user_<number>@...`). For example, the fictional account
 1. In the app's left navigation, select **Order Details**.
 2. Use the view search/filter to find product
    **Northwind Traders Clam Chowder**.
-3. Locate these three order lines:
+3. Locate these three order lines. Only **Quantity** and **Unit Price**
+   appear in the app; you calculate the exposure yourself.
 
-   | Order | Quantity | Unit price | Calculated exposure |
-   | --- | ---: | ---: | ---: |
-   | `0915` | `50` | `9.65` | `USD 482.50` |
-   | `0920` | `30` | `9.65` | `USD 289.50` |
-   | `0935` | `10` | `9.65` | `USD 96.50` |
+   | Order | Quantity | Unit Price |
+   | --- | ---: | ---: |
+   | `0915` | `50` | `9.65` |
+   | `0920` | `30` | `9.65` |
+   | `0935` | `10` | `9.65` |
 
-4. Add the three exposures:
+4. For each order line, calculate its exposure:
 
    ```text
-   482.50 + 289.50 + 96.50 = 868.50
+   Exposure = Quantity × Unit Price
    ```
 
-5. Record `USD 868.50` in your lab notes.
-6. Select **Purchase Orders**.
-7. Confirm there is no participant-created Purchase Order whose number begins
+   Write the three results in your lab notes.
+
+5. Add the three exposures to get the total exposure for Clam Chowder.
+6. Confirm your total is `USD 868.50`, and record it in your lab notes. If
+   your total differs, recheck each line before you continue.
+7. Select **Purchase Orders**.
+8. Confirm there is no participant-created Purchase Order whose number begins
    with `CL`.
 
 ## Understand the authority boundary
