@@ -25,10 +25,10 @@ decision. Offers are information only, never approval or execution.
 This is an isolated training exercise using workshop data, not a
 production-ready extension or certification of API-level validation.
 
-Track **app-builder completion** separately from **full workshop acceptance**.
+Track **app-builder completion** separately from the **participant walkthrough**.
 The builder must complete and verify its supported scope; the participant
-then completes the explicit manual follow-ups below. A documented manual
-follow-up is not permission to omit a safety requirement or claim acceptance.
+then explores the view and form and discusses the business tradeoff below.
+This lighter walkthrough does not waive builder verification or safety gates.
 
 ## Fixed authoring decisions
 
@@ -36,6 +36,31 @@ Use these decisions as supplied design input, not a new requirements interview.
 Follow required skill reviews and obtain explicit approval before writes.
 Ask only when a genuine ambiguity, unsupported core requirement, or mismatch
 prevents safe implementation.
+
+### Educational-lab issue handling
+
+Aim for the specified design, but keep the lab moving when the core business
+capability works. The core is a usable offer table, form, and comparison
+view in the existing app, with the two approved offers correctly linked to
+the seeded case and USD. Approval, preservation, and relationship-safety
+gates remain mandatory.
+
+Treat cosmetic differences, missing descriptions, icon limitations,
+nonessential form spacing, exact column order/saved sorting, and default-view
+configuration as non-blocking when the form is readable and the comparison
+still shows the case, status, dates, quantities, and costs. Record the exact
+limitation and supported fallback in the plan or final report; do not
+silently claim a missing feature is implemented. Continue within the
+approved scope rather than repeatedly asking to fix minor polish or adding
+custom code/API patches.
+
+Pause for facilitator help only for a wrong target/identity, conflicting
+existing work that risks overwrite or duplication, missing core capability,
+or failed/unverified preservation, case/currency binding, or relationship
+safety. A minor warning is not a reason to halt otherwise supported work.
+New writes outside the approved scope still require explicit approval.
+
+### Intended design
 
 | Item | Requirement |
 | --- | --- |
@@ -52,13 +77,15 @@ prevents safe implementation.
 | Business data | App-builder creates exactly the two illustrative offers below after explicit build approval and relationship-safety verification; no other sample rows or seed-record edits |
 
 The facilitator prepares authentication, tools, USD currency, the base
-solution, and the seeded Pending case before the timed exercise. Record the
+solution, and the seeded Pending case before the exercise. Record the
 actual environment, identity, solution version, app ID, and case ID in the
 generated plan; do not ask the participant to choose a different architecture.
 
-Retrieve the existing app fresh. If the offer table already exists or the
-workspace belongs to another environment, report the state and obtain a
-reviewed resume plan. Do not overwrite earlier work or create another table.
+Retrieve the existing app fresh. If the offer table already exists, inspect
+the existing work and receipt to determine whether it can be safely resumed.
+If it conflicts with the requested build or the workspace belongs to another
+environment, report the state and obtain a reviewed resume plan. Do not
+overwrite earlier work or create another table.
 When resuming a planning-only run, preserve its artifacts before refreshing
 the download in the same workspace, reapply only the reviewed extension
 intent, and regenerate the preview, lint, and dry run. A previous dry run or
@@ -193,8 +220,10 @@ updates or default-view enrichment, not a direct API patch. If enrichment
 also changes this table's Inactive view, disclose its exact scope in the
 plan and obtain explicit approval before applying it; that additional change
 is not implicitly authorized. Preserve all views on other tables. If the
-required Active-view fields cannot be applied through supported tooling,
-report a blocker rather than leave the initial list with only name/date.
+requested Active-view fields cannot be applied through supported tooling,
+report a non-blocking limitation and direct the participant to the authored
+comparison view with the useful fields. Do not patch the stock view through
+an unsupported path.
 
 Create one public view named **Supplier Recovery Offers**:
 
@@ -218,18 +247,19 @@ Give the new table a meaningful Fluent-style SVG icon depicting a document
 with a price tag. Record that depiction as `iconDescription` in the App Spec
 before creating the SVG; use the supported app-builder table-icon and
 navigation-icon configuration. The **Supplier Recovery Offers** navigation
-entry must display that icon, not the generic stock table icon. Include the
-icon web resource and its table/navigation references in the existing
+entry should display that icon rather than the generic stock table icon.
+Include the icon web resource and its table/navigation references in the existing
 solution. Preserve the app icon and every existing table/navigation icon.
-If the supported tooling cannot apply the required icon, report a blocker
-rather than silently substituting the stock icon.
+If the supported tooling cannot apply the icon, report a non-blocking
+limitation and retain the stock icon. Do not spend the lab repairing icon
+polish or change existing icons.
 
 The navigation entry must open the offer table, and the named comparison
 view must be included and selectable in the app. Automatically opening that
 view is not an app-builder completion gate. If the builder cannot set it as
 default, record manual follow-up MF-01 rather than block the supported build.
 Do not modify stock views as a default-selection workaround. The only
-required stock-view edit is the Active-view field enrichment above;
+requested stock-view edit is the Active-view field enrichment above;
 automatic default selection remains optional, and no second authored view
 is required.
 Platform-generated forms/views are not additional authored deliverables;
@@ -260,10 +290,10 @@ or create Execution Evidence. No approval/execution buttons or automation.
 The two approved new offer rows are the only business-data additions in this
 module; creating them must not modify the seeded records.
 
-## App-builder completion and manual follow-ups
+## App-builder completion and participant walkthrough
 
 Before any environment writes, show the complete proposed extension, tool
-limitations, preservation plan, manual follow-ups, and actual dry-run plan.
+limitations, preservation plan, participant walkthrough, and actual dry-run plan.
 Distinguish new feature writes from app/sitemap, page/manifest, icon, and
 publish maintenance. Include the two sample-data writes, exact resolved case
 and USD currency, and concrete promised ship dates in that review.
@@ -283,30 +313,32 @@ and membership, default Active-view fields/filter and app availability,
 comparison-view columns/filter/sort and membership, navigation, solution
 membership, relationship policy, actual date behavior, and preservation.
 Read back the offer icon web resource and table/navigation assignments;
-record the participant's visual navigation check separately in MF-01.
+leave opening the published view and form to the participant walkthrough.
 Read back both sample rows, their case/currency bindings, dates, quantities,
 costs, Received status, and Active state. Compare protected business state
 with the pre-build baseline; do not create additional test offers.
 
-App-builder completion requires those supported checks and both sample rows
-to pass. Published form interactions and participant comparison/status changes
-remain separate acceptance steps. Seeded rows do not prove that New-form
-validation or manual record creation works.
-Report **"app-builder portion complete; manual acceptance pending"**
-only when supported deployment and verification actually pass. Otherwise
-report the failed or unverified items; a builder success message is not enough.
+App-builder completion requires the core capability, both sample rows, and
+the safety/preservation checks to pass. Verify and report the other requested
+details, but allow completion with documented non-blocking limitations under
+the issue-handling guidance above. Participant review is a short business-use
+walkthrough, not a requirement to test New-form validation or change statuses. Seeded rows
+and metadata checks do not certify every published form interaction.
+Report **"app-builder portion complete; participant walkthrough pending"**
+only when supported deployment and core verification actually pass. Add
+**"with noted limitations"** when minor issues remain. Otherwise report the
+failed or unverified core/safety items; a builder success message is not enough.
 
-Keep a follow-up checklist in the generated workspace. For every item,
-record owner, reason, exact action, expected result, status, and evidence.
-Use Pending, Passed, Failed, or Unverified; do not silently mark manual
-actions complete from metadata alone.
+Use the following IDs to structure the short walkthrough. No formal manual
+test receipt or evidence checklist is required. Do not claim the participant
+has reviewed the app based on metadata alone.
 
-| ID | Owner | Required follow-up and expected result |
+| ID | Owner | Participant walkthrough |
 | --- | --- | --- |
-| MF-01 | Participant; facilitator for optional default configuration | Confirm the Supplier Recovery Offers navigation entry shows the document-with-price-tag Fluent-style icon, not the generic stock table icon. Inspect **Active Supplier Recovery Offers** and confirm all six comparison fields and the Active filter; Created On may remain and saved date/cost sorting is not required there. Then select **Supplier Recovery Offers** and confirm the specified column order, Active filter, and saved ship-date/cost sorting. Manual comparison-view selection is sufficient; making it open automatically is optional, separately reviewed supported-designer work with any table-wide impact disclosed. |
-| MF-02 | Participant | Confirm the published Main form opens for New; the five specified fields are required; quantity 0 and negative cost are rejected; case is visible, optional, and navigable; Analyst Notes is a readable full-width multiline area. Do not save a test offer or edit seed data to perform the checks. |
-| MF-03 | Participant | Inspect the two app-builder-created offers below; confirm the same seeded case, USD, and recorded calendar dates. Compare them and save status changes through Received, Shortlisted, and Not Selected while Active. Do not create duplicate offers. |
-| MF-04 | Participant, assisted by read-only agent checks | Confirm the original landing page/navigation work and compare protected business state after the offer exercise; the decision stays Pending and no carrier/attempt/evidence work is created or advanced. |
+| MF-01 | Participant | Open Supplier Recovery Offers and select the comparison view if needed. Look at the offers' dates, quantities, and costs. |
+| MF-02 | Participant | Open an existing sample offer and explore its form, case link, details, and Analyst Notes. No edits or new records are needed. |
+| MF-03 | Participant | Compare the earlier/higher-cost and later/lower-cost offers. Discuss which to investigate further and what additional information would help. No status changes are required. |
+| MF-04 | Participant | Recognize that the offers capture alternatives, not approval or execution. Leave the recovery decision unchanged. |
 
 Report two tooling limitations without adding deferred implementation:
 
@@ -318,7 +350,7 @@ Report two tooling limitations without adding deferred implementation:
   manual relationship changes. Stop if the actual policy is unsafe or cannot
   be verified. Restrict Delete hardening remains deferred.
 
-Record app-builder issue candidates separately from workshop acceptance.
+Record app-builder issue candidates separately from the participant walkthrough.
 Future ADO filing does not authorize workarounds, role changes, unsupported
 API patches, or modifications to the builder.
 
@@ -366,40 +398,24 @@ delete offers, or reset a participant's status changes. Missing, partial,
 ambiguous, or conflicting sample data requires a reviewed resume plan and
 explicit approval before further writes.
 
-The required exercise passes only when:
+The participant exercise is complete after the short MF-01 through MF-04
+walkthrough: open the new view and form, compare the two illustrative offers,
+and understand that these records do not approve or execute recovery.
+Manual invalid-value tests, status changes, and technical evidence collection
+are not required participant work.
 
-1. The published existing app and its original landing page/navigation still work.
-2. Exactly one new offer table has the agreed fields and case relationship,
-   with its Fluent-style SVG icon. All new/changed components, including the
-   icon web resource, are in the existing solution.
-3. The published Main form requires Offer Name, Promised Ship Date,
-   Recoverable Quantity, Incremental Cost, and Offer Status, and rejects
-   zero quantity and negative cost. Disruption Case is visible, navigable,
-   and optional. Both app-builder-created illustrative offers have the
-   verified seeded Supplier F case, USD currency, and reviewed values/dates.
-   Successful sample insertion is not evidence of manual New-form validation
-   or a successful manual New/save interaction.
-4. The new navigation entry displays the specified Fluent-style offer icon
-   and opens the offer table. The default **Active Supplier Recovery Offers**
-   view includes all six comparison fields and retains its Active filter;
-   Created On may remain and its saved sorting is not a gate. After selecting
-   **Supplier Recovery Offers** if necessary, the comparison view shows
-   both offers, the specified columns, and date/cost sorting. Automatic
-   default-view selection is not required.
-5. Changing one offer to Shortlisted and then Not Selected keeps it visible
-   while Active, without implying approval.
-6. Read-back comparison with the pre-exercise baseline confirms the decision
-   is still Pending, case/decision states are unchanged, and no carrier,
-   attempt, or evidence records were created or advanced by the exercise.
-
-Report failed, pending, and unverified results explicitly. A builder success
-message alone is not acceptance. Do not call this variant production-ready.
-Full workshop acceptance remains pending until MF-01 through MF-04 and all
-six checks above pass, even if the app-builder portion is already complete.
+The builder must verify the published core extension, sample data,
+relationship safety, and preservation, and report failed or unverified
+checks explicitly. Non-blocking polish/tooling limitations are reported,
+not treated as failed core completion. A builder
+success message alone is not verification. The walkthrough does not certify
+production readiness or every form/API validation path. More detailed
+interaction testing may be performed separately by the facilitator.
 
 ## Optional work and later modules
 
-Only after required acceptance, separately review an optional task:
+After the participant walkthrough and successful builder verification,
+separately review an optional task:
 
 - If rehearsed successfully with the installed skill version, prefer the
   authored **Supplier Recovery Offer** Main form using supported default-form
