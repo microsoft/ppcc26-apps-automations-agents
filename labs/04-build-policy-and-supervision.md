@@ -265,9 +265,9 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    | Change type | `Modified` |
    | Table name | `Recovery Decisions` |
    | Scope | `Organization` |
-   | Filter rows | `ppcc_decisionnumber eq 'RD-01040' and ppcc_approvalstate eq 100000000` |
+   | Filter rows | `ppcc_decisionnumber eq 'RD-01004' and ppcc_approvalstate eq 100000000` |
 
-6. Replace `RD-01040` with the **Decision Number** from your lab's Recovery
+6. Replace `RD-01004` with the **Decision Number** from your lab's Recovery
    Decision record. This value is an autonumber generated in Dataverse.
 7. In **Selected columns** (or monitored columns, depending on UI), select only
    `ppcc_recommendationrationale`.
@@ -299,7 +299,9 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    `Supplier delay -Northwind Traders Clam Chowder` (or the equivalent case in
    your dataset), then select **Open case form**.
 4. On the case form, open **Related** > **Recovery Decision** and select the
-   current Pending decision for that case (for example, `RD-01040`).
+   current Pending decision for that case (for example, `RD-01004`).
+
+![Locate disruption case and recovery decision](images/module4/15-locate-case-and-recovery-decision.png)
 5. Set **Recommendation Rationale** to:
 
    ```text
@@ -330,7 +332,7 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 Leave this open and go back to Agent in Copilot Studio and see the **Activity** tab where you can see running items reviewing exact steps the agent is taking. If you run into issues, check Power Apps MCP authentication, and whether `request_assistance` created a visible Agent Feed task, double check the correct Agent was added in the App - know that Disruption Commander agent does not work you need Disruption Handoff agent, an easy mistake to make.
 4. Confirm exactly one new item appears for the same case/decision you updated.
    The title may vary by environment (for example, it might use a case number
-   like `DC-01041` instead of the case title text).
+   like `DC-01004` instead of the case title text).
 5. Open the item and confirm it includes:
    - supplier-delay evidence context (3 impacted orders, USD 868.50),
    - recovery remains Pending / requires human review,
