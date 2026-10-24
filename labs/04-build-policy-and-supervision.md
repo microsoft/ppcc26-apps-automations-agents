@@ -15,27 +15,37 @@ You will create one Business Skill and two agents:
    the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
-5. Select **Create skill**.
-6. Set:
+5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature**:
+   1. Select **Power Platform Admin Center**.
+   2. In environment settings, open **Work IQ**.
+   3. Turn on **Turn on Business Applications in Work IQ**.
+   4. Select **Apply**.
+   5. Return to your maker tab and open **Business skills** again.
+6. Select **Create skill**.
+7. Set:
 
    | Field | Value |
    | --- | --- |
    | Name | `ppcc-order-disruption-triage` |
    | Description | `Use this skill when a supplier delay, inventory shortage, or shipment risk may affect open Northwind customer orders.` |
 
-7. Open
+8. Open
    [`./prompts/module4/ppcc-order-disruption-triage.md`](./prompts/module4/ppcc-order-disruption-triage.md).
-8. Copy from `# Order disruption triage` through the end of the file. Do not
+9. Copy from `# Order disruption triage` through the end of the file. Do not
    copy the YAML metadata above the heading.
-9. Paste the copied content into **Instructions**.
-10. Select **Preview**.
-11. Confirm the preview contains:
+10. Paste the copied content into **Instructions**.
+11. Select **Preview**.
+12. Confirm the preview contains:
     - Policy version `lab-1`
     - Evidence to gather
     - Prioritization
     - Recovery policy
     - Completion and audit
-12. Select **Save**.
+13. Select **Save**.
+
+![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
+
+![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
 
 ![Business Skill editor](images/module4/10-business-skill-editor.png)
 
