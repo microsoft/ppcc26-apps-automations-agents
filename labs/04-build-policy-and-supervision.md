@@ -64,6 +64,10 @@ the skill and adding it to the solution are the only participant actions.
 ## Create Disruption Commander agent
 
 1. Open **Copilot Studio** in the lab environment.
+   - If Copilot Studio is not already pinned in the Maker left navigation,
+     select **Power Platform** at the bottom-left, then select **Copilot Studio**.
+
+![Open Copilot Studio from Power Platform](images/module4/12-open-copilot-studio-from-power-platform.png)
 2. Select **Other ways to build**.
 3. Select **Agent (Standard)**.
 4. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
