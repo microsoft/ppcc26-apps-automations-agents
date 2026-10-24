@@ -77,8 +77,11 @@ the skill and adding it to the solution are the only participant actions.
 
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
 4. Select **Agent (Standard)**.
+
 5. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
+
 6. Select **Skip to configure**.
+
 7. Enter:
 
    | Field | Value |
