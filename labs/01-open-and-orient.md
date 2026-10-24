@@ -309,6 +309,9 @@ account (`odl_user_<number>@...`). For example, the fictional account
 1. In the app's left navigation, select **Order Details**.
 2. Use the view search/filter to find product
    **Northwind Traders Clam Chowder**.
+
+![Order Details filtered to Northwind Traders Clam Chowder](images/module1/14-order-details-clam-chowder-filter.png)
+
 3. Locate these three order lines. Only **Quantity** and **Unit Price**
    appear in the app; you calculate the exposure yourself.
 
