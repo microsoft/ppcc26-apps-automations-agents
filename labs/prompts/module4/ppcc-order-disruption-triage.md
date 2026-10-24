@@ -1,11 +1,3 @@
----
-name: ppcc-order-disruption-triage
-description: >-
-  Use this skill when a supplier delay, inventory shortage, or shipment risk
-  may affect open Northwind customer orders.
-version: lab-1
----
-
 # Order disruption triage
 
 **Policy version:** `lab-1`
