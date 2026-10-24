@@ -301,6 +301,10 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 4. On the case form, open **Related** > **Recovery Decision** and select the
    current Pending decision for that case (for example, `RD-01004`).
 
+![Open Related menu and select Recovery Decisions](images/module4/16-open-related-menu-recovery-decisions.png)
+
+![Recovery Decision associated view with Decision Number](images/module4/17-recovery-decision-associated-view.png)
+
 ![Locate disruption case and recovery decision](images/module4/15-locate-case-and-recovery-decision.png)
 5. Set **Recommendation Rationale** to:
 
