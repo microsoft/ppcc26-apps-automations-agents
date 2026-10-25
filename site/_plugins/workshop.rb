@@ -144,7 +144,7 @@ module Workshop
       return value if value.start_with?("#", "//") || value.match?(/\A[a-z][a-z0-9+.-]*:/i)
 
       path, suffix = value.split(/(?=[?#])/, 2)
-      decoded = URI::DEFAULT_PARSER.unescape(path)
+      decoded = URI::DEFAULT_PARSER.unescape(path).tr("\\", "/")
       target = decoded.start_with?("/") ? File.join(@root, decoded.delete_prefix("/")) : File.expand_path(decoded, File.dirname(File.join(@root, source)))
       key = relative(target)
       raise Jekyll::Errors::FatalException, "Link escapes repository: #{source}: #{value}" if key.start_with?("../")

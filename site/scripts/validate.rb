@@ -27,6 +27,7 @@ documents.each do |path, document|
   document.css("a[href], img[src], link[href], script[src]").each do |node|
     value = node[node.name == "img" || node.name == "script" ? "src" : "href"]
     next if value.match?(%r{\A(?:[a-z][a-z0-9+.-]*:|//)}i)
+    errors << "#{path}: non-portable backslash in generated URL: #{value}" if value.include?("\\")
     destination, fragment = value.split("#", 2)
     destination = URI::DEFAULT_PARSER.unescape(destination.split("?", 2).first.to_s)
     if destination.empty?
