@@ -90,10 +90,33 @@ help; do not create a replacement or edit seed data.
 
 Continue inside your workshop VM, using the extracted files from Module 1.
 
-1. Open **Visual Studio Code** and select **File > Open Folder**.
-2. Select `C:\github\ppcc26-apps-automations-agents`, then select
-   **Select Folder**. Open the extracted folder, not the ZIP file.
-3. In the **Explorer** pane, confirm that `labs`, `setup`, and `solutions`
+1. Open **Visual Studio Code** and select **File > New Window** to start a
+   new VS Code session. Complete the following steps in that new window.
+2. Select **File > Open Folder**. Select
+   `C:\github\ppcc26-apps-automations-agents`, then select
+   **Select Folder**.
+
+   > [!NOTE]
+   > This is the folder you extracted and renamed in Module 1, not the
+   > downloaded ZIP file.
+
+   ![VS Code open folder](images\module2\01-vscode-open-folder.png)
+
+3. If VS Code shows a **Restricted Mode** banner, select **Manage**.
+   In **Workspace Trust**, select **Trust** under **In a Trusted Folder**.
+   If the folder is already trusted, continue to step 5.
+
+   ![In the VS Code Restricted Mode banner, select Manage.](images/module2/02-vscode-manage-workspace-trust.png)
+
+   ![In Workspace Trust, select Trust under In a Trusted Folder.](images/module2/03-vscode-trust-folder.png)
+
+4. Confirm that Workspace Trust shows **You trust this folder** and the
+   **Restricted Mode** banner has disappeared. Select the **X** in the
+   upper-right corner of the **Workspace Trust** dialog to close it.
+
+   ![Workspace Trust shows You trust this folder. Select the X in the upper-right corner to close the dialog.](images/module2/04-vscode-close-workspace-trust.png)
+
+5. In the **Explorer** pane, confirm that `labs`, `setup`, and `solutions`
    appear directly under the workshop folder. Open
    `labs\prompts\module2\supplier-recovery-offer-extension-app-spec.md`
    to confirm the requirements are available.
@@ -102,14 +125,26 @@ Continue inside your workshop VM, using the extracted files from Module 1.
    follow Module 1's extraction and rename instructions. Do not continue
    from a nested folder or download a second copy over existing lab work.
 
-4. Select **Terminal > New Terminal**. Use the terminal profile dropdown
-   to select **PowerShell** if a different shell opens.
-5. In that PowerShell terminal, run:
+   ![VS Code Explorer shows labs, setup, and solutions under the workshop folder, with the Supplier Recovery Offers requirements file open.](images/module2/05-vscode-open-extension-requirements.png)
 
-```powershell
-Set-Location "C:\github\ppcc26-apps-automations-agents"
-pac auth list
-```
+6. Select **Terminal > New Terminal**. Use the terminal profile dropdown
+   to select **PowerShell** if a different shell opens.
+
+   ![In VS Code, open the Terminal menu and select New Terminal.](images/module2/06-vscode-new-terminal.png)
+
+7. In that PowerShell terminal, run:
+
+   ```powershell
+   Set-Location "C:\github\ppcc26-apps-automations-agents"
+   pac auth list
+   ```
+
+   If VS Code asks you to confirm pasting multiple lines into the terminal,
+   select **Paste**.
+
+   ![In the VS Code multiline paste confirmation, select Paste.](images/module2/07-vscode-confirm-terminal-paste.png)
+
+   ![PowerShell terminal showing pac auth list reporting that no authentication profiles were found.](images/module2/08-pac-auth-list-no-profiles.png)
 
 ### Connect PAC to your DEV environment
 
@@ -146,12 +181,16 @@ Replace `<INSTANCE-URL>` with the copied Instance url and follow the sign-in
 prompts using your Microsoft Entra workshop account. Do not use another
 participant's environment, the presenter's environment, or TARGET.
 
+![PowerShell terminal showing pac auth create with an example environment URL. Use your own assigned DEV Instance url.](images/module2/09-pac-auth-create-environment.png)
+
 Verify the active profile and connection:
 
 ```powershell
 pac auth list
 pac org who
 ```
+
+![PowerShell terminal showing pac auth list and pac org who identifying the active workshop account and DEV environment.](images/module2/10-pac-verify-account-and-environment.png)
 
 Confirm the active profile and `pac org who` identify your workshop account
 and assigned DEV. If PAC shows the wrong DEV, use the profile selection or
@@ -170,6 +209,8 @@ In the same terminal, check Azure CLI's account:
 az account show --query "{Account:user.name,Tenant:tenantId}" --output table
 ```
 
+![PowerShell terminal showing az account show output with the signed-in workshop account and tenant ID.](images/module2/12-azure-cli-verify-account.png)
+
 If you are not signed in, follow [Repair Azure sign-in](#repair-azure-sign-in)
 at the end of this module, then rerun this check.
 
@@ -183,38 +224,56 @@ Start Copilot only after these checks:
 copilot
 ```
 
+![PowerShell terminal showing the copilot command entered from the workshop folder.](images/module2/13-start-copilot.png)
+
 On first launch, Copilot may ask whether you trust the folder. Confirm it
 shows `C:\github\ppcc26-apps-automations-agents`, the workshop folder
 extracted in Module 1, before accepting. If it shows another location,
 cancel and reopen Copilot from the correct folder.
 
 If prompted to sign in, enter `/login` at the **Copilot prompt** and follow
-the instructions using your authorized workshop GitHub account. Use the
+the instructions using your authorized workshop GitHub.com account. Use the
 account guidance from
 [Module 1](01-open-and-orient.md#part-3-configure-github-in-visual-studio-code).
 Signing in to Copilot in VS Code does not necessarily sign in the CLI.
 
+![Copilot CLI prompting for sign-in, with /login entered at the Copilot prompt.](images/module2/14-copilot-login.png)
+
+![Copilot CLI account selection with GitHub.com highlighted.](images/module2/15-copilot-login-account-selection.png)
+
+![Copilot CLI sign-in method selection with Sign in with your browser (recommended) highlighted.](images/module2/16-copilot-login-sign-in-method.png)
+
+![GitHub Copilot CLI authorization page with the Authorize github button highlighted.](images/module2/17-copilot-login-authorize.png)
+
 If authentication fails or Copilot reports no access, ask the facilitator.
 Folder trust does not replace the explicit build approval requested later.
 
-At the **Copilot prompt**, enter `/skills` and confirm **app-builder** is
-available. It is provided by the **model-apps** plugin. If you installed
+At the **Copilot prompt**, enter `/skills info app-builder` to show the
+**app-builder** skill's details directly and confirm it is available.
+It is provided by the **model-apps** plugin. If you installed
 the plugin during preparation, restart Copilot before checking. If
 app-builder remains missing after restart, ask the facilitator to verify
 the model-apps plugin installation; see
 [Repair missing tools](#repair-missing-tools). Do not continue to Step 3
 with a different skill.
 
-Press **Esc** to close the skills panel and return to the normal Copilot
-prompt. If you opened a skill's details, press **Esc** again as needed.
-You do not need to launch the skill from the list; paste the Step 3 prompt
-at the normal Copilot prompt. Do not start a new-app workflow.
+![Copilot CLI showing /skills info app-builder entered at the prompt.](images/module2/18-copilot-skills-command.png)
+
+![Copilot CLI showing the app-builder skill details, including its plugin source and description.](images/module2/19-copilot-app-builder-skill-details.png)
+
+After reviewing the skill's details, paste the Step 3 prompt at the normal
+Copilot prompt. If a skills panel is open, press **Esc** to close it first.
+You do not need to launch the skill from a list. Do not start a new-app
+workflow.
 
 ## Step 3: Paste the bounded extension request
 
-Replace `<MY-DEV-URL>` with your assigned DEV URL before pasting.
+To prepare the prompt below, copy it into **Notepad** and replace
+`<MY-DEV-URL>` with your assigned DEV URL.
 The requirements already fix the schema and UI choices; you do not need to
 redesign them or choose production security/validation mechanisms.
+
+![Notepad showing the extension request with the DEV environment URL highlighted. Replace it with your own assigned DEV URL.](images/module2/20-notepad-edit-extension-request.png)
 
 ```text
 Use the app-builder skill to extend the installed PPCC Agentic Operations
@@ -276,6 +335,22 @@ MF-01 through MF-04 view/form walkthrough; do not claim I have reviewed the
 app before I do so. This is a training exercise, not production certification.
 ```
 
+Copy the edited prompt from **Notepad** and paste it at the **Copilot
+prompt**. Long pasted text appears as a single summary line, such as
+`[Paste #2 - 57 lines]`, rather than displaying the full text. This is
+expected; the summary represents the full pasted prompt.
+
+![Copilot CLI showing the pasted extension request at the prompt, with the requirements file referenced.](images/module2/21-copilot-pasted-extension-request.png)
+
+Press **Enter** to submit the prompt.
+
+Copilot starts by loading the **app-builder** skill and reading
+`supplier-recovery-offer-extension-app-spec.md`, as shown below. It then
+continues processing for a while. Wait for its response; do not submit the
+prompt again while Copilot shows **Working**.
+
+![Copilot loading the app-builder skill and reading the extension requirements file, with Working shown below.](images/module2/22-copilot-starting-app-builder.png)
+
 Keep the existing workspace if a run fails. See
 [Resume an interrupted run](#resume-an-interrupted-run) only if you need
 recovery guidance; for a fresh run, continue to Step 4.
@@ -284,12 +359,24 @@ files; use a fresh, separately named workspace for each environment.
 
 ## Step 4: Review and approve
 
-In VS Code Explorer, open
-`.artifacts\app-builder\supplier-recovery-offers-extension\review-plan.md`.
-For a formatted view, right-click the file and select **Open Preview**.
+When Copilot finishes preparing the review plan, you should see an approval
+prompt like the one below, with the path to `review-plan.md`. Leave the
+prompt waiting while you review the file; do not approve the build yet.
+
+![Copilot reporting that review-plan.md is ready and asking whether to approve the build.](images/module2/23-copilot-review-plan-approval.png)
+
+In VS Code, use the **Explorer** pane on the left to expand **.artifacts** >
+**app-builder** > **supplier-recovery-offers-extension**, then select
+**review-plan.md** to open it. For a formatted view, select **Text Editor**
+in the upper-right corner of the editor, then select **Markdown Preview**.
+
+![VS Code Explorer with review-plan.md selected and open in the editor.](images/module2/24-vscode-open-review-plan.png)
+
 This is the review file requested in Step 3, not an assumed built-in
 App Builder artifact. If it is missing or out of date, ask Copilot to write
 or refresh it before approving.
+
+![VS Code showing review-plan.md in Markdown Preview, with the approval status, target, and proposed changes.](images/module2/25-vscode-review-plan-markdown-preview.png)
 
 Review the file against the checks below, then return to the Copilot prompt
 to approve or request changes. Opening the file does not approve Dataverse
@@ -331,7 +418,18 @@ An absent cascade-policy option is not proof of failure either, but the
 actual relationship must be read back as referential/non-parental. Stop if
 that safety requirement fails or cannot be verified.
 
-Approve when the core scope and preservation plan match. Let the agent build,
+Approve when the core scope and preservation plan match. At the Copilot
+approval prompt, select **Yes** and press **Enter** to approve the build.
+
+![Copilot build approval prompt with Yes highlighted.](images/module2/26-copilot-approve-build.png)
+
+After approval, Copilot starts applying the schema without sample data, as
+shown below. The build will take a while from this point. Wait while Copilot
+shows **Working**; do not submit the request again.
+
+![Copilot confirming approval and running the schema stage without samples, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
+
+Let the agent build,
 verify the schema-only relationship safety gate, create the two approved
 offers through app-builder's sample-data phase, publish, and verify.
 Case/currency binding must use the supported sample-data path; if it cannot,
@@ -356,6 +454,14 @@ and Active state recorded. If these supported checks pass, report
 unverified core/safety checks explicitly; do not claim this checkpoint from
 build success alone.
 
+When app-builder finishes, Copilot displays a build summary like the example
+below. Read the verification results, limitations, and pending checks against
+the checkpoint above. To see more of the report, select the **box icon** in
+the upper-right corner of the terminal panel to maximize it. Select the same
+icon again to restore the panel to its previous size.
+
+![Copilot displaying the completed build report, with the terminal panel maximize and restore control highlighted in the upper-right corner.](images/module2/28-copilot-build-completion-report.png)
+
 Keep technical verification in the builder's report. The participant
 walkthrough below is a business-use review, not a manual test suite.
 On retries, inspect the offers and previous receipt before insertion. Do not
@@ -364,14 +470,25 @@ data requires a reviewed resume plan and fresh approval for further writes.
 
 ## Step 5: Explore the new view and form
 
+Go to <https://make.powerapps.com> and confirm your assigned DEV environment
+is selected. Select **Solutions**, open **PPCC Agentic Operations Control
+Tower**, then select **Apps**. Select the **PPCC Agentic Operations Control
+Tower** model-driven app and select **Play**.
+
+![Power Apps showing Apps in the PPCC Agentic Operations Control Tower solution, with the model-driven app selected and Play highlighted.](images/module2/29-power-apps-play-control-tower.png)
+
 1. **MF-01:** Refresh the app and open **Supplier Recovery Offers** from
    navigation. Select the **Supplier Recovery Offers** comparison view
    from the view picker if needed. Look at how it brings the offers'
    dates, quantities, and costs together.
-2. **MF-02:** Open one of the sample offers to see the new form. Look at
-   the disruption case link, offer details, and Analyst Notes. Consider
+2. **MF-02:** In the list, select a sample offer's **Offer Name**, such as
+   **Faster partial recovery**, to open its form. Look at the disruption
+   case link, offer details, and Analyst Notes. Consider
    how an analyst would use this form to record a supplier's alternative.
    No edits or new records are needed.
+
+   ![The Faster partial recovery sample offer open in the Supplier Recovery Offer form, showing its disruption case, status, ship date, quantity, cost, and Analyst Notes.](images/module2/30-supplier-recovery-offer-form.png)
+
 3. **MF-03:** Compare **Faster partial recovery** with **Lower-cost
    recovery**. Both offer 30 units; the earlier option costs USD 120,
    while the later option costs USD 40. Which would you investigate
@@ -464,8 +581,11 @@ Use this section only if Step 2 reports no Azure CLI login or sign-in fails
 during setup. If Azure CLI is missing, first follow
 [Repair missing tools](#repair-missing-tools).
 
-Ask the facilitator for your **workshop tenant ID**. In the VS Code
-PowerShell terminal, replace `<WORKSHOP-TENANT-ID>` with that value and run:
+To find your **workshop tenant ID**, open <https://make.powerapps.com> with
+your workshop account and assigned DEV environment selected. Select
+**Settings > Session details** and copy the value after **Tenant ID:**.
+If you cannot find it, ask the facilitator. In the VS Code PowerShell
+terminal, replace `<WORKSHOP-TENANT-ID>` with that value and run:
 
 ```powershell
 az login --tenant "<WORKSHOP-TENANT-ID>" --allow-no-subscriptions
@@ -473,11 +593,14 @@ az login --tenant "<WORKSHOP-TENANT-ID>" --allow-no-subscriptions
 
 Sign in with the **Microsoft Entra workshop account** from
 [Module 1](01-open-and-orient.md#part-1-retrieve-your-workshop-credentials),
-not your GitHub account or VM sign-in account. The tenant ID is not the
-DEV Instance url. If a subscription picker appears, use only the
+not your GitHub account or VM sign-in account. If asked to choose an account
+type, select **Work or school account**. The tenant ID is not the DEV
+Instance url. If a subscription picker appears, use only the
 facilitator-assigned workshop context; do not select another tenant to
 get past an error. Dataverse access does not require an Azure subscription;
 `--allow-no-subscriptions` permits sign-in to a tenant without one.
+
+![PowerShell terminal showing Azure CLI sign-in and tenant and subscription selection. Use your own assigned workshop tenant and subscription context.](images/module2/11-azure-cli-sign-in.png)
 
 If the browser account picker does not appear or cannot open, ask the
 facilitator whether device-code sign-in is permitted. Only if permitted,
