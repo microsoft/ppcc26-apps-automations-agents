@@ -53,6 +53,25 @@ documents.each do |path, document|
   end
 end
 modules = YAML.safe_load(File.read(File.join(root, "_data", "modules.yml")))
+agenda = YAML.safe_load(File.read(File.join(root, "_data", "agenda.yml")))
+previous_end = nil
+agenda.each do |entry|
+  start_time, end_time = %w[start end].map do |key|
+    value = entry.fetch(key)
+    raise "Invalid agenda time: #{value}" unless value.match?(/\A(?:[01]\d|2[0-3]):[0-5]\d\z/)
+    hours, minutes = value.split(":").map(&:to_i)
+    hours * 60 + minutes
+  end
+  errors << "Agenda gap/overlap at #{entry.fetch("start")}" if previous_end && previous_end != start_time
+  errors << "Agenda duration mismatch at #{entry.fetch("start")}" unless end_time - start_time == entry.fetch("duration") && end_time > start_time
+  errors << "Agenda session missing title" if entry.fetch("title").strip.empty?
+  errors << "Agenda session missing owner" if entry.fetch("kind") != "break" && entry.fetch("owner", "").strip.empty?
+  errors << "Agenda module missing products" if entry["module"] && entry.fetch("products", []).empty?
+  previous_end = end_time
+end
+errors << "Agenda must include all modules once in order" unless agenda.filter_map { |entry| entry["module"] } == modules.map { |item| item.fetch("number") }
+errors << "Agenda must start at 09:00 and end at 16:40" unless agenda.first.fetch("start") == "09:00" && agenda.last.fetch("end") == "16:40"
+errors << "Agenda module allocations must total 335 minutes" unless agenda.select { |entry| entry["module"] }.sum { |entry| entry.fetch("duration") } == 335
 manifest = JSON.parse(File.read(File.join(output, "source-manifest.json")))
 manifest.each do |source, hash|
   errors << "Source changed during build: #{source}" unless Digest::SHA256.file(File.join(repo, source)).hexdigest == hash
@@ -90,3 +109,4 @@ unless errors.empty?
   abort "#{errors.length} site validation error(s)."
 end
 puts "PASS: #{documents.length} HTML pages; all local links/fragments/images; #{modules.length} unchanged lab code/image/alert sets; exact prompt downloads; complete module search; source hashes; publication exclusions."
+puts "PASS: #{agenda.length} contiguous agenda entries; all six modules, owners, and products; 335 module minutes; 09:00-16:40 timetable."

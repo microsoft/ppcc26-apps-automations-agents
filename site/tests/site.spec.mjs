@@ -7,6 +7,38 @@ const modules = [
   "04-build-policy-and-supervision", "05-configure-recovery-and-cua", "06-run-deploy-and-replay"
 ];
 
+test("day agenda is discoverable, complete, and links to every module", async ({ page }) => {
+  await page.goto(`${base}/`);
+  await page.getByRole("link", { name: "View the day agenda" }).click();
+  await expect(page).toHaveURL(`${base}/#agenda`);
+  const agenda = page.locator("#agenda");
+  await expect(agenda.getByRole("heading", { name: "Full-day agenda" })).toBeVisible();
+  await expect(agenda.locator(".agenda-status")).toHaveText("9:00 AM–4:40 PM");
+  await expect(agenda.locator(".agenda-row")).toHaveCount(12);
+  await expect(agenda.getByRole("heading", { name: "Lunch", exact: true })).toBeVisible();
+  await expect(agenda.locator(".agenda-break")).toHaveCount(4);
+  await expect(agenda.locator(".agenda-time time").first()).toHaveText("9:00 AM");
+  await expect(agenda.locator(".agenda-time time").last()).toHaveText("4:30 PM");
+  await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:40 PM · 5 h 35 min of modules and labs, plus Computer Use wait time");
+  const moduleRows = agenda.locator(".agenda-lab");
+  const owners = ["Oliver", "Adrian", "Rasika", "Nikita", "Jay", "Warren"];
+  const durations = ["15 min", "35 min", "60 min", "60 min", "90 min", "75 min+ Computer Use wait"];
+  for (let index = 0; index < owners.length; index++) {
+    await expect(moduleRows.nth(index).locator(".agenda-owner")).toContainText(owners[index]);
+    await expect(moduleRows.nth(index).locator(".agenda-duration")).toHaveText(durations[index]);
+  }
+  const links = agenda.locator(".agenda-description h3 a");
+  await expect(links).toHaveCount(6);
+  for (let index = 0; index < modules.length; index++) {
+    await expect(links.nth(index)).toHaveAttribute("href", `${base}/labs/${modules[index]}/`);
+  }
+  await page.setViewportSize({ width: 375, height: 812 });
+  await expect(agenda.locator(".agenda-status")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await links.first().click();
+  await expect(page).toHaveURL(`${base}/labs/${modules[0]}/`);
+});
+
 test("all six direct module URLs, order, screenshots, and warnings work", async ({ page }) => {
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));

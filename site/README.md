@@ -37,6 +37,12 @@ Stop the preview with Ctrl+C.
 - Jekyll and Minimal Mistakes provide the static-site foundation. The local
   layouts and stylesheet implement a workshop-focused shell.
 - `_data/modules.yml` owns the ordered navigation and landing-page metadata.
+- `_data/agenda.yml` owns the 09:00-16:40 agenda supplied in the workshop overview,
+  including session titles, owners, products, lunch, and three breaks. The
+  facilitated module allocations total 5 h 35 min, plus Computer Use wait time;
+  they are distinct from the individual self-paced lab estimates. Module links
+  use the canonical module metadata. Static validation checks contiguous times,
+  durations, owners/products, and all six modules in order.
 - `_plugins/workshop.rb` reads canonical Markdown, renders it in memory, maps
   links to site routes, turns GitHub alerts into labeled callouts, and publishes
   only referenced static files.
@@ -54,6 +60,8 @@ Stop the preview with Ctrl+C.
 - Playwright checks direct module routes, search and its failure/retry state,
   clipboard success/failure, 375px layouts, 404 recovery, and automated
   accessibility on the home, setup, and Module 3 pages.
+  It also checks the agenda jump link, timings, breaks, mobile layout, and links
+  to every module.
 
 Do not copy internal preview content into this site without publication approval.
 Do not place credentials or attendee data anywhere in the site source.
