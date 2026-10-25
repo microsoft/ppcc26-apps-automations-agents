@@ -324,7 +324,7 @@ restore the current prepared solution.
    | `phoneNumber` | Phone Number |
 
    Display titles are labels; child-flow bindings use the camelCase keys,
-   not legacy `text`, `text_1`, or numbered inputs. Select the manual trigger
+   not `text`, `text_1`, or numbered inputs. Select the manual trigger
    and inspect **Parameters**. If it shows only input titles or no inputs,
    open **Code view** and inspect `inputs.schema.properties` and
    `inputs.schema.required`. All eleven keys must be present and required.
@@ -526,8 +526,7 @@ prompts to save on exit, leave without saving.
 7. Continue to **Read the decision and case** before saving. The designer
    requires at least one configured action after the trigger.
 
-The updated solution uses Choice columns. Do not use legacy lookup-table
-fields from an earlier workshop build.
+Use the Choice columns and numeric values listed below.
 
 ### Read the decision and case
 
@@ -564,7 +563,7 @@ The rows created below must bind **both** lookups.
 a table column. The current table has no Stage or System column.
 
 ![Parent-flow topology illustration: read the decision and case, list existing CP7 evidence, then enter the governed decision router.](images/module5/04-approved-recovery-flow-overview.png)
-Figure: Completed-state reference for action order. Add Governed Decision Router next; it is not expected to exist yet.
+Figure: The screenshot previews the completed action order. Add Governed Decision Router next.
 
 The parent-flow screenshots show the completed configuration. Build the
 actions in the sequence below; the separate child-action failure scope is
@@ -865,12 +864,10 @@ Figure: Deterministic recovery, review-task completion, and unsent drafts preced
    Figure: The separate scope handles action failures and timeouts without reading child response fields.
 
 > [!IMPORTANT]
-> An earlier prepared parent may run **Carrier verified** after a failed or
-> timed-out child call and omit **Carrier call failed**. That configuration
-> is not the completed lab outcome. Add the separate failure scope and set
-> the success-only condition run-after as described above before the
-> consequential test in Module 6. An absent child response is not a normal
-> returned ambiguity result.
+> **Before continuing to Module 6:** Confirm that **Carrier verified** runs
+> only after the child succeeds, and **Carrier call failed** runs only after
+> the child fails or times out. The failure scope must use action-level
+> diagnostics and must not create CP7 or resolve the case.
 
 Do not create CP7 in the False branch. Do not resolve the case merely because
 the child flow returned.
@@ -994,7 +991,7 @@ approved execution, persisted evidence, and replay behavior.
 - **Evidence columns missing**: use Evidence Number, Evidence Type, Evidence
   Link, Result Summary, Communication Draft, External Correlation ID,
   Started On, Completed On, and both case/decision lookups as mapped above.
-  Do not add legacy Stage or System columns to make old screenshots work.
+  Stage and System are not columns in the current Execution Evidence table.
 - **Choice comparison never matches**: verify that numeric Choice values were
   entered through **fx** and that the trigger filters `ppcc_approvalstate`.
 - **A carrier operation already exists**: inspect the existing operation and

@@ -1,0 +1,13 @@
+---
+layout: page
+title: "Prompts & resources"
+permalink: /resources/
+description: "Find the supporting prompts used in the workshop. Follow each lab for when and how to use them."
+---
+<p>These documents are read directly from the repository during the site build. Use them at the point specified by your module, not as a replacement for the lab instructions.</p>
+<div class="resource-list">
+{% for resource in site.data.resources %}
+<article class="resource-card"><p class="eyebrow">MODULE {{ resource.module }}</p><h2><a href="{{ resource.url | relative_url }}">{{ resource.title }}</a></h2><p>{{ resource.description }}</p><a class="text-link" href="{{ resource.download | relative_url }}" download>Download exact prompt text <span aria-hidden="true">↓</span></a></article>
+{% endfor %}
+</div>
+<h2>Solution resources</h2><p>Read the availability and facilitator guidance before importing anything.</p><a class="button button-dark" href="{{ '/solutions/' | relative_url }}">View solution guidance →</a>

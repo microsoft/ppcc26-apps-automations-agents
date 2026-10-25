@@ -1,0 +1,61 @@
+name: Workshop site
+
+on:
+  push:
+    branches: [main, site/github-pages]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Build site without changing workshop assets
+        run: bundle exec jekyll build --trace
+      - name: Validate links, content fidelity, and publication scope
+        run: bundle exec ruby scripts/validate.rb
+      - name: Verify original workshop content is untouched
+        run: git diff --exit-code -- ../labs ../setup ../solutions
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Test navigation, search, clipboard, accessibility, and mobile
+        run: npm test
+      - name: Upload reviewed static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/_site
+
+  deploy:
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/site/github-pages')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: workshop-pages-production
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

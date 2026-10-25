@@ -15,15 +15,18 @@ You will create one Business Skill and two agents:
    the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
-5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature** 
-![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
-please follow these steps:
+5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature**, follow these steps:
+
+   ![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
+
    1. Select **Power Platform Admin Center**.
    2. In environment settings, open **Work IQ**.
    3. Turn on **Turn on Business Applications in Work IQ**.
+
       ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
-   5. Select **Apply**.
-   6. Return to your maker tab and open **Business skills** again.
+   4. Select **Apply**.
+   5. Return to your maker tab and open **Business skills** again.
+   5. Return to your maker tab and open **Business skills** again.
 6. Select **Create skill**.
 7. Set:
 
@@ -32,10 +35,8 @@ please follow these steps:
    | Name | `ppcc-order-disruption-triage` |
    | Description | `Use this skill when a supplier delay, inventory shortage, or shipment risk may affect open Northwind customer orders.` |
 
-8. Open
-   [`./prompts/module4/ppcc-order-disruption-triage.md`](./prompts/module4/ppcc-order-disruption-triage.md).
-9. Copy from `# Order disruption triage` through the end of the file. Do not
-   copy the YAML metadata above the heading.
+8. Open [`./prompts/module4/ppcc-order-disruption-triage.md`](./prompts/module4/ppcc-order-disruption-triage.md).
+9. Copy from `# Order disruption triage` through the end of the file. 
 10. Paste the copied content into **Instructions**.
 11. Select **Preview**.
 12. Confirm the preview contains:
@@ -68,19 +69,25 @@ the skill and adding it to the solution are the only participant actions.
      select **Power Platform** on the bottom-left, then select **Copilot Studio**.
 
 ![Open Copilot Studio from Power Platform](images/module4/12-open-copilot-studio-from-power-platform.png)
+
 2. Verify that Copilot Studio is set to your workshop **Dev-USER-<UserId>**
    environment. If needed, use the environment picker and switch to your assigned
    Dev environment before continuing.
 
 ![Switch environment in Copilot Studio](images/module4/12a-switch-environment-copilot-studio.png)
+
 3. Select **Other ways to build**.
 
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
+
 4. Select **Agent (Standard)**.
 
-5. Name "Disruption Commander" expand the **Agent Settings (Optional)** select **PPCC Agentic Operataions Control Tower**.
+5. Enter `Disruption Commander` for **Name**. Expand
+   **Agent Settings (Optional)** and select
+   **PPCC Agentic Operataions Control Tower**.
 
-6. Once created, click **Edit** with pencil icon on the main section to update Description.
+6. Once created, select **Edit** (pencil icon) on the main section to update
+   **Description**.
 
 7. Enter data to match this:
 
@@ -91,8 +98,7 @@ the skill and adding it to the solution are the only participant actions.
 
 8. Select **Save**.
 9. On **Overview**, find **Instructions** and select **Edit**.
-10. Open
-   [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
+10. Open [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
 11. Copy the raw text below the heading into **Instructions**.
 12. Select **Save**.
 
@@ -277,8 +283,7 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 ![Search Dataverse trigger](images/module4/22-search-dataverse-trigger.png)
 
 3. Select **When a row is added, modified, or deleted** and select **Next**.
-4. On the next step, keep authentication defaults.
-5. (Optional) Rename the trigger to `Update of a Recovery Decision`.
+4. On the next step, keep authentication defaults. (Suggested) Rename the trigger to `Update of a Recovery Decision`.
 6. Configure:
 
    | Field | Value |
@@ -289,11 +294,11 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    | Selected columns  | `ppcc_recommendationrationale` |
    | Filter rows | `ppcc_approvalstate eq 100000000` |
 
-Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
-
 7. Note about **Selected columns** (or monitored columns, depending on business
-   or UI changes over time): keep only `ppcc_recommendationrationale`, which is
-   the field this lab updates to trigger the agent.
+   or UI changes over time) we use `ppcc_recommendationrationale`, which is
+   the field this lab will ask you to update in the app to trigger the agent.
+
+8.  Note about **Filter rows** As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses by looking up their state code values in Power Apps maker experience. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
 
 ![Trigger configuration example](images/module4/23-trigger-configuration-example.png)
 
@@ -315,15 +320,20 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 8. Select **Add to feed**.
 9. Confirm it appears under **Agent feed** and shows
    **Ready to generate tasks**.
-10. Select **Save and Publish**.
+10. Select **Save and Publish** icon on top right screen next to play icon (you will click that Play icon after the publish completes).
+
+![Add Handoff agent to Agent feed](images/module4/24-add-handoff-agent-to-feed.png)
 
 ## Create triggering event for the Handoff to human
 
-1. Open **PPCC Agentic Operations Control Tower**.
-2. Open **Control Tower Home**.
-3. Open the disruption case created in your lab, such as
-   `Supplier delay -Northwind Traders Clam Chowder` (or the equivalent case in
+1. Open **PPCC Agentic Operations Control Tower** from App list in Power Apps (or hit play if you are still on the previous edit screen).
+2. Open **Control Tower Home** menu item (should be opened by default).
+3. Search for the disruption case created earlier in your lab, such as
+   `Supplier delay -Northwind Traders Clam Chowder` or `DC-01000` (equivalent case in
    your dataset), then select **Open case form**.
+
+![Search disruption case and open case form](images/module4/25-search-disruption-case-open-form.png)
+
 4. On the case form, open **Related** > **Recovery Decision** and select the
    current Pending decision for that case (for example, `RD-01001`).
 
@@ -331,32 +341,19 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 
 ![Recovery Decision associated view with Decision Number](images/module4/17-recovery-decision-associated-view.png)
 
-5. Set **Recommendation Rationale** to:
-
-   ```text
-   Create one visible Agent Feed task for the disruption case Supplier delay -Northwind Traders Clam Chowder / SPLIT_SHIPMENT.
-
-   The task must appear as a Needs attention item in the model-driven app Agent Feed. Do not only create a standalone Agent Task row.
-
-   Include a related Dataverse record link that opens the Disruption Case record directly from Agent Feed.
-
-   Title: Supplier delay -Northwind Traders Clam Chowder: Review requested action SPLIT_SHIPMENT
-
-   Description: Review supplier-delay recovery recommendation. Evidence: 3 impacted Northwind orders totaling USD 868.50; policy lab-1; recommended action Split Shipment; alternative Expedite Reorder. Approval remains Pending in the PPCC Impacted Orders Control Tower.
-   ```
-
-   If your case title differs, keep the same structure and replace only the case
-   title text.
-
-6. Confirm **Approval State** remains **Pending** in the **Human decision** tab.
-7. Select **Save** once.
-8. Wait for the autonomous Handoff agent run to complete.
-9. Do not save the row again or modify another field to retry. 
-
+5. Update any text **Recommendation Rationale** you could just add a exra . or space
+6. In the **Human decision** tab - confirm **Approval State** remains **Pending**.
+7. Select **Save** button once.
+8. Do not save the row again or modify another field to retry. 
+9. Wait for the autonomous Handoff agent run to complete, we will switch apps - you don't need to wait on this screen.
+ 
 ## Verify Agent Feed alert
 
-1. Open **PPCC Agentic Operations Control Tower**.
-2. Select **Agent feed**. You can filter by **Needs attention** tab. 
+1. Open **PPCC Agentic Operations Control Tower** (if you closed it).
+2. Select **Agent feed**. You can filter by **Needs attention** tab. (If you do not see Agent Feed - please refresh the browser.)
+
+![Agent Feed needs attention item](images/module4/27-verify-agent-feed-alert.png)
+
 3. This might take a bit for an item to show up here. 
 Leave this open and go back to Agent in Copilot Studio and see the **Activity** tab where you can see running items reviewing exact steps the agent is taking. If you run into issues, check Power Apps MCP authentication, and whether `request_assistance` created a visible Agent Feed task, double check the correct Agent was added in the App - know that Disruption Commander agent does not work you need Disruption Handoff agent, an easy mistake to make.
 4. Confirm exactly one new item appears for the same case/decision you updated.
@@ -368,10 +365,16 @@ Leave this open and go back to Agent in Copilot Studio and see the **Activity** 
    - a clear boundary that completion of the Agent Feed item is not business approval.
 6. Scroll down in the item and open the related Disruption Case link (or open the
    item directly).
+
+![Open linked Disruption Case from Agent Feed item](images/module4/28-verify-open-disruption-case-link.png)
+
 7. Confirm it opens the linked Disruption Case record for your lab data and the
    **Decision Status** remains **Pending**.
 8. You can also review the **Activity** tab in the agent in Copilot Studio to
    troubleshoot or review exact steps the agent took.
+
+![Handoff agent Activity tab](images/module4/26-handoff-agent-activity-tab.png)
+
 9. Leave the task open for Module 6.
 
 ## Checkpoint
