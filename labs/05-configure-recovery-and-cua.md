@@ -1,6 +1,6 @@
 # Module 5: Create the Carrier agent and governed recovery cloud flow
 
-**Estimated time:** 90 minutes
+**Estimated time:** 60 minutes
 
 ## Overview
 

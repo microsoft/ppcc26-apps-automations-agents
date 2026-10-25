@@ -24,11 +24,11 @@ Throughout the workshop, you keep one authority boundary:
 
 | Module | You build | Time |
 | --- | --- | --- |
-| [1. Open the environment and understand the mission](labs/01-open-and-orient.md) | Retrieve credentials, connect to the VM, download this repository, sign in to GitHub Copilot, and inspect the business data in your Dev environment. | 30 min |
-| [2. Extend the Control Tower with App Builder](labs/02-build-control-tower.md) | A Supplier Recovery Offer table, form, comparison view, and navigation entry, created with App Builder and GitHub Copilot. Optional. | 35–40 min |
+| [1. Open the environment and understand the mission](labs/01-open-and-orient.md) | Retrieve credentials, connect to the VM, download this repository, sign in to GitHub Copilot, and inspect the business data in your Dev environment. | 25 min |
+| [2. Extend the Control Tower with App Builder](labs/02-build-control-tower.md) | A Supplier Recovery Offer table, form, comparison view, and navigation entry, created with App Builder and GitHub Copilot. Optional. | 60 min |
 | [3. Create supplier-delay intake and live impact](labs/03-build-intake-and-impact-cloud-flows.md) | Two Power Automate cloud flows that classify the supplier email with a prompt, create the disruption case, and calculate its impact. | 60 min |
 | [4. Create policy, bounded reasoning, and human supervision](labs/04-build-policy-and-supervision.md) | A Business Skill, the **Disruption Commander** agent, and an approval handoff agent that alerts a person in the Agent feed. | 60 min |
-| [5. Create the Carrier agent and governed recovery flow](labs/05-configure-recovery-and-cua.md) | A Copilot Studio agent with a restricted Computer Use tool, and the cloud flow that executes only an approved recovery. | 90 min |
+| [5. Create the Carrier agent and governed recovery flow](labs/05-configure-recovery-and-cua.md) | A Copilot Studio agent with a restricted Computer Use tool, and the cloud flow that executes only an approved recovery. | 60 min |
 | [6. Approve, deploy, and replay](labs/06-run-deploy-and-replay.md) | Approve the recovery in Dev, deploy the solutions to a managed target with Power Platform Pipelines, and replay the scenario there. | 90 min |
 
 Complete the modules in order. Each one builds on the records and components

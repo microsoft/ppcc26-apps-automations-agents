@@ -1,6 +1,6 @@
 # Module 2: Extend the Control Tower with App Builder
 
-**Estimated time:** 35-40 minutes, after VM setup.
+**Estimated time:** 60 minutes
 
 This duration is approximate. Completing Module 2 is not required to continue
 with the other modules; you can return and finish it later if needed.

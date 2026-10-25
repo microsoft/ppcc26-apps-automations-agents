@@ -1,6 +1,6 @@
 # Module 1: Open the environment and understand the mission
 
-**Estimated time:** 30 minutes
+**Estimated time:** 25 minutes
 
 In this module, you collect your workshop credentials, connect to your
 workshop virtual machine (VM) and download the workshop files to it, sign in
