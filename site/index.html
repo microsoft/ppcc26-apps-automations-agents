@@ -29,16 +29,10 @@ title: "Build intelligent business processes"
     <section id="agenda" class="agenda-section" aria-labelledby="agenda-heading">
       <div class="section-heading"><div><p class="eyebrow">WORKSHOP OVERVIEW</p><h2 id="agenda-heading">Full-day agenda</h2></div><span class="agenda-status">9:00 AM–4:40 PM</span></div>
       <p class="agenda-intro">Your workshop day, from scenario introduction to deployment and replay. Times are local to your workshop event.</p>
-      <div class="agenda-columns" aria-hidden="true"><span>Start / end</span><span></span><span>Session</span><span>Owner</span><span>Products</span><span>Duration</span></div>
+      <div class="agenda-columns" aria-hidden="true"><span></span><span>Session</span><span>Owner</span><span>Products</span><span>Start / end</span></div>
       <ol class="agenda-list">
       {% for entry in site.data.agenda %}
         <li class="agenda-row agenda-{{ entry.kind }}">
-          {% assign hour = entry.start | slice: 0, 2 | plus: 0 %}{% assign minute = entry.start | slice: 3, 2 %}{% assign display_hour = hour | modulo: 12 %}{% if display_hour == 0 %}{% assign display_hour = 12 %}{% endif %}
-          <div class="agenda-time">
-            <span class="sr-only">Start: </span><time datetime="{{ entry.start }}">{{ display_hour }}:{{ minute }} {% if hour < 12 %}AM{% else %}PM{% endif %}</time>
-            {% assign end_hour = entry.end | slice: 0, 2 | plus: 0 %}{% assign end_minute = entry.end | slice: 3, 2 %}{% assign display_end_hour = end_hour | modulo: 12 %}{% if display_end_hour == 0 %}{% assign display_end_hour = 12 %}{% endif %}
-            <span class="agenda-time-end"><span aria-hidden="true">– </span><span class="sr-only">End: </span><time datetime="{{ entry.end }}">{{ display_end_hour }}:{{ end_minute }} {% if end_hour < 12 %}AM{% else %}PM{% endif %}</time></span>
-          </div>
           <div class="agenda-module">{% if entry.module %}<span class="agenda-module-badge agenda-module-{{ entry.module }}" aria-label="Module {{ entry.module }}">M{{ entry.module }}</span>{% endif %}</div>
           <div class="agenda-description">
           {% if entry.module %}
@@ -50,7 +44,13 @@ title: "Build intelligent business processes"
           </div>
           <div class="agenda-owner">{% if entry.owner %}<span class="sr-only">Owner: </span>{{ entry.owner }}{% endif %}</div>
           <div class="agenda-products">{% if entry.products %}<span class="sr-only">Products: </span>{% for product in entry.products %}<span class="agenda-product">{{ product }}</span>{% endfor %}{% endif %}</div>
-          <span class="agenda-duration">{{ entry.duration }} min{% if entry.duration_note %}<small>{{ entry.duration_note }}</small>{% endif %}</span>
+          {% assign hour = entry.start | slice: 0, 2 | plus: 0 %}{% assign minute = entry.start | slice: 3, 2 %}{% assign display_hour = hour | modulo: 12 %}{% if display_hour == 0 %}{% assign display_hour = 12 %}{% endif %}
+          <div class="agenda-time">
+            <span class="sr-only">Start: </span><time datetime="{{ entry.start }}">{{ display_hour }}:{{ minute }} {% if hour < 12 %}AM{% else %}PM{% endif %}</time>
+            {% assign end_hour = entry.end | slice: 0, 2 | plus: 0 %}{% assign end_minute = entry.end | slice: 3, 2 %}{% assign display_end_hour = end_hour | modulo: 12 %}{% if display_end_hour == 0 %}{% assign display_end_hour = 12 %}{% endif %}
+            <span class="agenda-time-end"><span aria-hidden="true">– </span><span class="sr-only">End: </span><time datetime="{{ entry.end }}">{{ display_end_hour }}:{{ end_minute }} {% if end_hour < 12 %}AM{% else %}PM{% endif %}</time></span>
+            {% if entry.duration_note %}<small class="agenda-time-note">{{ entry.duration_note }}</small>{% endif %}
+          </div>
         </li>
       {% endfor %}
       </ol>
