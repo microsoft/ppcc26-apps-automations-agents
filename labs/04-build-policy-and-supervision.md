@@ -89,8 +89,6 @@ the skill and adding it to the solution are the only participant actions.
    | Name | `Disruption Commander` |
    | Description | `Explains persisted disruption evidence, policy, alternatives, and the next permitted step without executing consequential actions.` |
 
-   Note: Here is where you can change agent model.
-
 8. Select **Save**.
 9. On **Overview**, find **Instructions** and select **Edit**.
 10. Open
@@ -149,9 +147,9 @@ The scrolling in this section can be tricky, click inside of the section then sc
 
 ## Test Commander agent 
 
-1. Select **Test**.
-2. Select **New conversation**.
-3. Enter (Adjusting for your disruption case number if needed):
+1. Select **Test** from top right of the Copilot Studio screen.
+2. Select **New conversation** if prompted.
+3. Enter (Adjusting for your disruption case number as needed):
 
    ```text
    For disruption case DC-01000, explain the evidence, recommendation, alternatives, and next permitted step. 
@@ -177,36 +175,38 @@ The scrolling in this section can be tricky, click inside of the section then sc
 
 ## Create Disruption Approval Handoff Agent
 
+1. Return to **Copilot Studio** home, click on Home on left menu (don't click Agents).
+2. Select **Other ways to build**.
+3. Select **Agent (Standard)**.
+
 > [!IMPORTANT]
 > Use **Other ways to build** > **Agent (Standard)** for this Handoff agent.
 > Do not use the default **New agent** / autonomous-agent creation path. The
 > default path can create a lightweight agent without the **Triggers** UI, and
 > this module requires a Dataverse trigger to create the Agent Feed item.
 
-1. Return to **Copilot Studio**.
-2. Select **Other ways to build**.
-3. Select **Agent (Standard)**.
-4. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
-5. Select **Skip to configure**.
-6. Enter:
+4. Name it 'Disruption Approval Handoff Agent'
+5. Expand **Agent settings** and select Solution **PPCC Agentic Operations Control Tower**.
+6. Select **Create**.
+7.  Once created, click **Edit** with pencil icon on the main section to update Description.
 
    | Field | Value |
    | --- | --- |
    | Name | `Disruption Approval Handoff Agent` |
    | Description | `Creates one visible Agent Feed task for a pending recovery decision, summarizes the evidence, and never approves or executes the action.` |
 
-7. Select **Create**.
-8. On **Overview**, edit **Instructions**.
-9. Open
+8. Click **Save**.
+9. On **Overview**, edit **Instructions**.
+10. Open
    [`./prompts/module4/disruption-handoff.md`](./prompts/module4/disruption-handoff.md).
-10. Copy the text below the heading into **Instructions**.
-11. Confirm the text includes:
+11. Copy the text below the heading into **Instructions**.
+12. Review and note that text instructions include:
    - `exactly once per autonomous trigger run`
-   - language that creates one Agent Feed task for human review
    - `connected Disruption Commander`
    - `related Dataverse record link`
    - `end the conversation immediately`
    - `Never retry`
+   - language that creates one Agent Feed task for human review
 12. Select **Save**.
 
 ## Connect Handoff to Disruption Commander agent
@@ -215,11 +215,11 @@ The Handoff agent should not recreate the evidence reasoning itself. It uses the
 connected **Disruption Commander** agent to prepare the evidence summary, then
 creates the human-assistance item in Agent Feed.
 
-1. On the Handoff agent **Overview** page, find **Connected agents**.
-2. Select **Add connected agent**.
-3. Search for **Disruption Commander**.
+1. On the Handoff agent **Overview** page, find **Agents** section.
+2. Select **Add Agent**.
+3. Select for **Disruption Commander** from the list.
 4. Select **Disruption Commander**.
-5. Add it with this purpose:
+5. Update the **Description** with this purpose:
 
    ```text
    Summarize disruption evidence, policy version, recommendation, alternatives,
@@ -227,23 +227,21 @@ creates the human-assistance item in Agent Feed.
    one Agent Feed task for human review. Do not execute actions or modify data.
    ```
 
-6. Save the connected agent.
-7. Confirm **Connected agents** lists **Disruption Commander**.
-8. Return to the Handoff agent **Overview** page.
+6. Save the connected agent **Add and configure**.
+7. Return to the Handoff agent **Overview** page. Click on the Overview tab on the top menu.
+8. Scroll down on the Overview and check **Agents** list shows **Disruption Commander**.
 
 ## Add and restrict Power Apps MCP tool
 
 1. Select **Tools**.
 2. Select **Add a tool** > **Model Context Protocol**.
 3. Search for and add **Power Apps MCP Server**.
-4. If prompted, select the facilitator-provided Power Apps MCP connection.
-5. Open **Power Apps MCP Server**.
-6. In **Authentication**, select **Shared account**. Some builds label this
-   option **Maker-provided credentials**. Do not use **End user account** for
-   this lab; end-user credentials can create standalone Agent Task rows that do
-   not surface as Agent Feed cards in the running model-driven app.
-7. Select the inner **Tools** tab.
-8. Turn **Allow all** off.
+4. When prompted, select New Connection and use **Azure AD** use the lab Entra login.
+5. Once saved **Power Apps MCP Server**.
+6. Expand the **Additional details** section and select **Credential to use** change to **Maker-provided credentials**. Do not use **End user account** for
+   this lab; end-user credentials can create standalone Agent Task rows that do not surface as Agent Feed cards in the running model-driven app.
+7. Scroll to the **Tools** tab.
+8. Turn **Allow all** off from the table heading.
 9. Set:
 
    | Operation | State |
