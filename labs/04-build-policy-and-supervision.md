@@ -259,8 +259,6 @@ creates the human-assistance item in Agent Feed.
 
 ![Power Apps MCP Server details and tool toggles](images/module4/21-power-apps-mcp-tool-setup.png)
 
-![Allow only request_assistance](images/module4/14-handoff-mcp-tools.png)
-
 ## Add the autonomous Trigger to the agent
 
 Agent Feed cards must be created through an autonomous trigger path that uses
@@ -273,11 +271,11 @@ chat can invoke the tool, but it might only create a standalone Agent Task that
 does not appear in the running model-driven app. Do not write `agenttask` or
 `agentfeeditem` rows directly.
 
-1. On the Handoff agent, select **Add trigger**.
-2. Select **Microsoft Dataverse**.
-3. Select **When a row is added, modified, or deleted**.
-4. (Optional) Rename the trigger to
-   `Human Hand-off for modified Recovery Decisions`.
+1. On the Handoff agent Overview page, scroll down to **Triggers**, select **Add trigger**.
+2. Search 'Dataverse'.
+3. Select **When a row is added, modified, or deleted** click Next.
+4. On next step authetniction should be kept at defaults. 
+(Optional) Rename the trigger to `Update of a Recovery Decision`.
 5. Configure:
 
    | Field | Value |
@@ -285,16 +283,15 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    | Change type | `Modified` |
    | Table name | `Recovery Decisions` |
    | Scope | `Organization` |
+   | Selected columns  | `ppcc_recommendationrationale` |
    | Filter rows | `ppcc_approvalstate eq 100000000` |
 
-Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000`. This would be an area to troubleshoot if the data drifted, set Filter row to blank value if trigger is not working.
+Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
 
-6. Replace `RD-01001` with the **Decision Number** from your lab's Recovery
-   Decision record. This value is an autonumber generated in Dataverse.
-7. In **Selected columns** (or monitored columns, depending on UI), select only
-   `ppcc_recommendationrationale`.
-8. Save the trigger.
-9. Return to **Overview**.
+7. Note about **Selected columns** (or monitored columns, depending on business or UI changes over time), for now we selected only
+   `ppcc_recommendationrationale` which we will update in the App to trigger this Agent.
+8. Save with **Create trigger** and Close the pop-up when one.
+9. You should be returned to main **Overview** tab for Handoff agent.
 10. Select **Publish**.
 11. Wait for publication to succeed.
 
@@ -302,7 +299,7 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 
 1. Return to Power Apps.
 2. Select **Apps**.
-3. Find **Admin Management App**.
+3. Find **PPCC Agentic Operations Control Tower**.
 4. Select **...** > **Edit**.
 5. In the app designer, select **Agents**.
 6. Under **In your environment**, find
