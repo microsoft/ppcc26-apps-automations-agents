@@ -15,18 +15,18 @@ You will create one Business Skill and two agents:
    the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
-5. If you see this message **Turn on Work IQ setting to use this feature**
-   
-![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
+5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature**, follow these steps:
 
-   Please follow these steps only if you are seeing this message:
-      1. Select **Power Platform Admin Center**.
-      2. In environment settings, open **Work IQ**.
-      3. Turn on **Turn on Business Applications in Work IQ**.
-         ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
-      5. Select **Apply**.
-      6. Return to your maker tab and open **Business skills** again.
-      
+   ![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
+
+   1. Select **Power Platform Admin Center**.
+   2. In environment settings, open **Work IQ**.
+   3. Turn on **Turn on Business Applications in Work IQ**.
+
+      ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
+   4. Select **Apply**.
+   5. Return to your maker tab and open **Business skills** again.
+   5. Return to your maker tab and open **Business skills** again.
 6. Select **Create skill**.
 7. Set:
 
