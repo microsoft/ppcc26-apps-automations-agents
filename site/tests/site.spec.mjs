@@ -18,7 +18,19 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   await expect(agenda.getByRole("heading", { name: "Lunch", exact: true })).toBeVisible();
   await expect(agenda.locator(".agenda-break")).toHaveCount(4);
   await expect(agenda.locator(".agenda-time time").first()).toHaveText("9:00 AM");
-  await expect(agenda.locator(".agenda-time time").last()).toHaveText("4:30 PM");
+  await expect(agenda.locator(".agenda-time time").last()).toHaveText("4:40 PM");
+  const timeRanges = [
+    ["9:00 AM", "9:10 AM"], ["9:10 AM", "9:25 AM"], ["9:25 AM", "10:00 AM"],
+    ["10:00 AM", "10:15 AM"], ["10:15 AM", "11:15 AM"], ["11:15 AM", "12:15 PM"],
+    ["12:15 PM", "1:15 PM"], ["1:15 PM", "1:30 PM"], ["1:30 PM", "3:00 PM"],
+    ["3:00 PM", "3:15 PM"], ["3:15 PM", "4:30 PM"], ["4:30 PM", "4:40 PM"]
+  ];
+  for (let index = 0; index < timeRanges.length; index++) {
+    const times = agenda.locator(".agenda-row").nth(index).locator(".agenda-time time");
+    await expect(times).toHaveText(timeRanges[index]);
+    await expect(times.first()).toBeVisible();
+    await expect(times.last()).toBeVisible();
+  }
   await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:40 PM · 5 h 35 min of modules and labs, plus Computer Use wait time");
   const moduleRows = agenda.locator(".agenda-lab");
   const owners = ["Oliver", "Adrian", "Rasika", "Nikita", "Jay", "Warren"];
@@ -34,6 +46,10 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   }
   await page.setViewportSize({ width: 375, height: 812 });
   await expect(agenda.locator(".agenda-status")).toBeVisible();
+  for (const times of await agenda.locator(".agenda-time").all()) {
+    await expect(times.locator("time")).toHaveCount(2);
+    await expect(times.locator("time").last()).toBeVisible();
+  }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await links.first().click();
   await expect(page).toHaveURL(`${base}/labs/${modules[0]}/`);

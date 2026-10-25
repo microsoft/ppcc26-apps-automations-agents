@@ -69,6 +69,7 @@ $base0f: #8e3646;
 }
 .agenda-row:nth-child(even) { background: #ffffff0b; }
 .agenda-time { color: #f1f0fa; font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.agenda-time-end { display: block; }
 .agenda-module-badge { display: block; padding: 4px 5px; border-radius: 5px; text-align: center; font-size: 12px; font-weight: 750; color: #101222; }
 .agenda-module-1 { background: #7490ff; }
 .agenda-module-2 { background: #74f7d8; }

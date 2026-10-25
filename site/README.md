@@ -41,7 +41,8 @@ Stop the preview with Ctrl+C.
   including session titles, owners, products, lunch, and three breaks. The
   facilitated module allocations total 5 h 35 min, plus Computer Use wait time;
   they are distinct from the individual self-paced lab estimates. Module links
-  use the canonical module metadata. Static validation checks contiguous times,
+  use the canonical module metadata. Every row displays its start and end time
+  in AM/PM format, including breaks and lunch. Static validation checks contiguous times,
   durations, owners/products, and all six modules in order.
 - `_plugins/workshop.rb` reads canonical Markdown, renders it in memory, maps
   links to site routes, turns GitHub alerts into labeled callouts, and publishes
