@@ -42,7 +42,9 @@ Stop the preview with Ctrl+C.
   facilitated module allocations total 5 h 35 min, plus Computer Use wait time;
   they are distinct from the individual self-paced lab estimates. Module links
   use the canonical module metadata. Every row displays its start and end time
-  in AM/PM format after Products, including breaks and lunch. There is no separate
+  in aligned Start and End columns after Products, including breaks and lunch.
+  Narrow screens use labeled start/end pairs below the product labels instead of
+  squeezing the desktop columns. There is no separate
   Duration column; the Computer Use wait note remains beside Module 6's times.
   Static validation checks contiguous times,
   durations, owners/products, and all six modules in order.
@@ -64,7 +66,9 @@ Stop the preview with Ctrl+C.
   clipboard success/failure, 375px layouts, 404 recovery, and automated
   accessibility on the home, setup, and Module 3 pages.
   It also checks the agenda jump link, timings, breaks, mobile layout, and links
-  to every module.
+  to every module. Text-boundary and header-alignment checks cover 12 viewport
+  widths from 320px to 1440px. Stylesheet URLs are versioned per build so cached
+  layouts do not conflict with updated markup.
 
 Do not copy internal preview content into this site without publication approval.
 Do not place credentials or attendee data anywhere in the site source.

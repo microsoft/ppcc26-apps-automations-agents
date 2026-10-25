@@ -15,7 +15,7 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   await expect(agenda.getByRole("heading", { name: "Full-day agenda" })).toBeVisible();
   await expect(agenda.locator(".agenda-status")).toHaveText("9:00 AM–4:40 PM");
   await expect(agenda.locator(".agenda-row")).toHaveCount(12);
-  await expect(agenda.locator(".agenda-columns > span")).toHaveText(["", "Session", "Owner", "Products", "Start / end"]);
+  await expect(agenda.locator(".agenda-columns > span")).toHaveText(["", "Session", "Owner", "Products", "Start", "End"]);
   await expect(agenda.locator(".agenda-duration")).toHaveCount(0);
   await expect(agenda.locator(".agenda-products + .agenda-time")).toHaveCount(12);
   for (const row of await agenda.locator(".agenda-lab").all()) {
@@ -65,6 +65,46 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await links.first().click();
   await expect(page).toHaveURL(`${base}/labs/${modules[0]}/`);
+});
+
+test("agenda time text is not clipped and columns align across screen sizes", async ({ page }) => {
+  await page.goto(`${base}/`);
+  for (const stylesheet of await page.locator('link[rel="stylesheet"]').all()) {
+    await expect(stylesheet).toHaveAttribute("href", /\?v=\d+$/);
+  }
+  for (const width of [1440, 1280, 1100, 1024, 961, 960, 820, 768, 760, 600, 375, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const failures = await page.locator("#agenda").evaluate(agenda => {
+      const problems = [];
+      const headers = [...agenda.querySelectorAll(".agenda-columns > span")].slice(-2);
+      const desktop = getComputedStyle(agenda.querySelector(".agenda-columns")).display !== "none";
+      for (const row of agenda.querySelectorAll(".agenda-row")) {
+        const values = [...row.querySelectorAll(".agenda-time-value")];
+        for (let index = 0; index < values.length; index++) {
+          const value = values[index];
+          const time = value.querySelector("time");
+          const range = document.createRange();
+          range.selectNodeContents(time);
+          const text = range.getBoundingClientRect();
+          for (const container of [value, row.querySelector(".agenda-time"), row, agenda]) {
+            const bounds = container.getBoundingClientRect();
+            if (text.left < bounds.left - 1 || text.right > bounds.right + 1 || text.top < bounds.top - 1 || text.bottom > bounds.bottom + 1) {
+              problems.push(`Clipped ${time.textContent} in ${container.className}`);
+            }
+          }
+          if (desktop && Math.abs(value.getBoundingClientRect().left - headers[index].getBoundingClientRect().left) > 1) {
+            problems.push(`Misaligned ${time.textContent}`);
+          }
+        }
+        if (values[0].getBoundingClientRect().right > values[1].getBoundingClientRect().left + 1) {
+          problems.push("Start and end columns overlap");
+        }
+      }
+      if (document.documentElement.scrollWidth > innerWidth) problems.push("Page overflows horizontally");
+      return problems;
+    });
+    expect(failures, `Agenda layout at ${width}px`).toEqual([]);
+  }
 });
 
 test("all six direct module URLs, order, screenshots, and warnings work", async ({ page }) => {
