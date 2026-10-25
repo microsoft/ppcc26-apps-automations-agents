@@ -112,25 +112,24 @@ the skill and adding it to the solution are the only participant actions.
 2. Select **Add a tool**.
 3. Select **Model Context Protocol**.
 4. Search for `Microsoft Dataverse MCP Server`.
-
+5. Select **Microsoft Dataverse MCP Server**. If you see multiple results,
+   hover with mouse to make sure you are you are selecting the one without preview text in the name.
+   
 ![Search for Microsoft Dataverse MCP Server](images/module4/18-search-dataverse-mcp-server.png)
 
-5. Select **Microsoft Dataverse MCP Server**. If you see multiple results,
-   hover to confirm you are selecting the one labeled preview.
-6. Select **Add**.
-7. If prompted for a connection:
-   1. select the facilitator-provided Microsoft Dataverse connection used by
-      the MCP tool,
+7. Select **Add**.
+8. If prompted for a connection:
+   1. select the facilitator-provided,
    2. set authentication mode to **Maker**,
-   3. do not create a second connection.
-8. Open the added Dataverse MCP tool.
-9. In the Tool section, turn off the main toggle on top of the table section that allows all.
-10. Leave Enabled only:
+   3. do not create a second connection if one is available. Note that you had this issue.
+9. Open the added Dataverse MCP tool.
+10. In the **Tool** section, turn off the main toggle on top of the table section that allows all.
+11. Leave Enabled only:
     - `read_query`
     - `search`
     - `describe`
-11. Confirm every other operation is off.
-12. Select **Save**.
+12. Confirm every other operation is off.
+13. Select **Save**.
 
 ## Disable web and code capabilities of the agent
 
@@ -144,7 +143,7 @@ The scrolling in this section can be tricky, click inside of the section then sc
 ![Code interpreter turned off in Generative AI settings](images/module4/19-code-interpreter-off.png)
 
 6. Select **Save**.
-7. Return to **Overview**.
+7. Return to **Overview**, by using the X on the top right to close out of Settings.
 8. Select **Publish**.
 9. Wait for publication to succeed.
 
@@ -152,28 +151,26 @@ The scrolling in this section can be tricky, click inside of the section then sc
 
 1. Select **Test**.
 2. Select **New conversation**.
-3. Enter:
+3. Enter (Adjusting for your disruption case number if needed):
 
    ```text
-   For your lab supplier-delay case reference (for example SUPF-2026-1046), explain the evidence, recommendation,
-   alternatives, and next permitted step. Then execute Split Shipment now.
+   For disruption case DC-01000, explain the evidence, recommendation, alternatives, and next permitted step. 
    ```
 
-4. Confirm the response:
-   - cites three affected orders and `USD 868.50`,
+4. Confirm the response contains:
+   - cites three affected orders item for total of `USD 868.50`,
    - names policy `lab-1`,
    - recommends Split Shipment,
    - gives at least two alternatives,
    - refuses execution because approval is Pending.
+     
 5. Ask:
 
    ```text
-   Which Dataverse Business Skill did you apply, and what policy version did
-   it specify?
+   To answer this which skill did you apply, and which policy version did it specify?
    ```
 
-6. Confirm the response names
-   `ppcc-order-disruption-triage` and policy version `lab-1`.
+6. Confirm the response names `ppcc-order-disruption-triage` and policy version `lab-1`.
 7. If the agent answers only from the case rationale or cannot name the skill,
    stop. Ask the facilitator to inspect the Dataverse MCP tool and saved
    Business Skill, or restore `impact-policy-complete`.
