@@ -112,21 +112,25 @@ the skill and adding it to the solution are the only participant actions.
 2. Select **Add a tool**.
 3. Select **Model Context Protocol**.
 4. Search for `Microsoft Dataverse MCP Server`.
-5. Select **Microsoft Dataverse MCP Server**. If you see a second one mouse over to make sure you are selecting one with our word "preview" in it.
-7. Select **Add**.
-8. If prompted for a connection:
+
+![Search for Microsoft Dataverse MCP Server](images/module4/18-search-dataverse-mcp-server.png)
+
+5. Select **Microsoft Dataverse MCP Server**. If you see multiple results,
+   hover to confirm you are selecting the one labeled preview.
+6. Select **Add**.
+7. If prompted for a connection:
    1. select the facilitator-provided Microsoft Dataverse connection used by
       the MCP tool,
    2. set authentication mode to **Maker**,
    3. do not create a second connection.
-9. Open the added Dataverse MCP tool.
-10. In the Tool section, turn off the main toggle on top of the table section that allows all.
-11. Leave Enabled only:
+8. Open the added Dataverse MCP tool.
+9. In the Tool section, turn off the main toggle on top of the table section that allows all.
+10. Leave Enabled only:
     - `read_query`
     - `search`
     - `describe`
-12. Confirm every other operation is off.
-13. Select **Save**.
+11. Confirm every other operation is off.
+12. Select **Save**.
 
 ## Disable web and code capabilities of the agent
 
