@@ -15,6 +15,9 @@ You will create one Business Skill and two agents:
    the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
+
+   ![Select Business skills from More menu](images/module4/09-more-business-skills.png)
+
 5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature**, follow these steps:
 
    ![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
