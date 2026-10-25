@@ -69,11 +69,13 @@ the skill and adding it to the solution are the only participant actions.
      select **Power Platform** on the bottom-left, then select **Copilot Studio**.
 
 ![Open Copilot Studio from Power Platform](images/module4/12-open-copilot-studio-from-power-platform.png)
+
 2. Verify that Copilot Studio is set to your workshop **Dev-USER-<UserId>**
    environment. If needed, use the environment picker and switch to your assigned
    Dev environment before continuing.
 
 ![Switch environment in Copilot Studio](images/module4/12a-switch-environment-copilot-studio.png)
+
 3. Select **Other ways to build**.
 
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
