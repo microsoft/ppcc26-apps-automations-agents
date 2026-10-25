@@ -359,6 +359,9 @@ Leave this open and go back to Agent in Copilot Studio and see the **Activity** 
    - a clear boundary that completion of the Agent Feed item is not business approval.
 6. Scroll down in the item and open the related Disruption Case link (or open the
    item directly).
+
+![Open linked Disruption Case from Agent Feed item](images/module4/28-verify-open-disruption-case-link.png)
+
 7. Confirm it opens the linked Disruption Case record for your lab data and the
    **Decision Status** remains **Pending**.
 8. You can also review the **Activity** tab in the agent in Copilot Studio to
