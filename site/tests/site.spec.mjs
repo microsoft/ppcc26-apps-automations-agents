@@ -13,7 +13,7 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   await expect(page).toHaveURL(`${base}/#agenda`);
   const agenda = page.locator("#agenda");
   await expect(agenda.getByRole("heading", { name: "Full-day agenda" })).toBeVisible();
-  await expect(agenda.locator(".agenda-status")).toHaveText("9:00 AM–4:40 PM");
+  await expect(agenda.locator(".agenda-status")).toHaveText("9:00 AM–4:25 PM");
   await expect(agenda.locator(".agenda-row")).toHaveCount(12);
   await expect(agenda.locator(".agenda-columns > span")).toHaveText(["", "Session", "Owner", "Products", "Start", "End"]);
   await expect(agenda.locator(".agenda-duration")).toHaveCount(0);
@@ -26,12 +26,12 @@ test("day agenda is discoverable, complete, and links to every module", async ({
   await expect(agenda.getByRole("heading", { name: "Lunch", exact: true })).toBeVisible();
   await expect(agenda.locator(".agenda-break")).toHaveCount(4);
   await expect(agenda.locator(".agenda-time time").first()).toHaveText("9:00 AM");
-  await expect(agenda.locator(".agenda-time time").last()).toHaveText("4:40 PM");
+  await expect(agenda.locator(".agenda-time time").last()).toHaveText("4:25 PM");
   const timeRanges = [
-    ["9:00 AM", "9:10 AM"], ["9:10 AM", "9:25 AM"], ["9:25 AM", "10:00 AM"],
-    ["10:00 AM", "10:15 AM"], ["10:15 AM", "11:15 AM"], ["11:15 AM", "12:15 PM"],
-    ["12:15 PM", "1:15 PM"], ["1:15 PM", "1:30 PM"], ["1:30 PM", "3:00 PM"],
-    ["3:00 PM", "3:15 PM"], ["3:15 PM", "4:30 PM"], ["4:30 PM", "4:40 PM"]
+    ["9:00 AM", "9:20 AM"], ["9:20 AM", "9:45 AM"], ["9:45 AM", "10:45 AM"],
+    ["10:45 AM", "11:00 AM"], ["11:00 AM", "12:00 PM"], ["12:00 PM", "1:00 PM"],
+    ["1:00 PM", "2:00 PM"], ["2:00 PM", "2:15 PM"], ["2:15 PM", "3:15 PM"],
+    ["3:15 PM", "3:25 PM"], ["3:25 PM", "3:55 PM"], ["3:55 PM", "4:25 PM"]
   ];
   for (let index = 0; index < timeRanges.length; index++) {
     const times = agenda.locator(".agenda-row").nth(index).locator(".agenda-time time");
@@ -39,9 +39,9 @@ test("day agenda is discoverable, complete, and links to every module", async ({
     await expect(times.first()).toBeVisible();
     await expect(times.last()).toBeVisible();
   }
-  await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:40 PM · 5 h 35 min of modules and labs, plus Computer Use wait time");
+  await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:25 PM · 4 h 55 min of modules and labs, plus Computer Use wait time");
   const moduleRows = agenda.locator(".agenda-lab");
-  const owners = ["Oliver", "Adrian", "Rasika", "Nikita", "Jay", "Warren"];
+  const owners = ["Olivier", "Adrian", "Rasika", "Nikita", "Jay", "Warren"];
   for (let index = 0; index < owners.length; index++) {
     await expect(moduleRows.nth(index).locator(".agenda-owner")).toContainText(owners[index]);
   }
