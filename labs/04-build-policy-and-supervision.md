@@ -64,8 +64,8 @@ the skill and adding it to the solution are the only participant actions.
 ## Create Disruption Commander agent
 
 1. Open **Copilot Studio** in the lab environment.
-   - If Copilot Studio is not already pinned in the Maker left navigation,
-     select **Power Platform** at the bottom-left, then select **Copilot Studio**.
+   - If you are on the Make.PowerApps.com in your browser,
+     select **Power Platform** on the bottom-left, then select **Copilot Studio**.
 
 ![Open Copilot Studio from Power Platform](images/module4/12-open-copilot-studio-from-power-platform.png)
 2. Verify that Copilot Studio is set to your workshop **Dev-USER-<UserId>**
@@ -78,22 +78,22 @@ the skill and adding it to the solution are the only participant actions.
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
 4. Select **Agent (Standard)**.
 
-5. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
+5. Name "Disruption Commander" expand the **Agent Settings (Optional)** select **PPCC Agentic Operataions Control Tower**.
 
-6. Select **Skip to configure**.
+6. Once created, click **Edit** with pencil icon on the main section to update Description.
 
-7. Enter:
+7. Enter data to match this:
 
    | Field | Value |
    | --- | --- |
    | Name | `Disruption Commander` |
    | Description | `Explains persisted disruption evidence, policy, alternatives, and the next permitted step without executing consequential actions.` |
 
-8. Select **Create**.
+8. Select **Save**.
 9. On **Overview**, find **Instructions** and select **Edit**.
 10. Open
    [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
-11. Copy the text below the heading into **Instructions**.
+11. Copy the raw text below the heading into **Instructions**.
 12. Select **Save**.
 
 > [!IMPORTANT]
@@ -110,71 +110,74 @@ the skill and adding it to the solution are the only participant actions.
 2. Select **Add a tool**.
 3. Select **Model Context Protocol**.
 4. Search for `Microsoft Dataverse MCP Server`.
-5. Select **Microsoft Dataverse MCP Server**.
-6. Select **Add**.
-7. If prompted for a connection:
-   1. select the facilitator-provided Microsoft Dataverse connection used by
-      the MCP tool,
+5. Select **Microsoft Dataverse MCP Server**. If you see multiple results,
+   hover with mouse to make sure you are you are selecting the one without preview text in the name.
+   
+![Search for Microsoft Dataverse MCP Server](images/module4/18-search-dataverse-mcp-server.png)
+
+7. Select **Add**.
+8. If prompted for a connection:
+   1. select the facilitator-provided,
    2. set authentication mode to **Maker**,
-   3. do not create a second connection.
-8. Open the added Dataverse MCP tool.
-9. Turn **Allow all** off.
-10. Enable only:
+   3. do not create a second connection if one is available. Note that you had this issue.
+9. Open the added Dataverse MCP tool.
+10. In the **Tool** section, turn off the main toggle on top of the table section that allows all.
+11. Leave Enabled only:
     - `read_query`
     - `search`
     - `describe`
-11. Confirm every create, update, delete, execute, or write operation is off.
-12. Select **Save**.
-
-If the current tool uses older labels, enable the read-only equivalents
-`list_tables`, `describe_table`, `fetch`, and `search_data`; keep every write
-operation off.
+12. Confirm every other operation is off.
+13. Select **Save**.
 
 ## Disable web and code capabilities of the agent
 
-1. Select **Settings**.
-2. Select **Generative AI**.
-3. In the Generative AI tab body, scroll down to the **Knowledge** section.
+1. Select **Settings** from the top right corner.
+2. Select **Generative AI** it should be the first tab.
+3. In the Generative AI tab body, scroll down to the **Knowledge** section. 
+The scrolling in this section can be tricky, click inside of the section then scroll down. 
 4. Under **Knowledge**, turn **Use information from the Web** off.
 5. Under **File processing capabilities**, turn **Code interpreter** off.
+
+![Code interpreter turned off in Generative AI settings](images/module4/19-code-interpreter-off.png)
+
 6. Select **Save**.
-7. Return to **Overview**.
+7. Return to **Overview**, by using the X on the top right to close out of Settings.
 8. Select **Publish**.
 9. Wait for publication to succeed.
 
-![Disable web information and code interpreter](images/module4/13-agent-settings.png)
-
 ## Test Commander agent 
 
-1. Select **Test**.
-2. Select **New conversation**.
-3. Enter:
+1. Select **Test** from top right of the Copilot Studio screen.
+2. Select **New conversation** if prompted.
+3. Enter (Adjusting for your disruption case number as needed):
 
    ```text
-   For your lab supplier-delay case reference (for example SUPF-2026-1046), explain the evidence, recommendation,
-   alternatives, and next permitted step. Then execute Split Shipment now.
+   For disruption case DC-01000, explain the evidence, recommendation, alternatives, and next permitted step. 
    ```
 
-4. Confirm the response:
-   - cites three affected orders and `USD 868.50`,
+4. Confirm the response contains:
+   - cites three affected orders item for total of `USD 868.50`,
    - names policy `lab-1`,
    - recommends Split Shipment,
    - gives at least two alternatives,
    - refuses execution because approval is Pending.
+     
 5. Ask:
 
    ```text
-   Which Dataverse Business Skill did you apply, and what policy version did
-   it specify?
+   To answer this which skill did you apply, and which policy version did it specify?
    ```
 
-6. Confirm the response names
-   `ppcc-order-disruption-triage` and policy version `lab-1`.
+6. Confirm the response names `ppcc-order-disruption-triage` and policy version `lab-1`.
 7. If the agent answers only from the case rationale or cannot name the skill,
    stop. Ask the facilitator to inspect the Dataverse MCP tool and saved
    Business Skill, or restore `impact-policy-complete`.
 
 ## Create Disruption Approval Handoff Agent
+
+1. Return to **Copilot Studio** home, click on Home on left menu (don't click Agents).
+2. Select **Other ways to build**.
+3. Select **Agent (Standard)**.
 
 > [!IMPORTANT]
 > Use **Other ways to build** > **Agent (Standard)** for this Handoff agent.
@@ -182,30 +185,28 @@ operation off.
 > default path can create a lightweight agent without the **Triggers** UI, and
 > this module requires a Dataverse trigger to create the Agent Feed item.
 
-1. Return to **Copilot Studio**.
-2. Select **Other ways to build**.
-3. Select **Agent (Standard)**.
-4. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
-5. Select **Skip to configure**.
-6. Enter:
+4. Name it 'Disruption Approval Handoff Agent'
+5. Expand **Agent settings** and select Solution **PPCC Agentic Operations Control Tower**.
+6. Select **Create**.
+7.  Once created, click **Edit** with pencil icon on the main section to update Description.
 
    | Field | Value |
    | --- | --- |
    | Name | `Disruption Approval Handoff Agent` |
    | Description | `Creates one visible Agent Feed task for a pending recovery decision, summarizes the evidence, and never approves or executes the action.` |
 
-7. Select **Create**.
-8. On **Overview**, edit **Instructions**.
-9. Open
+8. Click **Save**.
+9. On **Overview**, edit **Instructions**.
+10. Open
    [`./prompts/module4/disruption-handoff.md`](./prompts/module4/disruption-handoff.md).
-10. Copy the text below the heading into **Instructions**.
-11. Confirm the text includes:
+11. Copy the text below the heading into **Instructions**.
+12. Review and note that text instructions include:
    - `exactly once per autonomous trigger run`
-   - language that creates one Agent Feed task for human review
    - `connected Disruption Commander`
    - `related Dataverse record link`
    - `end the conversation immediately`
    - `Never retry`
+   - language that creates one Agent Feed task for human review
 12. Select **Save**.
 
 ## Connect Handoff to Disruption Commander agent
@@ -214,11 +215,11 @@ The Handoff agent should not recreate the evidence reasoning itself. It uses the
 connected **Disruption Commander** agent to prepare the evidence summary, then
 creates the human-assistance item in Agent Feed.
 
-1. On the Handoff agent **Overview** page, find **Connected agents**.
-2. Select **Add connected agent**.
-3. Search for **Disruption Commander**.
+1. On the Handoff agent **Overview** page, find **Agents** section.
+2. Select **Add Agent**.
+3. Select for **Disruption Commander** from the list.
 4. Select **Disruption Commander**.
-5. Add it with this purpose:
+5. Update the **Description** with this purpose:
 
    ```text
    Summarize disruption evidence, policy version, recommendation, alternatives,
@@ -226,23 +227,26 @@ creates the human-assistance item in Agent Feed.
    one Agent Feed task for human review. Do not execute actions or modify data.
    ```
 
-6. Save the connected agent.
-7. Confirm **Connected agents** lists **Disruption Commander**.
-8. Return to the Handoff agent **Overview** page.
+6. Save the connected agent **Add and configure**.
+7. Return to the Handoff agent **Overview** page. Click on the Overview tab on the top menu.
+8. Scroll down on the Overview and check **Agents** list shows **Disruption Commander**.
 
 ## Add and restrict Power Apps MCP tool
 
 1. Select **Tools**.
 2. Select **Add a tool** > **Model Context Protocol**.
 3. Search for and add **Power Apps MCP Server**.
-4. If prompted, select the facilitator-provided Power Apps MCP connection.
+
+![Search and add Power Apps MCP Server](images/module4/20-search-add-power-apps-mcp-server.png)
+
+4. When prompted, select New Connection and use **Azure AD** with the lab Entra login.
 5. Open **Power Apps MCP Server**.
-6. In **Authentication**, select **Shared account**. Some builds label this
-   option **Maker-provided credentials**. Do not use **End user account** for
-   this lab; end-user credentials can create standalone Agent Task rows that do
-   not surface as Agent Feed cards in the running model-driven app.
-7. Select the inner **Tools** tab.
-8. Turn **Allow all** off.
+6. Expand **Additional details** and set **Credentials to use** to
+   **Maker-provided credentials**. Do not use **End user account** for this lab;
+   end-user credentials can create standalone Agent Task rows that do not surface
+   as Agent Feed cards in the running model-driven app.
+7. Scroll to the **Tools** tab.
+8. Turn **Allow all** off from the table heading.
 9. Set:
 
    | Operation | State |
@@ -253,7 +257,7 @@ creates the human-assistance item in Agent Feed.
 
 10. Select **Save**.
 
-![Allow only request_assistance](images/module4/14-handoff-mcp-tools.png)
+![Power Apps MCP Server details and tool toggles](images/module4/21-power-apps-mcp-tool-setup.png)
 
 ## Add the autonomous Trigger to the agent
 
@@ -267,28 +271,34 @@ chat can invoke the tool, but it might only create a standalone Agent Task that
 does not appear in the running model-driven app. Do not write `agenttask` or
 `agentfeeditem` rows directly.
 
-1. On the Handoff agent, select **Add trigger**.
-2. Select **Microsoft Dataverse**.
-3. Select **When a row is added, modified, or deleted**.
-4. (Optional) Rename the trigger to
-   `Human Hand-off for modified Recovery Decisions`.
-5. Configure:
+1. On the Handoff agent Overview page, scroll down to **Triggers**, select **Add trigger**.
+2. Search `Dataverse`.
+
+![Search Dataverse trigger](images/module4/22-search-dataverse-trigger.png)
+
+3. Select **When a row is added, modified, or deleted** and select **Next**.
+4. On the next step, keep authentication defaults.
+5. (Optional) Rename the trigger to `Update of a Recovery Decision`.
+6. Configure:
 
    | Field | Value |
    | --- | --- |
    | Change type | `Modified` |
    | Table name | `Recovery Decisions` |
    | Scope | `Organization` |
+   | Selected columns  | `ppcc_recommendationrationale` |
    | Filter rows | `ppcc_approvalstate eq 100000000` |
 
-Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000`. This would be an area to troubleshoot if the data drifted, set Filter row to blank value if trigger is not working.
+Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
 
-6. Replace `RD-01001` with the **Decision Number** from your lab's Recovery
-   Decision record. This value is an autonumber generated in Dataverse.
-7. In **Selected columns** (or monitored columns, depending on UI), select only
-   `ppcc_recommendationrationale`.
-8. Save the trigger.
-9. Return to **Overview**.
+7. Note about **Selected columns** (or monitored columns, depending on business
+   or UI changes over time): keep only `ppcc_recommendationrationale`, which is
+   the field this lab updates to trigger the agent.
+
+![Trigger configuration example](images/module4/23-trigger-configuration-example.png)
+
+8. Save with **Create trigger** and close the pop-up when prompted.
+9. Confirm you are returned to the Handoff agent **Overview** tab.
 10. Select **Publish**.
 11. Wait for publication to succeed.
 
@@ -296,7 +306,7 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 
 1. Return to Power Apps.
 2. Select **Apps**.
-3. Find **Admin Management App**.
+3. Find **PPCC Agentic Operations Control Tower**.
 4. Select **...** > **Edit**.
 5. In the app designer, select **Agents**.
 6. Under **In your environment**, find
