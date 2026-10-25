@@ -77,11 +77,15 @@ the skill and adding it to the solution are the only participant actions.
 3. Select **Other ways to build**.
 
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
+
 4. Select **Agent (Standard)**.
 
-5. Name "Disruption Commander" expand the **Agent Settings (Optional)** select **PPCC Agentic Operataions Control Tower**.
+5. Enter `Disruption Commander` for **Name**. Expand
+   **Agent Settings (Optional)** and select
+   **PPCC Agentic Operataions Control Tower**.
 
-6. Once created, click **Edit** with pencil icon on the main section to update Description.
+6. Once created, select **Edit** (pencil icon) on the main section to update
+   **Description**.
 
 7. Enter data to match this:
 
@@ -92,8 +96,7 @@ the skill and adding it to the solution are the only participant actions.
 
 8. Select **Save**.
 9. On **Overview**, find **Instructions** and select **Edit**.
-10. Open
-   [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
+10. Open [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
 11. Copy the raw text below the heading into **Instructions**.
 12. Select **Save**.
 
