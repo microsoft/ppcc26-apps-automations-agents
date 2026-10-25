@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<main id="main" class="reader">
+  <aside class="workshop-sidebar">
+    <details open class="module-navigation"><summary>Workshop modules</summary>
+      <a class="sidebar-setup" href="{{ '/setup/' | relative_url }}">Before you begin <span aria-hidden="true">↗</span></a>
+      <nav aria-label="Module navigation">
+      {% for module in site.data.modules %}
+        <a href="{{ '/labs/' | append: module.slug | append: '/' | relative_url }}"{% if page.module == module.number %} aria-current="page"{% endif %}><span class="sidebar-number">0{{ module.number }}</span><span>{{ module.short }}<small>{{ module.duration }}</small></span></a>
+      {% endfor %}
+      </nav>
+      <a class="sidebar-resources" href="{{ '/resources/' | relative_url }}">Prompts &amp; resources</a>
+    </details>
+  </aside>
+  <article class="lab-article">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Workshop</a><span aria-hidden="true">/</span><a href="{{ '/labs/' | relative_url }}">Modules</a><span aria-hidden="true">/</span><span>Module {{ page.module }}</span></nav>
+    <header class="lab-heading"><p class="eyebrow">MODULE 0{{ page.module }} / 06</p><h1>{{ page.title }}</h1><div class="lab-meta"><span>{{ page.duration }}</span><span>{{ page.product }}</span></div><p class="outcome"><strong>Your outcome</strong> {{ page.outcome }}</p></header>
+    <div class="prose lab-content">{{ content }}</div>
+    <nav class="next-prev" aria-label="Previous and next module">
+      {% if page.previous_module %}<a href="{{ '/labs/' | append: page.previous_module.slug | append: '/' | relative_url }}"><small>← Previous module</small>{{ page.previous_module.short }}</a>{% else %}<a href="{{ '/setup/' | relative_url }}"><small>← Before you begin</small>Environment setup</a>{% endif %}
+      {% if page.next_module %}<a href="{{ '/labs/' | append: page.next_module.slug | append: '/' | relative_url }}"><small>Next module →</small>{{ page.next_module.short }}</a>{% else %}<a href="{{ '/' | relative_url }}"><small>Workshop complete →</small>Back to the overview</a>{% endif %}
+    </nav>
+    <div class="source-links"><a href="https://github.com/{{ site.repository }}/blob/{{ site.source_branch }}/{{ page.source_path }}">View source on GitHub</a><a href="https://github.com/{{ site.repository }}/edit/{{ site.source_branch }}/{{ page.source_path }}">Edit on GitHub</a><a href="https://github.com/{{ site.repository }}/issues/new?title={{ page.title | prepend: '[Workshop] ' | uri_escape }}">Report an issue</a></div>
+  </article>
+  <aside class="page-toc"><details open><summary>On this page</summary><nav aria-label="On this page"><ol>{% for heading in page.headings %}<li class="toc-level-{{ heading.level }}"><a href="#{{ heading.id | escape }}">{{ heading.text | escape }}</a></li>{% endfor %}</ol></nav></details></aside>
+</main>
