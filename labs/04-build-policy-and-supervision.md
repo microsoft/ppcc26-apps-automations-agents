@@ -139,6 +139,9 @@ the skill and adding it to the solution are the only participant actions.
 3. In the Generative AI tab body, scroll down to the **Knowledge** section. The scrolling in this section can be tricky, click inside of the section then scroll down. 
 4. Under **Knowledge**, turn **Use information from the Web** off.
 5. Under **File processing capabilities**, turn **Code interpreter** off.
+
+![Code interpreter turned off in Generative AI settings](images/module4/19-code-interpreter-off.png)
+
 6. Select **Save**.
 7. Return to **Overview**.
 8. Select **Publish**.
