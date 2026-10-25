@@ -64,8 +64,8 @@ the skill and adding it to the solution are the only participant actions.
 ## Create Disruption Commander agent
 
 1. Open **Copilot Studio** in the lab environment.
-   - If Copilot Studio is not already pinned in the Maker left navigation,
-     select **Power Platform** at the bottom-left, then select **Copilot Studio**.
+   - If you are on the Make.PowerApps.com in your browser,
+     select **Power Platform** on the bottom-left, then select **Copilot Studio**.
 
 ![Open Copilot Studio from Power Platform](images/module4/12-open-copilot-studio-from-power-platform.png)
 2. Verify that Copilot Studio is set to your workshop **Dev-USER-<UserId>**
@@ -78,22 +78,24 @@ the skill and adding it to the solution are the only participant actions.
 ![Other ways to build button](images/module4/12b-other-ways-to-build.png)
 4. Select **Agent (Standard)**.
 
-5. If prompted for a solution, select **PPCC Agentic Control Tower Starter**.
+5. Name "Disruption Commander" expand the **Agent Settings (Optional)** select **PPCC Agentic Operataions Control Tower**.
 
-6. Select **Skip to configure**.
+6. Once created, click **Edit** with pencil icon on the main section to update Description.
 
-7. Enter:
+7. Enter data to match this:
 
    | Field | Value |
    | --- | --- |
    | Name | `Disruption Commander` |
    | Description | `Explains persisted disruption evidence, policy, alternatives, and the next permitted step without executing consequential actions.` |
 
-8. Select **Create**.
+   Note: Here is where you can change agent model.
+
+8. Select **Save**.
 9. On **Overview**, find **Instructions** and select **Edit**.
 10. Open
    [`./prompts/module4/disruption-commander.md`](./prompts/module4/disruption-commander.md).
-11. Copy the text below the heading into **Instructions**.
+11. Copy the raw text below the heading into **Instructions**.
 12. Select **Save**.
 
 > [!IMPORTANT]
@@ -110,31 +112,27 @@ the skill and adding it to the solution are the only participant actions.
 2. Select **Add a tool**.
 3. Select **Model Context Protocol**.
 4. Search for `Microsoft Dataverse MCP Server`.
-5. Select **Microsoft Dataverse MCP Server**.
-6. Select **Add**.
-7. If prompted for a connection:
+5. Select **Microsoft Dataverse MCP Server**. If you see a second one mouse over to make sure you are selecting one with our word "preview" in it.
+7. Select **Add**.
+8. If prompted for a connection:
    1. select the facilitator-provided Microsoft Dataverse connection used by
       the MCP tool,
    2. set authentication mode to **Maker**,
    3. do not create a second connection.
-8. Open the added Dataverse MCP tool.
-9. Turn **Allow all** off.
-10. Enable only:
+9. Open the added Dataverse MCP tool.
+10. In the Tool section, turn off the main toggle on top of the table section that allows all.
+11. Leave Enabled only:
     - `read_query`
     - `search`
     - `describe`
-11. Confirm every create, update, delete, execute, or write operation is off.
-12. Select **Save**.
-
-If the current tool uses older labels, enable the read-only equivalents
-`list_tables`, `describe_table`, `fetch`, and `search_data`; keep every write
-operation off.
+12. Confirm every other operation is off.
+13. Select **Save**.
 
 ## Disable web and code capabilities of the agent
 
-1. Select **Settings**.
-2. Select **Generative AI**.
-3. In the Generative AI tab body, scroll down to the **Knowledge** section.
+1. Select **Settings** from the top right corner.
+2. Select **Generative AI** it should be the first tab.
+3. In the Generative AI tab body, scroll down to the **Knowledge** section. The scrolling in this section can be tricky, click inside of the section then scroll down. 
 4. Under **Knowledge**, turn **Use information from the Web** off.
 5. Under **File processing capabilities**, turn **Code interpreter** off.
 6. Select **Save**.
