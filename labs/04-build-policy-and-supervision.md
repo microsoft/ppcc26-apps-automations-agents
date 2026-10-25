@@ -272,11 +272,14 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 `agentfeeditem` rows directly.
 
 1. On the Handoff agent Overview page, scroll down to **Triggers**, select **Add trigger**.
-2. Search 'Dataverse'.
-3. Select **When a row is added, modified, or deleted** click Next.
-4. On next step authetniction should be kept at defaults. 
-(Optional) Rename the trigger to `Update of a Recovery Decision`.
-5. Configure:
+2. Search `Dataverse`.
+
+![Search Dataverse trigger](images/module4/22-search-dataverse-trigger.png)
+
+3. Select **When a row is added, modified, or deleted** and select **Next**.
+4. On the next step, keep authentication defaults.
+5. (Optional) Rename the trigger to `Update of a Recovery Decision`.
+6. Configure:
 
    | Field | Value |
    | --- | --- |
@@ -288,10 +291,14 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 
 Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
 
-7. Note about **Selected columns** (or monitored columns, depending on business or UI changes over time), for now we selected only
-   `ppcc_recommendationrationale` which we will update in the App to trigger this Agent.
-8. Save with **Create trigger** and Close the pop-up when one.
-9. You should be returned to main **Overview** tab for Handoff agent.
+7. Note about **Selected columns** (or monitored columns, depending on business
+   or UI changes over time): keep only `ppcc_recommendationrationale`, which is
+   the field this lab updates to trigger the agent.
+
+![Trigger configuration example](images/module4/23-trigger-configuration-example.png)
+
+8. Save with **Create trigger** and close the pop-up when prompted.
+9. Confirm you are returned to the Handoff agent **Overview** tab.
 10. Select **Publish**.
 11. Wait for publication to succeed.
 
