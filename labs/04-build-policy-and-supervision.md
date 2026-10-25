@@ -335,28 +335,12 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 
 ![Recovery Decision associated view with Decision Number](images/module4/17-recovery-decision-associated-view.png)
 
-5. Set **Recommendation Rationale** to:
-
-   ```text
-   Create one visible Agent Feed task for the disruption case Supplier delay -Northwind Traders Clam Chowder / SPLIT_SHIPMENT.
-
-   The task must appear as a Needs attention item in the model-driven app Agent Feed. Do not only create a standalone Agent Task row.
-
-   Include a related Dataverse record link that opens the Disruption Case record directly from Agent Feed.
-
-   Title: Supplier delay -Northwind Traders Clam Chowder: Review requested action SPLIT_SHIPMENT
-
-   Description: Review supplier-delay recovery recommendation. Evidence: 3 impacted Northwind orders totaling USD 868.50; policy lab-1; recommended action Split Shipment; alternative Expedite Reorder. Approval remains Pending in the PPCC Impacted Orders Control Tower.
-   ```
-
-   If your case title differs, keep the same structure and replace only the case
-   title text.
-
-6. Confirm **Approval State** remains **Pending** in the **Human decision** tab.
-7. Select **Save** once.
-8. Wait for the autonomous Handoff agent run to complete.
-9. Do not save the row again or modify another field to retry. 
-
+5. Update any text **Recommendation Rationale** you could just add a exra . or space
+6. In the **Human decision** tab - confirm **Approval State** remains **Pending**.
+7. Select **Save** button once.
+8. Do not save the row again or modify another field to retry. 
+9. Wait for the autonomous Handoff agent run to complete, we will switch apps - you don't need to wait on this screen.
+ 
 ## Verify Agent Feed alert
 
 1. Open **PPCC Agentic Operations Control Tower** (if you closed it).
