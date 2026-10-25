@@ -15,15 +15,18 @@ You will create one Business Skill and two agents:
    the number in your workshop account (`odl_user_<UserId>@...`).
 3. In the left navigation, select **More**.
 4. Select **Business skills**.
-5. If you see **Business skills (preview)** with **Turn on Work IQ setting to use this feature** 
+5. If you see this message **Turn on Work IQ setting to use this feature**
+   
 ![Business Skills requires Work IQ](images/module4/09-business-skills-workiq-required.png)
-please follow these steps:
-   1. Select **Power Platform Admin Center**.
-   2. In environment settings, open **Work IQ**.
-   3. Turn on **Turn on Business Applications in Work IQ**.
-      ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
-   5. Select **Apply**.
-   6. Return to your maker tab and open **Business skills** again.
+
+   Please follow these steps only if you are seeing this message:
+      1. Select **Power Platform Admin Center**.
+      2. In environment settings, open **Work IQ**.
+      3. Turn on **Turn on Business Applications in Work IQ**.
+         ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
+      5. Select **Apply**.
+      6. Return to your maker tab and open **Business skills** again.
+      
 6. Select **Create skill**.
 7. Set:
 
@@ -32,10 +35,8 @@ please follow these steps:
    | Name | `ppcc-order-disruption-triage` |
    | Description | `Use this skill when a supplier delay, inventory shortage, or shipment risk may affect open Northwind customer orders.` |
 
-8. Open
-   [`./prompts/module4/ppcc-order-disruption-triage.md`](./prompts/module4/ppcc-order-disruption-triage.md).
-9. Copy from `# Order disruption triage` through the end of the file. Do not
-   copy the YAML metadata above the heading.
+8. Open [`./prompts/module4/ppcc-order-disruption-triage.md`](./prompts/module4/ppcc-order-disruption-triage.md).
+9. Copy from `# Order disruption triage` through the end of the file. 
 10. Paste the copied content into **Instructions**.
 11. Select **Preview**.
 12. Confirm the preview contains:
