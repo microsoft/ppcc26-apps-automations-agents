@@ -325,6 +325,9 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 3. Search for the disruption case created earlier in your lab, such as
    `Supplier delay -Northwind Traders Clam Chowder` or `DC-01000` (equivalent case in
    your dataset), then select **Open case form**.
+
+![Search disruption case and open case form](images/module4/25-search-disruption-case-open-form.png)
+
 4. On the case form, open **Related** > **Recovery Decision** and select the
    current Pending decision for that case (for example, `RD-01001`).
 
