@@ -316,6 +316,8 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    **Ready to generate tasks**.
 10. Select **Save and Publish** icon on top right screen next to play icon (you will click that Play icon after the publish completes).
 
+![Add Handoff agent to Agent feed](images/module4/24-add-handoff-agent-to-feed.png)
+
 ## Create triggering event for the Handoff to human
 
 1. Open **PPCC Agentic Operations Control Tower** from App list in Power Apps (or hit play if you are still on the previous edit screen).
