@@ -1,0 +1,50 @@
+---
+layout: default
+title: "Build intelligent business processes"
+---
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="live-dot"></span> PPCC 2026 / HANDS-ON WORKSHOP</p>
+      <h1>Apps. Automations.<br><span>Agents.</span><br>One intelligent process.</h1>
+      <p class="hero-description">Build an Agentic Operations Control Tower. Bring apps, cloud flows, and supervised agents together to turn a supplier disruption into a governed recovery.</p>
+      <div class="hero-actions"><a class="button button-primary" href="{{ '/setup/' | relative_url }}">Prepare your environment <span aria-hidden="true">→</span></a><a class="button button-ghost" href="{{ '/labs/01-open-and-orient/' | relative_url }}">Start Module 1 <span aria-hidden="true">↗</span></a></div>
+      <p class="hero-note">Power Apps · Power Automate · Copilot Studio · Dataverse</p>
+    </div>
+    <div class="process-art" role="img" aria-label="A supplier delay moves through an app and automation, then supervised agent reasoning and recovery, with Dataverse connecting the process.">
+      <div class="art-label">THE CONNECTED PROCESS</div>
+      <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+      <div class="process-node node-app"><span class="node-symbol">▦</span><span><small>01 / EXPERIENCE</small><strong>Apps</strong></span><span class="node-state">Connected</span></div>
+      <div class="process-node node-flow"><span class="node-symbol">⇄</span><span><small>02 / ORCHESTRATION</small><strong>Automations</strong></span></div>
+      <div class="process-node node-agent"><span class="node-symbol">✧</span><span><small>03 / REASONING</small><strong>Agents</strong></span><span class="approval-tag">Human supervised</span></div>
+      <div class="data-foundation"><span aria-hidden="true">◉</span> Dataverse <small>One shared business context</small></div>
+      <div class="art-caption"><span class="live-dot"></span> From disruption to governed recovery</div>
+    </div>
+  </section>
+  <section class="metrics" aria-label="Workshop at a glance">
+    <div><strong>06</strong><span>Connected modules</span></div><div><strong>~6.1<span>h</span></strong><span>Hands-on lab content</span></div><div><strong>04</strong><span>Power Platform products</span></div><div><strong>01</strong><span>End-to-end scenario</span></div>
+  </section>
+  <div class="content-wrap">
+    <section class="intro-section" aria-labelledby="build-heading">
+      <div><p class="eyebrow">THE MISSION</p><h2 id="build-heading">Don't just build a demo.<br>Connect the whole process.</h2></div>
+      <div><p>A supplier delay puts orders at risk. Your job: make the impact visible, apply business policy, bring a human into the decision, and orchestrate recovery.</p><p>Each module adds a piece to the same Control Tower, from your app experience to the final deployment and replay.</p><a class="text-link" href="{{ '/labs/' | relative_url }}">Explore the learning journey <span aria-hidden="true">→</span></a></div>
+    </section>
+    <section class="journey-section" aria-labelledby="journey-heading">
+      <div class="section-heading"><div><p class="eyebrow">YOUR LEARNING JOURNEY</p><h2 id="journey-heading">Six modules. One connected story.</h2></div><span class="section-note">Follow in order · Build as you go</span></div>
+      <div class="module-grid">
+      {% for module in site.data.modules %}
+        <a class="module-card" href="{{ '/labs/' | append: module.slug | append: '/' | relative_url }}">
+          <div class="card-top"><span class="module-number">0{{ module.number }}</span><span class="duration">{{ module.duration }}</span></div>
+          <p class="product-label">{{ module.product }}</p><h3>{{ module.short }}</h3><p>{{ module.description }}</p>
+          <span class="card-bottom">Explore module <span aria-hidden="true">↗</span></span>
+        </a>
+      {% endfor %}
+      </div>
+      <p class="timing-note">Lab estimates total 6 hours 5–10 minutes. VM setup, deployment/recovery time, breaks, and Q&amp;A are additional. Module 2 is not required to continue to Module 3.</p>
+    </section>
+    <section class="ready-banner">
+      <div><p class="eyebrow">BEFORE YOU BEGIN</p><h2>A little preparation.<br>A smoother workshop.</h2><p>Use your assigned workshop account, VM, and environments. Your facilitator provides access details.</p></div>
+      <div><a class="button button-dark" href="{{ '/setup/' | relative_url }}">Check your setup <span aria-hidden="true">→</span></a><a class="text-link" href="{{ '/solutions/' | relative_url }}">About solution resources <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </div>
+</main>

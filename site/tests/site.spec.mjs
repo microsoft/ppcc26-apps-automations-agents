@@ -1,0 +1,119 @@
+import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+const base = "/ppcc26-apps-automations-agents";
+const modules = [
+  "01-open-and-orient", "02-build-control-tower", "03-build-intake-and-impact-cloud-flows",
+  "04-build-policy-and-supervision", "05-configure-recovery-and-cua", "06-run-deploy-and-replay"
+];
+
+test("all six direct module URLs, order, screenshots, and warnings work", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  for (let index = 0; index < modules.length; index++) {
+    const response = await page.goto(`${base}/labs/${modules[index]}/`);
+    expect(response.status()).toBe(200);
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator(".module-navigation [aria-current]")).toContainText(`0${index + 1}`);
+    if (index < modules.length - 1) {
+      await expect(page.locator(".next-prev a").last()).toHaveAttribute("href", `${base}/labs/${modules[index + 1]}/`);
+    }
+    expect(await page.locator(".lab-content").innerText()).not.toContain("[!CAUTION]");
+    for (const image of await page.locator(".lab-content img").all()) {
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+test("search covers every module, no-results state, and keyboard close", async ({ page }) => {
+  await page.goto(`${base}/`);
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  const input = page.getByRole("searchbox");
+  const index = await (await page.request.get(`${base}/search.json`)).json();
+  for (const slug of modules) {
+    const entry = index.find(item => item.url === `${base}/labs/${slug}/`);
+    expect(entry).toBeTruthy();
+    const phrase = entry.text.match(/[A-Za-z][A-Za-z -]{30,70}/)[0].trim();
+    await input.fill(phrase);
+    await expect(page.locator("#search-results a").filter({ hasText: entry.title })).toBeVisible();
+  }
+  await input.fill("thisworddoesnotexistintheworkshop");
+  await expect(page.locator("#search-status")).toContainText("No results");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(page.getByRole("button", { name: "Search", exact: true })).toBeFocused();
+});
+
+test("search failures are explicit and retryable", async ({ page }) => {
+  await page.route("**/search.json", route => route.fulfill({ status: 503, body: "Unavailable" }));
+  await page.goto(`${base}/`);
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(page.locator("#search-status")).toContainText("Search is unavailable");
+  await page.getByRole("button", { name: "Close search" }).click();
+  await page.unroute("**/search.json");
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await page.getByRole("searchbox").fill("supplier");
+  await expect(page.locator("#search-results li").first()).toBeVisible();
+});
+
+test("copy controls preserve exact prompt text and report denied clipboard access", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto(`${base}/labs/${modules[2]}/`);
+  const code = page.locator(".lab-content pre > code").first();
+  const expected = await code.textContent();
+  await page.evaluate(() => {
+    const write = navigator.clipboard.writeText.bind(navigator.clipboard);
+    navigator.clipboard.writeText = text => { window.copiedText = text; return write(text); };
+  });
+  const copy = code.locator("..").getByRole("button", { name: "Copy code or prompt" });
+  await copy.click();
+  await expect(copy).toHaveText("Copied");
+  expect(await page.evaluate(() => window.copiedText)).toBe(expected);
+  expect((await page.evaluate(() => navigator.clipboard.readText())).replace(/\r\n/g, "\n")).toBe(expected);
+  await page.evaluate(() => {
+    navigator.clipboard.writeText = () => Promise.reject(new Error("Permission denied"));
+  });
+  await copy.click();
+  await expect(copy).toHaveText("Copy failed");
+  await expect(page.locator("#copy-status")).toContainText("Select and copy the text manually");
+});
+
+for (const route of ["/", "/setup/", `/labs/${modules[2]}/`]) {
+  test(`accessibility: ${route}`, async ({ page }) => {
+    await page.goto(`${base}${route}`);
+    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
+    expect(results.violations.filter(item => ["critical", "serious"].includes(item.impact))).toEqual([]);
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+  });
+}
+
+test("375px mobile navigation and pages do not overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  for (const route of ["/", "/setup/", "/resources/", ...modules.map(slug => `/labs/${slug}/`)]) {
+    await page.goto(`${base}${route}`);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await page.goto(`${base}/`);
+  await page.getByRole("button", { name: "Menu", exact: true }).click();
+  await expect(page.getByRole("navigation", { name: "Primary navigation" })).toBeVisible();
+  await page.getByRole("link", { name: "Get ready", exact: true }).click();
+  await expect(page).toHaveURL(`${base}/setup/`);
+});
+
+test("prompt downloads and missing-page recovery work", async ({ page }) => {
+  await page.goto(`${base}/resources/`);
+  const links = await page.locator(".resource-card a[download]").all();
+  expect(links.length).toBe(5);
+  for (const link of links) {
+    const response = await page.request.get(await link.getAttribute("href"));
+    expect(response.ok()).toBe(true);
+    expect((await response.body()).length).toBeGreaterThan(100);
+  }
+  const response = await page.goto(`${base}/not-a-page/`);
+  expect(response.status()).toBe(404);
+  await page.getByRole("link", { name: "Back to the workshop" }).click();
+  await expect(page).toHaveURL(`${base}/`);
+});

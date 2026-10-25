@@ -1,0 +1,36 @@
+title: "Apps, Automations & Agents"
+description: "Build intelligent business processes in this hands-on PPCC 2026 Power Platform workshop."
+url: "https://microsoft.github.io"
+baseurl: "/ppcc26-apps-automations-agents"
+repository: "microsoft/ppcc26-apps-automations-agents"
+source_branch: "main"
+theme: minimal-mistakes-jekyll
+markdown: kramdown
+highlighter: rouge
+sass:
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
+    - slash-div
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - scripts
+  - tests
+  - vendor
+  - test-results
+  - package.json
+  - package-lock.json
+  - playwright.config.mjs
+  - node_modules
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

@@ -1,0 +1,26 @@
+---
+---
+@import "minimal-mistakes/skins/air";
+@import "minimal-mistakes/variables";
+$base00: #f1f4f9;
+$base01: #e3e8ef;
+$base02: #c9d2e3;
+$base03: #55647b;
+$base04: #526178;
+$base05: #17243b;
+$base06: #17243b;
+$base07: #17243b;
+$base08: #9e2542;
+$base09: #87420b;
+$base0a: #735010;
+$base0b: #246235;
+$base0c: #00676b;
+$base0d: #244da3;
+$base0e: #7344a0;
+$base0f: #8e3646;
+@import "minimal-mistakes/syntax";
+
+.module-number { color: #5f7193; }
+.sidebar-number { opacity: 1; }
+.prose .highlight { background: #f1f4f9; color: #17243b; }
+.prose pre code { font-size: 13px; }
