@@ -277,8 +277,7 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 ![Search Dataverse trigger](images/module4/22-search-dataverse-trigger.png)
 
 3. Select **When a row is added, modified, or deleted** and select **Next**.
-4. On the next step, keep authentication defaults.
-5. (Optional) Rename the trigger to `Update of a Recovery Decision`.
+4. On the next step, keep authentication defaults. (Suggested) Rename the trigger to `Update of a Recovery Decision`.
 6. Configure:
 
    | Field | Value |
@@ -289,11 +288,11 @@ does not appear in the running model-driven app. Do not write `agenttask` or
    | Selected columns  | `ppcc_recommendationrationale` |
    | Filter rows | `ppcc_approvalstate eq 100000000` |
 
-Note: As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
-
 7. Note about **Selected columns** (or monitored columns, depending on business
-   or UI changes over time): keep only `ppcc_recommendationrationale`, which is
-   the field this lab updates to trigger the agent.
+   or UI changes over time) we use `ppcc_recommendationrationale`, which is
+   the field this lab will ask you to update in the app to trigger the agent.
+
+8.  Note about **Filter rows** As your policies evolve above in the filter rows you could use a more specific filter like `ppcc_decisionnumber eq 'RD-01000' and ppcc_approvalstate eq 100000000` you can add more approval statuses by looking up their state code values in Power Apps maker experience. This would be an area to troubleshoot by clearing the Filter to blank value, if trigger is not working.
 
 ![Trigger configuration example](images/module4/23-trigger-configuration-example.png)
 
@@ -315,14 +314,14 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 8. Select **Add to feed**.
 9. Confirm it appears under **Agent feed** and shows
    **Ready to generate tasks**.
-10. Select **Save and Publish**.
+10. Select **Save and Publish** icon on top right screen next to play icon (you will click that Play icon after the publish completes).
 
 ## Create triggering event for the Handoff to human
 
-1. Open **PPCC Agentic Operations Control Tower**.
-2. Open **Control Tower Home**.
-3. Open the disruption case created in your lab, such as
-   `Supplier delay -Northwind Traders Clam Chowder` (or the equivalent case in
+1. Open **PPCC Agentic Operations Control Tower** from App list in Power Apps (or hit play if you are still on the previous edit screen).
+2. Open **Control Tower Home** menu item (should be opened by default).
+3. Search for the disruption case created earlier in your lab, such as
+   `Supplier delay -Northwind Traders Clam Chowder` or `DC-01000` (equivalent case in
    your dataset), then select **Open case form**.
 4. On the case form, open **Related** > **Recovery Decision** and select the
    current Pending decision for that case (for example, `RD-01001`).
@@ -355,8 +354,8 @@ Note: As your policies evolve above in the filter rows you could use a more spec
 
 ## Verify Agent Feed alert
 
-1. Open **PPCC Agentic Operations Control Tower**.
-2. Select **Agent feed**. You can filter by **Needs attention** tab. 
+1. Open **PPCC Agentic Operations Control Tower** (if you closed it).
+2. Select **Agent feed**. You can filter by **Needs attention** tab. (If you do not see Agent Feed - please refresh the browser.)
 3. This might take a bit for an item to show up here. 
 Leave this open and go back to Agent in Copilot Studio and see the **Activity** tab where you can see running items reviewing exact steps the agent is taking. If you run into issues, check Power Apps MCP authentication, and whether `request_assistance` created a visible Agent Feed task, double check the correct Agent was added in the App - know that Disruption Commander agent does not work you need Disruption Handoff agent, an easy mistake to make.
 4. Confirm exactly one new item appears for the same case/decision you updated.
