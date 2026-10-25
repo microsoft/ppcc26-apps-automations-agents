@@ -345,6 +345,9 @@ does not appear in the running model-driven app. Do not write `agenttask` or
 
 1. Open **PPCC Agentic Operations Control Tower** (if you closed it).
 2. Select **Agent feed**. You can filter by **Needs attention** tab. (If you do not see Agent Feed - please refresh the browser.)
+
+![Agent Feed needs attention item](images/module4/27-verify-agent-feed-alert.png)
+
 3. This might take a bit for an item to show up here. 
 Leave this open and go back to Agent in Copilot Studio and see the **Activity** tab where you can see running items reviewing exact steps the agent is taking. If you run into issues, check Power Apps MCP authentication, and whether `request_assistance` created a visible Agent Feed task, double check the correct Agent was added in the App - know that Disruption Commander agent does not work you need Disruption Handoff agent, an easy mistake to make.
 4. Confirm exactly one new item appears for the same case/decision you updated.
