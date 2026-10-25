@@ -136,7 +136,8 @@ the skill and adding it to the solution are the only participant actions.
 
 1. Select **Settings** from the top right corner.
 2. Select **Generative AI** it should be the first tab.
-3. In the Generative AI tab body, scroll down to the **Knowledge** section. The scrolling in this section can be tricky, click inside of the section then scroll down. 
+3. In the Generative AI tab body, scroll down to the **Knowledge** section. 
+The scrolling in this section can be tricky, click inside of the section then scroll down. 
 4. Under **Knowledge**, turn **Use information from the Web** off.
 5. Under **File processing capabilities**, turn **Code interpreter** off.
 
@@ -146,8 +147,6 @@ the skill and adding it to the solution are the only participant actions.
 7. Return to **Overview**.
 8. Select **Publish**.
 9. Wait for publication to succeed.
-
-![Disable web information and code interpreter](images/module4/13-agent-settings.png)
 
 ## Test Commander agent 
 
