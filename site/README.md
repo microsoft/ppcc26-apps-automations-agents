@@ -60,8 +60,9 @@ Do not place credentials or attendee data anywhere in the site source.
 
 ## Publishing
 
-The workflow in `../.github/workflows/pages.yml` builds and tests pull requests;
-only a successful run on `main` can deploy.
+The workflow in `../.github/workflows/pages.yml` builds and tests pull requests.
+A successful push run on `main` or `site/github-pages` can deploy; pull requests
+cannot deploy. Both branches target the same public Pages site, not separate previews.
 
 A repository administrator must first enable **Settings > Pages > Build and
 deployment > Source: GitHub Actions**, subject to organization policy.
@@ -70,7 +71,13 @@ The intended production address is:
 <https://microsoft.github.io/ppcc26-apps-automations-agents/>
 
 No repository settings are changed by the build. Local implementation does not
-publish anything; push/merge and Pages enablement are separate operations.
+publish anything; a push to an allowed branch and Pages enablement are separate
+operations. The `github-pages` environment must permit the deployment branch.
+
+To publish without merging the site PR, push to `site/github-pages`. Its push
+trigger builds and deploys without requiring a workflow file on `main`. Manual
+workflow dispatch is available once GitHub recognizes the workflow on the default
+branch; it is not needed for the branch-publishing path.
 
 The base path is configured in `_config.yml`. Keep preview-server and browser
 test paths aligned if the repository name changes. Use production-base-path

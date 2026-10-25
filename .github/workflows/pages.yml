@@ -2,7 +2,7 @@ name: Workshop site
 
 on:
   push:
-    branches: [main]
+    branches: [main, site/github-pages]
   pull_request:
   workflow_dispatch:
 
@@ -43,7 +43,7 @@ jobs:
           path: site/_site
 
   deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/site/github-pages')
     needs: build
     runs-on: ubuntu-latest
     permissions:
