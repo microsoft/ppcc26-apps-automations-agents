@@ -360,6 +360,9 @@ Leave this open and go back to Agent in Copilot Studio and see the **Activity** 
    **Decision Status** remains **Pending**.
 8. You can also review the **Activity** tab in the agent in Copilot Studio to
    troubleshoot or review exact steps the agent took.
+
+![Handoff agent Activity tab](images/module4/26-handoff-agent-activity-tab.png)
+
 9. Leave the task open for Module 6.
 
 ## Checkpoint
