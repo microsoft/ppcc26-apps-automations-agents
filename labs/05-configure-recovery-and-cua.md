@@ -865,12 +865,10 @@ Figure: Deterministic recovery, review-task completion, and unsent drafts preced
    Figure: The separate scope handles action failures and timeouts without reading child response fields.
 
 > [!IMPORTANT]
-> An earlier prepared parent may run **Carrier verified** after a failed or
-> timed-out child call and omit **Carrier call failed**. That configuration
-> is not the completed lab outcome. Add the separate failure scope and set
-> the success-only condition run-after as described above before the
-> consequential test in Module 6. An absent child response is not a normal
-> returned ambiguity result.
+> **Before continuing to Module 6:** Confirm that **Carrier verified** runs
+> only after the child succeeds, and **Carrier call failed** runs only after
+> the child fails or times out. The failure scope must use action-level
+> diagnostics and must not create CP7 or resolve the case.
 
 Do not create CP7 in the False branch. Do not resolve the case merely because
 the child flow returned.
