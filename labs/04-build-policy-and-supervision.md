@@ -236,10 +236,15 @@ creates the human-assistance item in Agent Feed.
 1. Select **Tools**.
 2. Select **Add a tool** > **Model Context Protocol**.
 3. Search for and add **Power Apps MCP Server**.
-4. When prompted, select New Connection and use **Azure AD** use the lab Entra login.
-5. Once saved **Power Apps MCP Server**.
-6. Expand the **Additional details** section and select **Credential to use** change to **Maker-provided credentials**. Do not use **End user account** for
-   this lab; end-user credentials can create standalone Agent Task rows that do not surface as Agent Feed cards in the running model-driven app.
+
+![Search and add Power Apps MCP Server](images/module4/20-search-add-power-apps-mcp-server.png)
+
+4. When prompted, select New Connection and use **Azure AD** with the lab Entra login.
+5. Open **Power Apps MCP Server**.
+6. Expand **Additional details** and set **Credentials to use** to
+   **Maker-provided credentials**. Do not use **End user account** for this lab;
+   end-user credentials can create standalone Agent Task rows that do not surface
+   as Agent Feed cards in the running model-driven app.
 7. Scroll to the **Tools** tab.
 8. Turn **Allow all** off from the table heading.
 9. Set:
@@ -251,6 +256,8 @@ creates the human-assistance item in Agent Feed.
    | `invoke_data_entry` | Off |
 
 10. Select **Save**.
+
+![Power Apps MCP Server details and tool toggles](images/module4/21-power-apps-mcp-tool-setup.png)
 
 ![Allow only request_assistance](images/module4/14-handoff-mcp-tools.png)
 
