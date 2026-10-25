@@ -26,9 +26,12 @@ app**, rather than create a separate application:
 | **Comparison view** | Show alternatives side by side so analysts can weigh delivery timing against additional cost. |
 | **Navigation entry** | Make the new capability available within the app the operations team already uses. |
 
-App Builder creates two illustrative offers so you can immediately try the
-comparison. You will review the proposed changes before they are applied
-and verify that the original app and business records remain intact.
+The workshop already contains the disruption case and related business
+data. After you approve the plan, App Builder creates two example Supplier
+Recovery Offers linked to that existing case so you can try the comparison.
+You do not import or enter these offers yourself. You will review the
+proposed changes before they are applied and verify that the original app
+and business records remain intact.
 
 ### How this fits the workshop
 
@@ -38,7 +41,7 @@ and human supervision; Module 5 builds the approval-gated execution path;
 and Module 6 brings those capabilities together through approval,
 deployment, and verified recovery.
 
-The illustrative offers are not automatically consumed by the later flows
+The example offers are not automatically consumed by the later flows
 or agents. **Shortlisting an offer is not approval:** this module does not
 authorize recovery, contact a supplier, or start execution.
 
@@ -100,7 +103,7 @@ Continue inside your workshop VM, using the extracted files from Module 1.
    > This is the folder you extracted and renamed in Module 1, not the
    > downloaded ZIP file.
 
-   ![VS Code open folder](images\module2\01-vscode-open-folder.png)
+   ![VS Code open folder](images/module2/01-vscode-open-folder.png)
 
 3. If VS Code shows a **Restricted Mode** banner, select **Manage**.
    In **Workspace Trust**, select **Trust** under **In a Trusted Folder**.
@@ -357,7 +360,13 @@ recovery guidance; for a fresh run, continue to Step 4.
 Do not rerun against another environment using the same downloaded app
 files; use a fresh, separately named workspace for each environment.
 
-## Step 4: Review and approve
+## Step 4: Review and approve the app changes
+
+You are reviewing App Builder's proposed changes to the existing app,
+recorded in `review-plan.md`: the new offer table, form, views, navigation,
+and two example offers. Approving this plan authorizes those app changes
+in your assigned DEV environment, subject to the required safety checks.
+It does **not** approve a supplier offer or authorize recovery execution.
 
 When Copilot finishes preparing the review plan, you should see an approval
 prompt like the one below, with the path to `review-plan.md`. Leave the
@@ -384,7 +393,7 @@ writes.
 
 These are the intended design, not a reason to halt for minor polish.
 Proceed with documented limitations when the table, form, comparison, and
-approved sample data work safely. Cosmetic details, descriptions, exact
+approved example offers work safely. Cosmetic details, descriptions, exact
 layout/sorting, icon application, and default-view enrichment are
 non-blocking; do not expand the build to repair them.
 
@@ -399,13 +408,13 @@ table. If required information is missing or unclear, ask Copilot to update
 | Table | Offer Name, case lookup, promised ship date, quantity, cost, three-value status, optional notes |
 | UI | One Supplier Recovery Offer Main form, one Active-offer view, one navigation entry displaying the table's document-with-price-tag Fluent-style SVG icon |
 | Icon verification | Builder reads back the icon web resource and table/navigation assignments; existing icons preserved |
-| Polish | Purposeful descriptions on new components; full-width, three-row Analyst Notes; sample notes explain earlier/higher-cost versus later/lower-cost alternatives |
-| Sample data | Exactly two specified offers; same verified seeded Supplier F / Clam Chowder case and active USD; explicit Received status, quantities/costs, and recorded VM-date +3/+7 calendar dates |
+| Polish | Purposeful descriptions on new components; full-width, three-row Analyst Notes; example-offer notes explain earlier/higher-cost versus later/lower-cost alternatives |
+| Example offers | Exactly two specified offers created by App Builder; linked to the existing, verified Supplier F / Clam Chowder case and active USD; explicit Received status, quantities/costs, and recorded VM-date +3/+7 calendar dates |
 | View selection | Navigation opens the offer table; comparison view is selectable; manual selection is allowed |
 | Default list | Active Supplier Recovery Offers includes all six comparison fields and its Active filter; extra existing columns may remain; exact order and saved sorting are not required there; separate comparison view retained for those guarantees |
 | Preservation | Original app/page/components/data/roles retained; necessary maintenance writes identified |
 | Participant review | A short walkthrough of the new view, form, offer comparison, and information-only boundary |
-| Not requested | No case grid, second view, new roles, validation plug-in, automation, export, additional sample rows, or seed-record edits |
+| Not requested | No case grid, second view, new roles, validation plug-in, automation, export, additional example offers, or edits to existing workshop records |
 | Authority | Offers cannot approve or execute recovery |
 
 The skill may require intermediate reviews. Use the supplied requirements
@@ -423,11 +432,13 @@ approval prompt, select **Yes** and press **Enter** to approve the build.
 
 ![Copilot build approval prompt with Yes highlighted.](images/module2/26-copilot-approve-build.png)
 
-After approval, Copilot starts applying the schema without sample data, as
-shown below. The build will take a while from this point. Wait while Copilot
-shows **Working**; do not submit the request again.
+After approval, Copilot first creates the table, form, and view without
+adding offer records, as shown below. After checking the relationship safety
+settings, it creates the two example offers. The build will take a while
+from this point. Wait while Copilot shows **Working**; do not submit the
+request again.
 
-![Copilot confirming approval and running the schema stage without samples, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
+![Copilot confirming approval and creating the table and app components before adding the example offers, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
 
 Let the agent build,
 verify the schema-only relationship safety gate, create the two approved
@@ -446,7 +457,7 @@ limitations rather than blocking the walkthrough on them. Verify applied
 icon/view changes where supported. All new/changed components
 belong to the existing solution. Metadata, membership, preservation, date
 behavior, relationship policy, and the protected-state baseline have been
-checked. Both illustrative offers have been created and read back with their
+checked. Both example offers have been created and read back with their
 row IDs, expected case/USD bindings, dates, quantities, costs, Received status,
 and Active state recorded. If these supported checks pass, report
 **app-builder portion complete; participant walkthrough pending**, adding
@@ -465,7 +476,7 @@ icon again to restore the panel to its previous size.
 Keep technical verification in the builder's report. The participant
 walkthrough below is a business-use review, not a manual test suite.
 On retries, inspect the offers and previous receipt before insertion. Do not
-blindly rerun sample creation or reset participant edits; partial/conflicting
+blindly rerun example-offer creation or reset participant edits; partial/conflicting
 data requires a reviewed resume plan and fresh approval for further writes.
 
 ## Step 5: Explore the new view and form
@@ -481,13 +492,13 @@ Tower** model-driven app and select **Play**.
    navigation. Select the **Supplier Recovery Offers** comparison view
    from the view picker if needed. Look at how it brings the offers'
    dates, quantities, and costs together.
-2. **MF-02:** In the list, select a sample offer's **Offer Name**, such as
+2. **MF-02:** In the list, select an example offer's **Offer Name**, such as
    **Faster partial recovery**, to open its form. Look at the disruption
    case link, offer details, and Analyst Notes. Consider
    how an analyst would use this form to record a supplier's alternative.
    No edits or new records are needed.
 
-   ![The Faster partial recovery sample offer open in the Supplier Recovery Offer form, showing its disruption case, status, ship date, quantity, cost, and Analyst Notes.](images/module2/30-supplier-recovery-offer-form.png)
+   ![The Faster partial recovery example offer open in the Supplier Recovery Offer form, showing its disruption case, status, ship date, quantity, cost, and Analyst Notes.](images/module2/30-supplier-recovery-offer-form.png)
 
 3. **MF-03:** Compare **Faster partial recovery** with **Lower-cost
    recovery**. Both offer 30 units; the earlier option costs USD 120,
@@ -499,7 +510,7 @@ Tower** model-driven app and select **Play**.
 
 This is a walkthrough of the business capability, not a formal acceptance
 test. You do not need to test invalid values, change offer statuses, or
-collect technical evidence. If the view, form, or sample offers are missing,
+collect technical evidence. If the view, form, or example offers are missing,
 ask the facilitator rather than creating replacements.
 
 ## Completion and optional work
@@ -508,7 +519,7 @@ If you continue to another module before finishing, retain this module's
 workspace so you can resume later.
 
 The participant exercise is complete when you have explored the new view
-and form, compared the two sample offers, and understood how the extension
+and form, compared the two example offers, and understood how the extension
 supports an analyst without approving or executing recovery.
 The builder remains responsible for its technical verification under the
 [extension requirements](prompts/module2/supplier-recovery-offer-extension-app-spec.md#illustrative-data-and-acceptance).
