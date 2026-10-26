@@ -29,7 +29,7 @@ Throughout the workshop, you keep one authority boundary:
 | [3. Create supplier-delay intake and live impact](labs/03-build-intake-and-impact-cloud-flows.md) | Two Power Automate cloud flows that classify the supplier email with a prompt, create the disruption case, and calculate its impact. | 60 min |
 | [4. Create policy, bounded reasoning, and human supervision](labs/04-build-policy-and-supervision.md) | A Business Skill, the **Disruption Commander** agent, and an approval handoff agent that alerts a person in the Agent feed. | 60 min |
 | [5. Create the Carrier agent and governed recovery flow](labs/05-configure-recovery-and-cua.md) | A Copilot Studio agent with a restricted Computer Use tool, and the cloud flow that executes only an approved recovery. | 60 min |
-| [6. Approve, deploy, and replay](labs/06-run-deploy-and-replay.md) | Approve the recovery in Dev, deploy the solutions to a managed target with Power Platform Pipelines, and replay the scenario there. | 90 min |
+| [6. Deploy the Control Tower](labs/06-run-deploy-and-replay.md) | Deploy the Business Skills library first, then the main solution to the same managed target with Power Platform Pipelines. | 30 min |
 
 Complete the modules in order. Each one builds on the records and components
 created by the previous one.

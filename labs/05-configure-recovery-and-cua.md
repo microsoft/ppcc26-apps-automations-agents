@@ -882,7 +882,8 @@ evidence and carrier ledger records.
 Figure: Verified responses write CP7 before resolution. Ambiguous responses and failed or timed-out child calls have separate Needs Attention paths.
 
 The following screenshots show the expected browser-side state before and
-after a verified submission. You will observe the automatic run in Module 6.
+after a verified submission. These are reference examples; Module 6 covers
+deployment only and does not run recovery.
 
 ![Before governed execution, the carrier portal shows no submission.](images/module5/03-automatic-cua-before.jpg)
 
@@ -943,8 +944,8 @@ CP7.
    `PPCCAgenticOperationsControlTower`, with **Register Shipping Contact**
    attached to that agent and the required connection references present.
    Do not move the parent or child flow into a separate solution.
-7. Do not approve the workshop Recovery Decision yet. Module 6 performs the
-   single consequential test.
+7. Leave the workshop Recovery Decision **Pending**. Module 6 deploys the
+   solutions without running a consequential recovery test.
 
 Before leaving the designer, walk through these configuration checks without
 running the flow:
@@ -961,8 +962,9 @@ running the flow:
 | If Rejected > True | Decision Rejected maps to case Cancelled (100000008) |
 | Replay and guard-mismatch branches | Compose Inputs are present; neither branch performs consequential work |
 
-These checks verify configuration only. Module 6 validates the actual
-approved execution, persisted evidence, and replay behavior.
+These checks verify configuration only. End-to-end validation of approved
+execution, persisted evidence, and replay behavior is outside the
+deployment-only scope of Module 6.
 
 ## If validation or save fails
 
