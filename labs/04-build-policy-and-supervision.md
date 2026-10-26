@@ -27,10 +27,11 @@ You will create one Business Skill and two agents:
    3. Turn on **Turn on Business Applications in Work IQ**.
 
       ![Enable Work IQ setting](images/module4/09-workiq-enable-setting.png)
-      
-   5. Select **Apply**.
+   4. Select **Apply**.
+   5. If you get an error while saving, open **Dataverse intelligence** and turn on **Turn on Dataverse intelligence for agents and AI experiences**.
+
+      ![Enable Dataverse intelligence setting](images/module4/09-dataverse-intelligence-enable.png)
    6. Return to your maker tab and open **Business skills** again.
-   
 6. Select **Create skill**.
 7. Set:
 
