@@ -1,6 +1,6 @@
 # Module 2: Extend the Control Tower with App Builder
 
-**Estimated time:** 35-40 minutes, after VM setup.
+**Estimated time:** 60 minutes
 
 This duration is approximate. Completing Module 2 is not required to continue
 with the other modules; you can return and finish it later if needed.
@@ -26,9 +26,12 @@ app**, rather than create a separate application:
 | **Comparison view** | Show alternatives side by side so analysts can weigh delivery timing against additional cost. |
 | **Navigation entry** | Make the new capability available within the app the operations team already uses. |
 
-App Builder creates two illustrative offers so you can immediately try the
-comparison. You will review the proposed changes before they are applied
-and verify that the original app and business records remain intact.
+The workshop already contains the disruption case and related business
+data. After you approve the plan, App Builder creates two example Supplier
+Recovery Offers linked to that existing case so you can try the comparison.
+You do not import or enter these offers yourself. You will review the
+proposed changes before they are applied and verify that the original app
+and business records remain intact.
 
 ### How this fits the workshop
 
@@ -38,7 +41,7 @@ and human supervision; Module 5 builds the approval-gated execution path;
 and Module 6 brings those capabilities together through approval,
 deployment, and verified recovery.
 
-The illustrative offers are not automatically consumed by the later flows
+The example offers are not automatically consumed by the later flows
 or agents. **Shortlisting an offer is not approval:** this module does not
 authorize recovery, contact a supplier, or start execution.
 
@@ -133,87 +136,103 @@ Continue inside your workshop VM, using the extracted files from Module 1.
 
    ![The Supplier Recovery Offers requirements file displayed in VS Code Markdown Preview.](images/module2/05a-vscode-extension-requirements-preview.png)
 
+6. Select **Terminal > New Terminal**. Use the terminal profile dropdown
+   to select **PowerShell** if a different shell opens.
+
+   ![In VS Code, open the Terminal menu and select New Terminal.](images/module2/06-vscode-new-terminal.png)
+
 ### Connect PAC to your DEV environment
 
 1. In <https://make.preview.powerapps.com>, select your assigned
    **Dev-USER-&lt;number&gt;** environment. Open **Settings > Session details**
    and copy **Instance url**. This is the environment/organization URL, not
-   the app's browser URL. Keep this URL handy; use it wherever
-   `<MY-DEV-URL>` appears in this module.
+   the app's browser URL. Keep this URL handy; use it wherever `<MY-DEV-URL>` appears in this module.
 
    ![Power Apps session details dialog with Instance url highlighted. Copy the URL for your assigned DEV environment.](images/module2/06a-power-apps-session-details-instance-url.png)
 
-2. Open **GitHub Copilot Chat** in VS Code and select **Agent** mode. This
-   fresh workshop setup does not yet have a PAC authentication profile, so
-   create one directly. In the chat input, enter the following command,
+2. Switch back to VS Code. This fresh workshop setup does not yet have a PAC authentication profile, so
+   create one directly. In the terminal input, enter the following command,
    replacing `<MY-DEV-URL>` with the Instance url you just copied, and
    press **Enter**:
 
    ```powershell
    pac auth create --environment "<MY-DEV-URL>"
    ```
-
    Use your own assigned DEV URL, not the example URL in the screenshot.
 
-   ![GitHub Copilot Chat with pac auth create and an example environment URL entered in the chat input.](images/module2/06-copilot-chat-pac-auth-create.png)
-
-3. If Copilot asks permission to run the command, confirm it is
-   `pac auth create --environment` with your assigned DEV URL, then select
-   **Allow**. Follow the sign-in prompts using your **Microsoft Entra
-   workshop account**.
-
-   ![Copilot Chat requesting permission to run pac auth create, with Allow in this Session highlighted.](images/module2/08-copilot-chat-allow-pac-auth-create.png)
-
-4. Confirm Copilot reports that PAC authentication succeeded and the profile
-   is connected, as shown below. If authentication fails, ask the facilitator
-   for help before continuing.
-
-   ![Copilot Chat reporting successful PAC authentication and a connected DEV profile.](images/module2/09-copilot-chat-pac-auth-success.png)
+   ![PowerShell terminal showing pac auth create with an example environment URL. Use your own assigned DEV Instance url.](images/module2/09-pac-auth-create-environment.png)
 
 ### Sign in to Azure CLI
 
-1. In **GitHub Copilot Chat**, enter the following command and select
-   **Send**:
+1. In the same terminal, enter the following command and press **Enter**:
 
    ```powershell
    az login --use-device-code
    ```
+2. When the terminal displays the sign-in message below, open
+   <https://login.microsoft.com/device> in your browser and enter the
+   8-character code shown in your terminal. Follow the prompts to select
+   your workshop account and allow Azure CLI.
 
-   ![GitHub Copilot Chat input with az login --use-device-code entered.](images/module2/32-copilot-chat-azure-device-code-login.png)
+   ![PowerShell terminal showing the Azure CLI device sign-in URL and a redacted authentication code.](images/module2/11-azure-cli-device-code.png)
 
-2. If Copilot asks permission to run the command, select **Allow**.
+3. Return to the terminal. If a subscription picker appears and your assigned
+   workshop subscription is already marked as the default (`*`), press
+   **Enter** to continue. Otherwise, select your assigned workshop subscription.
 
-   ![Copilot Chat requesting permission to run az login --use-device-code, with Allow in this Session highlighted.](images/module2/33-copilot-chat-allow-azure-login.png)
+   ![PowerShell terminal showing the subscription and tenant selection after az login --use-device-code.](images/module2/12-azure-cli-subscription-selection.png)
 
-3. When Chat reports **Azure device-code login is waiting for
-   authentication**, select the sign-in URL in its response to open it in
-   the browser on the workshop VM.
-   Return to Chat, copy the device code from the same response, then paste
-   it into the code field on the Microsoft sign-in page and continue.
-   Sign in with the same **Microsoft Entra workshop account** used for PAC.
-   If asked for an account type, select **Work or school account**.
-   Use the URL and code from your own session, not the screenshot; paste
-   the code only into the Microsoft sign-in page, not into Chat.
+### Start Copilot CLI
 
-   ![Copilot Chat reporting that Azure device-code login is waiting for authentication, with the clickable sign-in URL highlighted and the device code masked.](images/module2/34-copilot-chat-azure-device-code.png)
-
-   If a subscription picker appears, use the assigned workshop context.
-   After you complete sign-in, return to Chat and wait for a successful
-   Azure CLI login message like the example below.
-
-   ![Copilot Chat reporting that Azure CLI login completed successfully and identifying the connected tenant and default subscription.](images/module2/35-copilot-chat-azure-login-success.png)
-
-4. After sign-in completes, ask Copilot Chat to run:
+1. After Azure CLI sign-in completes, enter the following command in the
+   terminal and press **Enter** to start Copilot:
 
    ```powershell
-   az account show --query "{Account:user.name,Tenant:tenantId}" --output table
+   copilot
    ```
 
-   Confirm the account and tenant match your workshop identity. If sign-in
-   fails or no account is available, see
-   [Repair Azure sign-in](#repair-azure-sign-in) or ask the facilitator.
+   ![PowerShell terminal showing completed Azure CLI sign-in and the copilot command entered from the workshop folder.](images/module2/13-start-copilot-terminal.png)
 
-## Step 3: Submit the app extension request
+2. If you have not previously been prompted to trust the folder, Copilot may
+   ask now. Confirm it shows `C:\github\ppcc26-apps-automations-agents`, the
+   workshop folder extracted in Module 1, before accepting. If it shows
+   another location, cancel and reopen Copilot from the correct folder.
+
+   ![Copilot CLI folder trust prompt showing the workshop folder with Yes selected.](images/module2/13a-copilot-folder-trust.png)
+
+3. If Copilot displays **Please use /login to sign in to use Copilot**, enter
+   `/login` at the **Copilot prompt** and press **Enter**.
+
+   ![Copilot CLI prompting for sign-in, with /login entered at the Copilot prompt.](images/module2/14-copilot-login.png)
+
+   When asked which account to log into, select **GitHub.com** and press
+   **Enter**.
+
+   ![Copilot CLI account selection with GitHub.com highlighted.](images/module2/15-copilot-login-account-selection.png)
+
+   Select **Sign in with your browser (recommended)** and press **Enter**.
+
+   ![Copilot CLI sign-in method selection with Sign in with your browser (recommended) highlighted.](images/module2/16-copilot-login-sign-in-method.png)
+
+   In the browser, enter your authorized workshop GitHub.com username
+   (not an email address; do not include `@`) and
+   select **Sign in with your identity provider**. Follow the prompts to
+   complete sign-in. Use the account guidance from
+   [Module 1](01-open-and-orient.md#part-3-configure-github-in-visual-studio-code).
+
+   ![GitHub sign-in page for Copilot CLI showing a workshop username and the Sign in with your identity provider button.](images/module2/16a-copilot-login-browser-sign-in.png)
+
+   Confirm the authorization page shows your workshop account, then select
+   **Authorize github**.
+
+   ![GitHub Copilot CLI authorization page with the Authorize github button highlighted.](images/module2/17-copilot-login-authorize.png)
+
+   Return to the terminal after authorization completes. Signing in to Copilot
+   in VS Code does not necessarily sign in the CLI.
+
+   If authentication fails or Copilot reports no access, ask the facilitator.
+
+## Step 3: Paste the bounded extension request
 
 To prepare the prompt below, copy it into **Notepad** and replace
 `<MY-DEV-URL>` with your assigned DEV URL.
@@ -282,32 +301,35 @@ MF-01 through MF-04 view/form walkthrough; do not claim I have reviewed the
 app before I do so. This is a training exercise, not production certification.
 ```
 
-Copy the edited prompt from **Notepad** and paste it into the **GitHub
-Copilot Chat** input. The text appears across multiple lines, as shown
-below. Scroll within the input to review the full prompt before submitting.
+Copy the edited prompt from **Notepad** and paste it at the **Copilot
+prompt**. Long pasted text appears as a single summary line, such as
+`[Paste #2 - 57 lines]`, rather than displaying the full text. This is
+expected; the summary represents the full pasted prompt.
 
-![GitHub Copilot Chat input showing the pasted multiline extension request with the DEV URL and requirements file reference.](images/module2/21-copilot-pasted-extension-request.png)
+![Copilot CLI showing the pasted extension request at the prompt, with the requirements file referenced.](images/module2/21-copilot-pasted-extension-request.png)
 
-Select the **Send** button (up arrow) to submit the prompt.
+Press **Enter** to submit the prompt.
 
-Copilot begins processing the request by reading the **app-builder** skill
-and explaining its initial checks, as shown below. Wait while it prepares
-the review plan; no Dataverse changes should be made before your approval.
+Copilot starts by loading the **app-builder** skill and reading
+`supplier-recovery-offer-extension-app-spec.md`, as shown below. It then
+continues processing for a while. Wait for its response; do not submit the
+prompt again while Copilot shows **Working**.
 
-![Copilot Chat starting the request, reading the app-builder skill, and describing identity checks and review-plan approval before Dataverse writes.](images/module2/36-copilot-chat-starting-extension-request.png)
+![Copilot loading the app-builder skill and reading the extension requirements file, with Working shown below.](images/module2/22-copilot-starting-app-builder.png)
 
-During the build setup, Copilot may ask you to run `az login`, as shown
-below. Open **Terminal > New Terminal** in VS Code and sign in using the
-same **Microsoft Entra workshop account** used for PAC. Follow
-[Repair Azure sign-in](#repair-azure-sign-in) for the tenant-specific command
-and account verification. Once `az account show` succeeds for your workshop
-account and tenant, return to Chat, select **I completed az login with the
-same workshop account**, and select **Submit**. If you cannot sign in,
-select **I need help with Azure CLI login** instead.
+Keep the existing workspace if a run fails. See
+[Resume an interrupted run](#resume-an-interrupted-run) only if you need
+recovery guidance; for a fresh run, continue to Step 4.
+Do not rerun against another environment using the same downloaded app
+files; use a fresh, separately named workspace for each environment.
 
-![Copilot Chat asking for Azure CLI sign-in, with options to confirm completion or request help and a Submit button.](images/module2/31-copilot-chat-azure-login-prompt.png)
+## Step 4: Review and approve the app changes
 
-## Step 4: Review and approve
+You are reviewing App Builder's proposed changes to the existing app,
+recorded in `review-plan.md`: the new offer table, form, views, navigation,
+and two example offers. Approving this plan authorizes those app changes
+in your assigned DEV environment, subject to the required safety checks.
+It does **not** approve a supplier offer or authorize recovery execution.
 
 When Copilot finishes preparing the review plan, you should see an approval
 prompt like the one below, with the path to `review-plan.md`. Leave the
@@ -319,6 +341,9 @@ In VS Code, use the **Explorer** pane on the left to expand **.artifacts** >
 **app-builder** > **supplier-recovery-offers-extension**, then select
 **review-plan.md** to open it. For a formatted view, select **Text Editor**
 in the upper-right corner of the editor, then select **Markdown Preview**.
+
+![VS Code Explorer with review-plan.md selected and open in the editor.](images/module2/24-vscode-open-review-plan.png)
+
 This is the review file requested in Step 3, not an assumed built-in
 App Builder artifact. If it is missing or out of date, ask Copilot to write
 or refresh it before approving.
@@ -331,7 +356,7 @@ writes.
 
 These are the intended design, not a reason to halt for minor polish.
 Proceed with documented limitations when the table, form, comparison, and
-approved sample data work safely. Cosmetic details, descriptions, exact
+approved example offers work safely. Cosmetic details, descriptions, exact
 layout/sorting, icon application, and default-view enrichment are
 non-blocking; do not expand the build to repair them.
 
@@ -346,13 +371,13 @@ table. If required information is missing or unclear, ask Copilot to update
 | Table | Offer Name, case lookup, promised ship date, quantity, cost, three-value status, optional notes |
 | UI | One Supplier Recovery Offer Main form, one Active-offer view, one navigation entry displaying the table's document-with-price-tag Fluent-style SVG icon |
 | Icon verification | Builder reads back the icon web resource and table/navigation assignments; existing icons preserved |
-| Polish | Purposeful descriptions on new components; full-width, three-row Analyst Notes; sample notes explain earlier/higher-cost versus later/lower-cost alternatives |
-| Sample data | Exactly two specified offers; same verified seeded Supplier F / Clam Chowder case and active USD; explicit Received status, quantities/costs, and recorded VM-date +3/+7 calendar dates |
+| Polish | Purposeful descriptions on new components; full-width, three-row Analyst Notes; example-offer notes explain earlier/higher-cost versus later/lower-cost alternatives |
+| Example offers | Exactly two specified offers created by App Builder; linked to the existing, verified Supplier F / Clam Chowder case and active USD; explicit Received status, quantities/costs, and recorded VM-date +3/+7 calendar dates |
 | View selection | Navigation opens the offer table; comparison view is selectable; manual selection is allowed |
 | Default list | Active Supplier Recovery Offers includes all six comparison fields and its Active filter; extra existing columns may remain; exact order and saved sorting are not required there; separate comparison view retained for those guarantees |
 | Preservation | Original app/page/components/data/roles retained; necessary maintenance writes identified |
 | Participant review | A short walkthrough of the new view, form, offer comparison, and information-only boundary |
-| Not requested | No case grid, second view, new roles, validation plug-in, automation, export, additional sample rows, or seed-record edits |
+| Not requested | No case grid, second view, new roles, validation plug-in, automation, export, additional example offers, or edits to existing workshop records |
 | Authority | Offers cannot approve or execute recovery |
 
 The skill may require intermediate reviews. Use the supplied requirements
@@ -370,11 +395,13 @@ approval prompt, select **Yes** and press **Enter** to approve the build.
 
 ![Copilot build approval prompt with Yes highlighted.](images/module2/26-copilot-approve-build.png)
 
-After approval, Copilot starts applying the schema without sample data, as
-shown below. The build will take a while from this point. Wait while Copilot
-shows **Working**; do not submit the request again.
+After approval, Copilot first creates the table, form, and view without
+adding offer records, as shown below. After checking the relationship safety
+settings, it creates the two example offers. The build will take a while
+from this point. Wait while Copilot shows **Working**; do not submit the
+request again.
 
-![Copilot confirming approval and running the schema stage without samples, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
+![Copilot confirming approval and creating the table and app components before adding the example offers, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
 
 Let the agent build,
 verify the schema-only relationship safety gate, create the two approved
@@ -393,7 +420,7 @@ limitations rather than blocking the walkthrough on them. Verify applied
 icon/view changes where supported. All new/changed components
 belong to the existing solution. Metadata, membership, preservation, date
 behavior, relationship policy, and the protected-state baseline have been
-checked. Both illustrative offers have been created and read back with their
+checked. Both example offers have been created and read back with their
 row IDs, expected case/USD bindings, dates, quantities, costs, Received status,
 and Active state recorded. If these supported checks pass, report
 **app-builder portion complete; participant walkthrough pending**, adding
@@ -412,7 +439,7 @@ icon again to restore the panel to its previous size.
 Keep technical verification in the builder's report. The participant
 walkthrough below is a business-use review, not a manual test suite.
 On retries, inspect the offers and previous receipt before insertion. Do not
-blindly rerun sample creation or reset participant edits; partial/conflicting
+blindly rerun example-offer creation or reset participant edits; partial/conflicting
 data requires a reviewed resume plan and fresh approval for further writes.
 
 ## Step 5: Explore the new view and form
@@ -428,13 +455,13 @@ Tower** model-driven app and select **Play**.
    navigation. Select the **Supplier Recovery Offers** comparison view
    from the view picker if needed. Look at how it brings the offers'
    dates, quantities, and costs together.
-2. **MF-02:** In the list, select a sample offer's **Offer Name**, such as
+2. **MF-02:** In the list, select an example offer's **Offer Name**, such as
    **Faster partial recovery**, to open its form. Look at the disruption
    case link, offer details, and Analyst Notes. Consider
    how an analyst would use this form to record a supplier's alternative.
    No edits or new records are needed.
 
-   ![The Faster partial recovery sample offer open in the Supplier Recovery Offer form, showing its disruption case, status, ship date, quantity, cost, and Analyst Notes.](images/module2/30-supplier-recovery-offer-form.png)
+   ![The Faster partial recovery example offer open in the Supplier Recovery Offer form, showing its disruption case, status, ship date, quantity, cost, and Analyst Notes.](images/module2/30-supplier-recovery-offer-form.png)
 
 3. **MF-03:** Compare **Faster partial recovery** with **Lower-cost
    recovery**. Both offer 30 units; the earlier option costs USD 120,
@@ -446,130 +473,32 @@ Tower** model-driven app and select **Play**.
 
 This is a walkthrough of the business capability, not a formal acceptance
 test. You do not need to test invalid values, change offer statuses, or
-collect technical evidence. If the view, form, or sample offers are missing,
+collect technical evidence. If the view, form, or example offers are missing,
 ask the facilitator rather than creating replacements.
 
-## Completion and optional work
+## Key takeaways and optional exploration
 
-If you continue to another module before finishing, retain this module's
-workspace so you can resume later.
+The key takeaway is how a prompt and an app specification work together to
+guide Copilot in creating or extending an app. Review the
+[extension prompt](#step-3-paste-the-bounded-extension-request) and
+[app specification](prompts/module2/supplier-recovery-offer-extension-app-spec.md)
+to see how they describe the intended capability, scope, and expected result.
+Exploring the generated view and form helps connect those instructions to
+what Copilot builds.
 
-The participant exercise is complete when you have explored the new view
-and form, compared the two sample offers, and understood how the extension
-supports an analyst without approving or executing recovery.
-The builder remains responsible for its technical verification under the
-[extension requirements](prompts/module2/supplier-recovery-offer-extension-app-spec.md#illustrative-data-and-acceptance).
-Exploring the app is not production certification, and failed or unverified
-build checks must still be reported.
+You do not need a flawless build to learn from this lab. If issues arise,
+share the error or unexpected behavior with Copilot, ask it to investigate,
+and work through the next steps together. Ask the facilitator for help when
+needed. Keep track of anything that remains unresolved; the builder's
+[technical verification](prompts/module2/supplier-recovery-offer-extension-app-spec.md#illustrative-data-and-acceptance)
+still matters, and exploring the app does not establish production readiness.
 
-If time remains, separately review and approve **one** optional task:
-add Offers by Disruption, or use the supported form designer to add the
-related offers grid to the existing case form. Neither is required to pass.
-No role changes or custom validation code are part of this variant.
+The prompt and specification are starting points you can adapt for other
+scenarios. For this workshop, keep the assigned environment and agreed build
+scope. If time remains, review and approve **one** optional variation with
+Copilot: add Offers by Disruption, or use the supported form designer to add
+the related offers grid to the existing case form. Neither is required.
+Role changes and custom validation code remain outside this lab's scope.
 
-A facilitator-rehearsed default Main-form preference is also optional under
-the simplified spec's preservation conditions; manual form selection remains
-allowed. It is separate from default-view selection and adds no required
-lab step. Presenter discussion of richer behaviors belongs outside the
-participant build scope.
-
-If the build cannot finish, the facilitator may provide an approved completed
-full-solution checkpoint. Record that you used it: inspecting that result is
-not the same as completing the agentic build. Still perform the offer
-view/form walkthrough and discuss the offer tradeoff and approval boundary.
-
-## Repair missing tools
-
-Node.js is required to run the App Builder plugin's hooks and supporting
-scripts.
-
-If Node.js, PAC CLI, Azure CLI, GitHub Copilot CLI, or the **model-apps**
-plugin that provides **app-builder** is missing, use the
-[prerequisite setup script](../setup/Install-Prerequisites.ps1) before
-starting the exercise. The script does **not** install Copilot CLI; if it is
-missing, ask the facilitator to install it first so the script can configure
-its plugins. PAC installation depends on the upstream installer and an
-available .NET SDK; ask the facilitator for help if PAC remains missing.
-
-On the workshop VM, open PowerShell and run:
-
-```powershell
-Set-Location "C:\github\ppcc26-apps-automations-agents"
-.\setup\Install-Prerequisites.ps1
-```
-
-Follow the Azure sign-in prompt using your workshop account. If the script
-fails or Windows blocks it, stop and ask the facilitator for help.
-After installation, close all VS Code windows and reopen the workshop
-folder so its terminals pick up the updated PATH. If you ran setup in a
-standalone PowerShell window, close it and open a new one before checking
-the tools or starting Copilot. Start a fresh Copilot session after plugin
-installation. If app-builder is still absent from `/skills`, ask the
-facilitator to verify that model-apps is installed and available to
-Copilot before proceeding. Confirm the tools are available:
-
-```powershell
-node --version
-pac help
-az --version
-copilot --version
-```
-
-Successful installation does not confirm PAC authentication, the assigned
-DEV connection, or app-builder availability; verify those in Step 2.
-If setup is still incomplete, ask the facilitator rather than installing or
-upgrading tools or repairing the base solution during the build. The
-[Microsoft Learn setup guide](https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/model-driven-app-external-tools)
-is a preparation reference.
-
-## Repair Azure sign-in
-
-Use this section if Copilot requests Azure CLI sign-in during the build setup
-or sign-in fails. If Azure CLI is missing, first follow
-[Repair missing tools](#repair-missing-tools).
-
-To find your **workshop tenant ID**, open <https://make.powerapps.com> with
-your workshop account and assigned DEV environment selected. Select
-**Settings > Session details** and copy the value after **Tenant ID:**.
-If you cannot find it, ask the facilitator. In the VS Code PowerShell
-terminal, replace `<WORKSHOP-TENANT-ID>` with that value and run:
-
-```powershell
-az login --tenant "<WORKSHOP-TENANT-ID>" --allow-no-subscriptions
-```
-
-Sign in with the **Microsoft Entra workshop account** from
-[Module 1](01-open-and-orient.md#part-1-retrieve-your-workshop-credentials),
-not your GitHub account or VM sign-in account. If asked to choose an account
-type, select **Work or school account**. The tenant ID is not the DEV
-Instance url. If a subscription picker appears, use only the
-facilitator-assigned workshop context; do not select another tenant to
-get past an error. Dataverse access does not require an Azure subscription;
-`--allow-no-subscriptions` permits sign-in to a tenant without one.
-
-![PowerShell terminal showing Azure CLI sign-in and tenant and subscription selection. Use your own assigned workshop tenant and subscription context.](images/module2/11-azure-cli-sign-in.png)
-
-If the browser account picker does not appear or cannot open, ask the
-facilitator whether device-code sign-in is permitted. Only if permitted,
-run:
-
-```powershell
-az login --tenant "<WORKSHOP-TENANT-ID>" --use-device-code --allow-no-subscriptions
-```
-
-Open the URL Azure CLI prints, enter its code, and sign in with the same
-workshop account. If device-code sign-in is blocked, stop for facilitator
-help rather than trying to bypass the policy.
-
-After either sign-in route, verify:
-
-```powershell
-az account show --query "{Account:user.name,Tenant:tenantId}" --output table
-pac org who
-```
-
-Confirm Azure CLI shows the assigned workshop account and tenant and
-matches PAC's workshop identity and DEV connection. If sign-in still fails
-or the identities do not match, stop for facilitator help. Otherwise,
-return to [Step 3: Submit the app extension request](#step-3-submit-the-app-extension-request)
-and respond to Copilot's sign-in prompt.
+If you move to another module before finishing, retain this workspace so you
+can resume later.
