@@ -66,10 +66,6 @@ This module also requires:
   case, with a **Pending** Recovery Decision, at least **30 affected units**,
   and **USD** currency.
 
-> [!NOTE]
-> If any tools are missing, see [Repair missing tools](#repair-missing-tools)
-> at the end of this module before starting the exercise.
-
 If the app or business data is missing, ask the facilitator; do not create
 replacements.
 Never use a presenter's environment URL or the managed TARGET.
@@ -321,12 +317,6 @@ prompt again while Copilot shows **Working**.
 
 ![Copilot loading the app-builder skill and reading the extension requirements file, with Working shown below.](images/module2/22-copilot-starting-app-builder.png)
 
-Keep the existing workspace if a run fails. See
-[Resume an interrupted run](#resume-an-interrupted-run) only if you need
-recovery guidance; for a fresh run, continue to Step 4.
-Do not rerun against another environment using the same downloaded app
-files; use a fresh, separately named workspace for each environment.
-
 ## Step 4: Review and approve the app changes
 
 You are reviewing App Builder's proposed changes to the existing app,
@@ -407,15 +397,22 @@ request again.
 
 ![Copilot confirming approval and creating the table and app components before adding the example offers, with Working shown below.](images/module2/27-copilot-approved-build-running.png)
 
-Let the agent build,
-verify the schema-only relationship safety gate, create the two approved
-offers through app-builder's sample-data phase, publish, and verify.
-Case/currency binding must use the supported sample-data path; if it cannot,
-stop rather than creating parent records or using a separate loader/API patch.
-If a core item is unsupported or fails, retain the error and workspace and
-request a reviewed recovery plan using
-[Resume an interrupted run](#resume-an-interrupted-run). Never delete the existing
-solution, replace a form/page, or duplicate the offer table to get past a failure.
+Let Copilot build the extension, check relationship safety, create the two
+approved example offers through App Builder's supported sample-data phase,
+publish, and verify.
+
+If a step fails, work with Copilot to understand the error and propose a
+supported fix. Keep the error and existing workspace, and review any changes
+before approving further writes. Continue past minor limitations when the
+core capability and safety checks pass.
+
+If Copilot cannot resolve the issue within the approved scope, or cannot
+verify relationship safety or the offers' links to the existing case and
+USD currency, ask the facilitator for help.
+
+Do not create replacement parent records, use a separate loader/API patch,
+delete the existing solution, replace an existing form/page, or duplicate
+the offer table to work around a failure.
 
 **App-builder checkpoint:** The published existing app has a usable new offer
 form, selectable comparison view with the useful comparison fields, and
