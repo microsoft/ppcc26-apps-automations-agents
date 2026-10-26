@@ -39,13 +39,14 @@ test("day agenda is discoverable, complete, and links to every module", async ({
     await expect(times.first()).toBeVisible();
     await expect(times.last()).toBeVisible();
   }
-  await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:25 PM · 4 h 55 min of modules and labs, plus Computer Use wait time");
+  await expect(agenda.locator(".agenda-summary")).toHaveText("9:00 AM–4:25 PM · 4 h 55 min of modules and labs");
   const moduleRows = agenda.locator(".agenda-lab");
   const owners = ["Olivier", "Adrian", "Rasika", "Nikita", "Jay", "Warren"];
   for (let index = 0; index < owners.length; index++) {
     await expect(moduleRows.nth(index).locator(".agenda-owner")).toContainText(owners[index]);
   }
-  await expect(moduleRows.last().locator(".agenda-time-note")).toHaveText("+ Computer Use wait");
+  await expect(moduleRows.last().locator(".agenda-time-note")).toHaveCount(0);
+  await expect(moduleRows.last().getByRole("heading")).toContainText("Deploy the Control Tower to TARGET");
   const links = agenda.locator(".agenda-description h3 a");
   await expect(links).toHaveCount(6);
   for (let index = 0; index < modules.length; index++) {

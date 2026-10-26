@@ -38,8 +38,8 @@ and business records remain intact.
 Module 2 adds a human-facing comparison capability. Module 3 automates
 supplier-notice intake and impact assessment; Module 4 adds policy guidance
 and human supervision; Module 5 builds the approval-gated execution path;
-and Module 6 brings those capabilities together through approval,
-deployment, and verified recovery.
+and Module 6 deploys those capabilities as two managed solutions through
+Power Platform Pipelines.
 
 The example offers are not automatically consumed by the later flows
 or agents. **Shortlisting an offer is not approval:** this module does not

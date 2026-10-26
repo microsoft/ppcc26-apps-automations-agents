@@ -40,13 +40,13 @@ Stop the preview with Ctrl+C.
 - `_data/agenda.yml` owns the 09:00-16:25 agenda calculated consecutively from the
   workshop overview's session durations, starting at 09:00,
   including session titles, owners, products, lunch, and three breaks. The
-  facilitated module allocations total 4 h 55 min, plus Computer Use wait time;
+  facilitated module allocations total 4 h 55 min;
   they are distinct from the individual self-paced lab estimates. Module links
   use the canonical module metadata. Every row displays its start and end time
   in aligned Start and End columns after Products, including breaks and lunch.
   Narrow screens use labeled start/end pairs below the product labels instead of
   squeezing the desktop columns. There is no separate
-  Duration column; the Computer Use wait note remains beside Module 6's times.
+  Duration column. Module 6 is a 30-minute deployment-only session.
   Static validation checks contiguous times,
   durations, owners/products, and all six modules in order.
 - `_plugins/workshop.rb` reads canonical Markdown, renders it in memory, maps
