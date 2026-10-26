@@ -37,9 +37,10 @@ Stop the preview with Ctrl+C.
 - Jekyll and Minimal Mistakes provide the static-site foundation. The local
   layouts and stylesheet implement a workshop-focused shell.
 - `_data/modules.yml` owns the ordered navigation and landing-page metadata.
-- `_data/agenda.yml` owns the 09:00-16:40 agenda supplied in the workshop overview,
+- `_data/agenda.yml` owns the 09:00-16:25 agenda calculated consecutively from the
+  workshop overview's session durations, starting at 09:00,
   including session titles, owners, products, lunch, and three breaks. The
-  facilitated module allocations total 5 h 35 min, plus Computer Use wait time;
+  facilitated module allocations total 4 h 55 min, plus Computer Use wait time;
   they are distinct from the individual self-paced lab estimates. Module links
   use the canonical module metadata. Every row displays its start and end time
   in aligned Start and End columns after Products, including breaks and lunch.
