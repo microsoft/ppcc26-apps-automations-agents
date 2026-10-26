@@ -160,7 +160,11 @@ Continue inside your workshop VM, using the extracted files from Module 1.
    ```
    Use your own assigned DEV URL, not the example URL in the screenshot.
 
-   ![PowerShell terminal showing pac auth create with an example environment URL. Use your own assigned DEV Instance url.](images/module2/09-pac-auth-create-environment.png)
+   When prompted to sign in, select your assigned workshop account and
+   complete the sign-in prompts. Then return to VS Code and wait for the
+   terminal to confirm that the authentication profile was created.
+
+   ![PowerShell terminal showing successful PAC authentication, connection to the DEV environment, and creation of an authentication profile. Account and environment details are redacted.](images/module2/09-pac-auth-create-success.png)
 
 ### Sign in to Azure CLI
 
