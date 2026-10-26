@@ -380,7 +380,7 @@ Leave this open and go back to Agent in Copilot Studio and see the **Activity** 
 
 ![Handoff agent Activity tab](images/module4/26-handoff-agent-activity-tab.png)
 
-9. Leave the task open for Module 6.
+9. Leave the task open and the decision **Pending**.
 
 ## Checkpoint
 
